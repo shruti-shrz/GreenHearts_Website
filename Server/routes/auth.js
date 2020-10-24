@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
 const requireLogin = require('../middleware/requireLogin');
 
-router.get('/hey', function(req, res) {
+router.get('/hey', requireLogin, function(req, res) {
   res.send('hey dude-_-');
 });
 
@@ -18,7 +18,7 @@ router.post('/signup', function(req, res) {
   }
   User.findOne({email:email}, function(err, result) {
     if(!err) {
-      if(!result) {
+      if(result) {
         return res.status(422).json({error: "account already exists"});
       }
       User.findOne({name:name}, function(err1, result1) {
@@ -69,3 +69,4 @@ router.post('/signin', function(req, res) {
     }
   });
 });
+module.exports = router;
