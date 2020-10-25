@@ -14,8 +14,8 @@ module.exports = function(req, res, next) {
       if(err) {
         return res.status(401).json({error: "must log in"});
       }
-      const {id} = payload
-      User.findById(id)
+      const {_id} = payload
+      User.findById(_id)
         .then(function(userData) {
           req.user = userData;
         });

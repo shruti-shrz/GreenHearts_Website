@@ -19,6 +19,7 @@ mongoose.connection.on('error',(err)=>{
 
 require('./models/user');
 require('./models/post');
+require('./models/tips.js');
 app.use(express.json());
 app.use(require('./routes/auth'));
 app.use(require('./routes/post'));
