@@ -18,7 +18,8 @@ module.exports = function(req, res, next) {
       User.findById(_id)
         .then(function(userData) {
           req.user = userData;
+          next();
         });
-      next()
+
     });
 };
