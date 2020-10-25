@@ -8,7 +8,7 @@ function Body(props)
 {
 
   return (
-    <div>
+    <div className='bodyDiv'>
       <p>The Body Here</p>
         {props.PageName==='HomePage' && <HomePage Setter={props.Setter} LoginStat={props.LoginStat} />}
         {props.PageName==='LoginPage' && <LoginPage Setter={props.Setter} LoginSetter={props.LoginSetter} />}
