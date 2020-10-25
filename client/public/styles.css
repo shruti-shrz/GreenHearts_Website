@@ -22,3 +22,18 @@ header h1 {
   font-size: 200%;
 
 }
+
+.homeButton {
+  background: transparent;
+  border: none;
+  margin: auto auto 0 auto;
+  font-size: 200%;
+}
+
+.homeDiv {
+  align-items: center;
+}
+
+.loginInput {
+  border: 10px 10px;
+}
