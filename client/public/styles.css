@@ -34,6 +34,22 @@ header h1 {
   align-items: center;
 }
 
+.bodyDiv{
+  height: 100%;
+}
+
 .loginInput {
   border: 10px 10px;
+}
+
+#toast-container{
+  top: 30px !important;
+  right: 20px !important;
+  left: auto !important;
+  background-color: #135B07 !important;
+  color: #ffffff !important;
+  font-size: 100%;
+  width: 10%;
+  border-radius: 7px;
+  padding: 10px;
 }
