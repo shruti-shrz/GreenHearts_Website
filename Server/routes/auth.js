@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = mongoose.model("User");
+const Tip = mongoose.model("Tip");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
 const requireLogin = require('../middleware/requireLogin');
+
+router.get('/', function(req, res) {
+  Tip.findOneRandom(function(err, randtip) {
+    if(err) {
+      return res.json({error: "got no tip"});
+    }
+    res.json({tip: randtip.tip});
+  });
+});
 
 router.get('/hey', requireLogin, function(req, res) {
   res.send('hey dude-_-');
@@ -63,7 +73,7 @@ router.post('/signin', function(req, res) {
           }
           //sending jwt token as user is logged in
           const token = jwt.sign({_id: account._id}, JWT_SECRET);
-          res.json({token: token});
+          res.json({token: token, user: account});
           //res.json({message: "logged in"});
         });
     }
