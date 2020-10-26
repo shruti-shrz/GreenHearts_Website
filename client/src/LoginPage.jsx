@@ -67,7 +67,11 @@ function LoginPage(props)
         else
         {
           console.log(data)
+          localStorage.setItem("jwt",data.token);
+          localStorage.setItem("user",JSON.stringify(data.user));
           setIsSignUp(false);
+          props.LoginSetter(true);
+          props.Setter("HomePage");
         }
       });
     }
