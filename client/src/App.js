@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import React, {useState} from 'react';
 import logo from './logo.svg';
->>>>>>> 041bb5fa398f867c4499a4eef07b934f3fc91e10
 import './App.css';
 
 import Header from './Header.jsx'
@@ -20,7 +16,7 @@ function App() {
         LoginStat={isLoggedIn}
         LoginSetter={setIsLoggedIn}
       />
-      <Body 
+      <Body
         PageName={pageState}
         Setter={setPageState}
         LoginStat={isLoggedIn}

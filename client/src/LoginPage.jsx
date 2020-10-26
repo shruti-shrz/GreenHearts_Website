@@ -71,7 +71,7 @@ function LoginPage(props)
           localStorage.setItem("user",JSON.stringify(data.user));
           setIsSignUp(false);
           props.LoginSetter(true);
-          props.Setter("HomePage");
+          props.Setter("HomePage")
         }
       });
     }
