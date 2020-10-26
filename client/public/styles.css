@@ -1,16 +1,13 @@
 body {
-  background-image: url("leafyclip.webp");
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  text-align: center;
+  background-color: whitesmoke;
+  /* background-image: url("leafyclip.webp"); */
 }
 
 header {
-  text-align: left;
-  background: transparent;
+  background: white;
   margin: auto -10px;
   padding: 1px 32px 0 32px;
+  box-shadow: 0px  0px 10px grey;
 }
 
 header h1 {
@@ -26,6 +23,81 @@ header h1 {
   float: right;
   font-size: 200%;
 
+}
+
+.postCard{
+  background: white;
+  box-shadow: 0px 0px 10px gray;
+  width: 600px;
+  padding: 0.1px 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.postCard img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  border-image: 1px gray;
+}
+
+.postCard div{
+  margin-bottom: 40px;
+}
+
+.postCard div img{
+  object-fit: cover;
+  float: left;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;/*
+  vertical-align: middle; */
+}
+
+.postCard div h3{
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+
+.horizontalAlign{
+  float: left;
+}
+
+.filterSection{
+  float: left;
+  background: white;
+  box-shadow: 0px 0px 10px gray;
+  padding: 10px 15px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  margin-left:200px ;
+  margin-right: 150px;
+  border-radius: 5px;
+}
+
+.postSection{
+display: inline-block;
+margin-right: 10px;
+margin-left: 10px;
+}
+
+.postTemplate{
+  background: white;
+  box-shadow: 0px 0px 10px gray;
+  width: 600px;
+  padding: 20px 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.postTemplate input{
+  size: 800;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .homeButton {
