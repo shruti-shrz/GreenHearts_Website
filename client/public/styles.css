@@ -108,7 +108,21 @@ margin-left: 10px;
 }
 
 .homeDiv {
-  align-items: center;
+  height: 80%;
+  min-height: 600px;
+  display:flex;
+  flex-direction: row;
+  align-content: flex-end;
+}
+
+.thoughtForTheDay{
+  position: absolute;
+  bottom: 200px;
+  left: 200px;
+  border-style: double;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 20px;
 }
 
 .bodyDiv{
@@ -119,6 +133,24 @@ margin-left: 10px;
 
 .loginInput {
   border: 10px 10px;
+  display: block;
+  margin: 10px auto 10px auto;
+  width: 200px;
+  height: 45px;
+  text-align: center;
+}
+
+.loginDiv {
+  width: 40%;
+  margin: 100px auto 100px auto;
+  background-color: #E3FECD ;
+  box-shadow: 4px 3px 7px 2px #00000040;
+  box-sizing: border-box;
+  min-height: 300px;
+  max-height: 400px;
+  border-radius: 7px;
+  text-align: center;
+  padding-top: 40px;
 }
 
 .profileDiv {
@@ -137,6 +169,7 @@ margin-left: 10px;
   margin: 100px auto 100px auto;
   min-height: 500px;
   width: 60%;
+  min-width: 900px;
 
 }
 
@@ -203,6 +236,72 @@ margin-left: 10px;
   padding: 10px;
 }
 
+.plantCard {
+  width: 250px;
+  height: 320px;
+  background-color: #faf487;
+  background-image: url("leafyclip.webp");
+  border-radius: 4px;
+  box-shadow: 4px 3px 4px 2px #00000040;
+  box-sizing: border-box;
+  margin: 10px;
+  padding: 10px;
+}
+
+.plantCard img {
+  height: 230px;
+  width: 230px;
+  margin: 10px auto 10px auto;
+}
+
+.plantCard button{
+  float: right;
+  background: transparent;
+  border-style: none;
+  font-size: 40px;
+  margin-top: 0;
+}
+
+.plantCard h4 {
+  margin-top: -2px;
+  margin-bottom: 0;
+}
+
+.plantCard p {
+  font-size: 15px;
+  margin-top: -2px;
+  margin-bottom: 0;
+}
+
+.plantHolder {
+  width: 72%;
+  height: auto;
+  background-color: white;
+  background-image: url("asfalt-dark.png");
+  border-radius: 7px;
+  float: right;
+  margin-right: 40px;
+  margin-top: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.addPlant {
+  width: 15%;
+  height: auto;
+  padding: 20px;
+  background-color: white;
+  float: left;
+  border-radius: 4px;
+  margin-left: 40px;
+  margin-top: 20px;
+
+  box-shadow: 3px 3px 3px 3px #00000040;
+  box-sizing: border-box;
+
+}
 
 .greenButton {
    background: #3DF63F;
