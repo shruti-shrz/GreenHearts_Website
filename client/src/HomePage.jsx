@@ -2,6 +2,7 @@ import React from 'react';
 
 function HomePage(props)
 {
+  
   function handleLogin()
   {
     props.Setter('LoginPage')

@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import M from 'materialize-css'
+import Loader from 'react-loader-spinner';
 
 function LoginPage(props)
 {
   const [info, setInfo]=useState({name:'', password:'', email:''})
   const [isSignUp, setIsSignUp]= useState(false);
+  const [spin, setSpin]= useState(false);
 
   function handleChange(event)
   {
@@ -31,6 +33,7 @@ function LoginPage(props)
 
   function loginButton()
   {
+    setSpin(true);
     if(isSignUp)
     {
       console.log(info);
@@ -48,6 +51,7 @@ function LoginPage(props)
         {
           setIsSignUp(false);
         }
+        setSpin(false);
       });
     }
     else{
@@ -73,8 +77,10 @@ function LoginPage(props)
           props.LoginSetter(true);
           props.Setter("HomePage")
         }
+        setSpin(false);
       });
     }
+
   }
   return(
     <div className="loginDiv">
@@ -83,6 +89,12 @@ function LoginPage(props)
         <input className='loginInput' name='password' onChange={handleChange} placeholder='Password' value={info.password} />
         <button className="greenButton" onClick={loginButton}>{isSignUp? 'Sign Up now' : 'Login'}</button>
         {!isSignUp && <button className="greenButton" onClick={()=>setIsSignUp(true)}>Sign up</button>}
+        {spin && <Loader
+         type="ThreeDots"
+         color="#24B61A"
+         height={100}
+         width={100}
+         />}
     </div>
   );
 }

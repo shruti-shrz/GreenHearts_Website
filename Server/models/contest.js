@@ -1,31 +1,27 @@
 const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema.Types
-const postSchema = new mongoose.Schema({
+const contestSchema = new mongoose.Schema({
 	title:{
 		type:String,
 		required:true
 	},
-	body:{
-		type:String,
-		required:true
-	},
-	photo:{
-		type:String,
-		required:false
-	},
-	likes:[{
-		type:ObjectId,
-		ref:"User"
+	contestants:[{
+		type:Object,
+		ref:"User",
+		// score:String,
+		// no_tress:String
 	}],
 	comments:[{
 		text:String,
+		photo:String,
+		time:String,
 		postedBy:{type:ObjectId,ref:"User"}
 	}],
-	postedBy:
+	createdBy:
 	{
 		type:ObjectId,
 		ref:"User"
 	}
 })
 
-mongoose.model("Post",postSchema)
+mongoose.model("Contest",contestSchema)

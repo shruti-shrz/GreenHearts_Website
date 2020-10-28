@@ -16,6 +16,14 @@ module.exports = function(req, res, next) {
       }
       const {_id} = payload
       User.findById(_id)
+        .populate({
+          path: 'followers',
+          populate: { path: 'followers' }
+        })
+        .populate({
+          path: 'following',
+          populate: { path: 'following' }
+        })
         .then(function(userData) {
           req.user = userData;
           next();
