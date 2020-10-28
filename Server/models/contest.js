@@ -5,6 +5,12 @@ const contestSchema = new mongoose.Schema({
 		type:String,
 		required:true
 	},
+	contestants:[{
+		type:Object,
+		ref:"User",
+		// score:String,
+		// no_tress:String
+	}],
 	comments:[{
 		text:String,
 		photo:String,
