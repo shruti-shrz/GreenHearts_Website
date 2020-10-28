@@ -19,7 +19,20 @@ router.post("/addplant", requireLogin, function(req,res){
   });
   plant.save()
     .then(function(result) {
-      res.json({plant: result});
+      //const id=mongoose.Types.ObjectId(req.user._id);
+      Plant.countDocuments({owner: req.user._id}, function(err, count) {
+        if(err) {
+          console.log(err);
+        }
+        else {
+          User.findByIdAndUpdate(req.user._id, {
+            numplants: count
+          }, {new: true})
+            .then(function(res1) {
+                res.json({plant: result});
+            });
+        }
+      });
     })
     .catch(function(err) {
       res.json({error: err});
