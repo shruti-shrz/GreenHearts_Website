@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './MyPlantsPage.css';
 import Loader from 'react-loader-spinner';
+import {Link} from 'react-router-dom';
+import M from 'materialize-css'
 
 function MyPlantsPage(props)
 {
@@ -8,6 +10,43 @@ function MyPlantsPage(props)
   const [pname, setPname]= useState("");
   const [imgfile, setImgfile]= useState("");
   const [url, setUrl]= useState("");
+  const [plants, setPlants]= useState([]);
+  var date= new Date().toDateString();
+
+  useEffect(()=>{
+    if(url)
+    {
+      fetch("/addplant",{
+        method:"post",
+        headers:{"Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+        body:JSON.stringify({
+          name: pname,
+          url,
+          date
+        })
+      }).then(res=>res.json())
+      .then(data=>{
+        if(data.error)
+        {
+        M.toast({html: data.error})
+        }
+        else
+        {
+          M.toast({html: "added plant"})
+          setPname("")
+          setPlants([...plants,{
+            name: pname,
+            url,
+            date
+          }])
+        }
+        setSpin(false);
+      });
+    }
+
+  },[url])
 
   function addplant()
   {
@@ -22,16 +61,38 @@ function MyPlantsPage(props)
     })
     .then(res=>res.json())
     .then(data=>{
-      setSpin(false);
       setUrl(data.url);})
     .catch(x=> console.log(x));
+  }
 
+  useEffect(()=>{
+    fetch('/myplants',{
+      headers:{
+        "Authorization": "Bearer " + localStorage.getItem("jwt")
+      }
+    }).then(res=>res.json())
+    .then(result=>{
+      setPlants(result.plants)
+      console.log(result)
+    })
+  },[])
+
+  function plantmaker(p)
+  {
+    return (
+        <div className="plantCard">
+          <img src={p.url} />
+          <button>🗑</button>
+          <h4>{p.name}</h4>
+          <p>{p.date}</p>
+        </div>
+    );
   }
 
   return (
     <div>
       <div className="addPlant">
-        <input placeholder="Plant Name" onChange={(event)=> setPname(event.target.value)}/>
+        <input placeholder="Plant Name" onChange={(event)=> setPname(event.target.value)} value={pname}/>
         <input type="file"/>
         <label className="custom-file-upload">
           <input type="file" onChange={(event)=> setImgfile(event.target.files[0])} />
@@ -46,36 +107,7 @@ function MyPlantsPage(props)
          />}
       </div>
       <div className="plantHolder">
-        <div className="plantCard">
-          <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/peace-lily-best-indoor-plants-1582227410.jpg?crop=0.8292517006802721xw:1xh;center,top&resize=480:*" />
-          <button>🗑</button>
-          <h4>Plant name</h4>
-          <p>12th June</p>
-        </div>
-        <div className="plantCard">
-          <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/peace-lily-best-indoor-plants-1582227410.jpg?crop=0.8292517006802721xw:1xh;center,top&resize=480:*" />
-          <button>🗑</button>
-          <h4>Plant name</h4>
-          <p>12th June</p>
-        </div>
-        <div className="plantCard">
-          <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/peace-lily-best-indoor-plants-1582227410.jpg?crop=0.8292517006802721xw:1xh;center,top&resize=480:*" />
-          <button>🗑</button>
-          <h4>Plant name</h4>
-          <p>12th June</p>
-        </div>
-        <div className="plantCard">
-          <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/peace-lily-best-indoor-plants-1582227410.jpg?crop=0.8292517006802721xw:1xh;center,top&resize=480:*" />
-          <button>🗑</button>
-          <h4>Plant name</h4>
-          <p>12th June</p>
-        </div>
-        <div className="plantCard">
-          <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/peace-lily-best-indoor-plants-1582227410.jpg?crop=0.8292517006802721xw:1xh;center,top&resize=480:*" />
-          <button>🗑</button>
-          <h4>Plant name</h4>
-          <p>12th June</p>
-        </div>
+        {plants.map(plantmaker)}
       </div>
     </div>
 
