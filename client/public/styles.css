@@ -15,6 +15,7 @@ header h1 {
   font-family: 'Dancing Script', cursive;
   font-size: 300%;
   color: #135B07 ;
+  cursor: pointer;
 }
 
 .headerButton {
@@ -167,7 +168,7 @@ margin-left: 10px;
   box-shadow: 4px 3px 7px 2px #00000040;
   box-sizing: border-box;
   margin: 100px auto 100px auto;
-  min-height: 500px;
+  min-height: 600px;
   width: 60%;
   min-width: 900px;
 
