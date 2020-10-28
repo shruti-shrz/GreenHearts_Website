@@ -21,9 +21,9 @@ function FeedPage(){
             </div>
             <div className="postSection">
                 <div className="postTemplate">
-                    <button style={{background:"white"},{border:"0px"}}><img style={{height:"20px"},{width:"20px"}} src="./camera-icon.png"/></button>
-                    <input style={{width:"500px"}} placeholder="Type your message here!!" type="text" id="message"/>
-                    <button style={{background:"white"},{border:"0px"}}><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
+                    <button style={{backgroundColor:"white"},{border:"0px"}}><img style={{height:"20px"},{width:"20px"}} src="./camera-icon.png"/></button>
+                    <input style={ {height:"20px"},{width:"500px"}} placeholder="Type your message here!!" type="text" id="message"/>
+                    <button style={{backgroundolor:"white"},{border:"0px"}}><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
                 <Posts/>
             </div>

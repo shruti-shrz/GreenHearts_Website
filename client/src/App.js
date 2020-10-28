@@ -6,7 +6,7 @@ import Header from './Header.jsx'
 import Body from './Body.jsx'
 
 function App() {
-  const [pageState, setPageState] = useState('HomePage');
+  const [pageState, setPageState] = useState('FeedPage');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <div>
