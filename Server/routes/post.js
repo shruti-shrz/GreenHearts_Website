@@ -8,6 +8,7 @@ const requireLogin = require('../middleware/requireLogin')
 router.get('/allpost',requireLogin,(req,res)=>{
 	Post.find()
 	.populate("postedBy","name")
+	.populate("comments.postedBy", "_id name")
 	.then(posts=>{
 		res.json({posts})
 	})
@@ -59,6 +60,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 router.get('/mypost',requireLogin,(req,res)=>{
 	Post.find({postedBy:req.user._id})
 	.populate("postedBy","name")
+	.populate("comments.postedBy", "_id name")
 	.then(myposts=>{
 		res.json({myposts})
 	})
@@ -85,6 +87,27 @@ router.get('/mypost',requireLogin,(req,res)=>{
  	},{
  		new:true
  	}).exec((err,result)=>{
+ 		if(err){
+ 			return res.status(422).json({error:err})
+ 		}else{
+ 			res.json(result)
+ 		}
+ 	})
+ })
+
+router.put('/comment',requireLogin,(req,res)=>{
+	const comment = {
+		text: req.body.text,
+		postedBy:req.user._id
+	}
+ 	Post.findByIdAndUpdate(req.body.postId,{
+ 		$push:{comments:comment}
+ 	},{
+ 		new:true
+ 	})
+ 	.populate("comments.postedBy","_id name")
+ 	.populate("postedBy","_id name")
+ 	.exec((err,result)=>{
  		if(err){
  			return res.status(422).json({error:err})
  		}else{
