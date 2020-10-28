@@ -11,11 +11,19 @@ function Header(props)
   {
     props.LoginSetter(true);
   }
+
+  function logout()
+  {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    props.LoginSetter(false);
+  }
   return (
     <header>
     <h1 onClick={handleHome}>GreenHearts</h1>
     <button className="headerButton" onClick={handleLogin}>👩</button>
     <button className="headerButton" onClick={maketrue}>maketrue</button>
+    {props.LoginStat && <button className="headerButton" onClick={logout}>LogOut</button>}
     </header>
   );
 }

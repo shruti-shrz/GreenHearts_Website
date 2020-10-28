@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import M from 'materialize-css'
+import Loader from 'react-loader-spinner';
 
 function LoginPage(props)
 {
   const [info, setInfo]=useState({name:'', password:'', email:''})
   const [isSignUp, setIsSignUp]= useState(false);
+  const [spin, setSpin]= useState(false);
 
   function handleChange(event)
   {
@@ -31,6 +33,7 @@ function LoginPage(props)
 
   function loginButton()
   {
+    setSpin(true);
     if(isSignUp)
     {
       console.log(info);
@@ -48,6 +51,7 @@ function LoginPage(props)
         {
           setIsSignUp(false);
         }
+        setSpin(false);
       });
     }
     else{
@@ -67,19 +71,30 @@ function LoginPage(props)
         else
         {
           console.log(data)
+          localStorage.setItem("jwt",data.token);
+          localStorage.setItem("user",JSON.stringify(data.user));
           setIsSignUp(false);
+          props.LoginSetter(true);
+          props.Setter("HomePage")
         }
+        setSpin(false);
       });
     }
+
   }
   return(
-    <div>
-      <p>the login page</p>
+    <div className="loginDiv">
       <input className='loginInput' name='name' onChange={handleChange} placeholder='Username' value={info.name} />
-        {isSignUp && <input name='email' onChange={handleChange} placeholder='Email' value={info.email} /> }
-        <input name='password' onChange={handleChange} placeholder='Password' value={info.password} />
-        <button onClick={loginButton}>{isSignUp? 'Sign Up now' : 'Login'}</button>
-        {!isSignUp && <button onClick={()=>setIsSignUp(true)}>Sign up</button>}
+        {isSignUp && <input className='loginInput' name='email' onChange={handleChange} placeholder='Email' value={info.email} /> }
+        <input className='loginInput' name='password' onChange={handleChange} placeholder='Password' value={info.password} />
+        <button className="greenButton" onClick={loginButton}>{isSignUp? 'Sign Up now' : 'Login'}</button>
+        {!isSignUp && <button className="greenButton" onClick={()=>setIsSignUp(true)}>Sign up</button>}
+        {spin && <Loader
+         type="ThreeDots"
+         color="#24B61A"
+         height={100}
+         width={100}
+         />}
     </div>
   );
 }
