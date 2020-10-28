@@ -16,7 +16,7 @@ function App() {
         LoginStat={isLoggedIn}
         LoginSetter={setIsLoggedIn}
       />
-      <Body 
+      <Body
         PageName={pageState}
         Setter={setPageState}
         LoginStat={isLoggedIn}

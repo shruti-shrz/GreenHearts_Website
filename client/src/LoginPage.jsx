@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
+import M from 'materialize-css'
+import Loader from 'react-loader-spinner';
 
 function LoginPage(props)
 {
-  const [info, setInfo]=useState({username:'', password:'', email:''})
+  const [info, setInfo]=useState({name:'', password:'', email:''})
   const [isSignUp, setIsSignUp]= useState(false);
+  const [spin, setSpin]= useState(false);
 
   function handleChange(event)
   {
@@ -11,39 +15,86 @@ function LoginPage(props)
     const inpname= event.target.name;
 
     setInfo( prevVal => {
-      if(inpname==='username')
+      if(inpname==='name')
       {
-        return ({username: newval, password:prevVal.password, email:prevVal.email}) ;
+        return ({name: newval, password:prevVal.password, email:prevVal.email}) ;
       }
       if(inpname==='password')
       {
-        return ({username: prevVal.username, password:newval, email:prevVal.email}) ;
+        return ({name: prevVal.name, password:newval, email:prevVal.email}) ;
       }
       else{
-        return ({username: prevVal.username, password:prevVal.password, email:newval}) ;
+        return ({name: prevVal.name, password:prevVal.password, email:newval}) ;
       }
     });
   }
 
-  function signUpButton()
-  {
-    setIsSignUp(true);
-  }
+
 
   function loginButton()
   {
-    props.LoginSetter(true);
+    setSpin(true);
+    if(isSignUp)
+    {
+      console.log(info);
+      fetch("/signup",{
+        method:"post",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(info)
+      }).then(res=>res.json())
+      .then(data=>{
+        if(data.error)
+        {
+        M.toast({html: data.error})
+        }
+        else
+        {
+          setIsSignUp(false);
+        }
+        setSpin(false);
+      });
+    }
+    else{
+      fetch("/signin",{
+        method:"post",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          name:info.name,
+          password:info.password
+        })
+      }).then(res=>res.json())
+      .then(data=>{
+        if(data.error)
+        {
+        M.toast({html: data.error})
+        }
+        else
+        {
+          console.log(data)
+          localStorage.setItem("jwt",data.token);
+          localStorage.setItem("user",JSON.stringify(data.user));
+          setIsSignUp(false);
+          props.LoginSetter(true);
+          props.Setter("HomePage")
+        }
+        setSpin(false);
+      });
+    }
+
   }
   return(
-    <div>
-      <p>the login page</p>
-      <form>
-        <input className='loginInput' name='username' onChange={handleChange} placeholder='Username' value={info.username} />
-        <input name='password' onChange={handleChange} placeholder='Password' value={info.password} />
-        {isSignUp && <input name='email' onChange={handleChange} placeholder='Email' value={info.email} /> }
-        <button>{isSignUp? 'Sign Up' : 'Login'}</button>
-        {!isSignUp && <button onClick={signUpButton}>Sign up</button>}
-      </form>
+    <div className="loginDiv">
+      <input className='loginInput' name='name' onChange={handleChange} placeholder='Username' value={info.name} />
+        {isSignUp && <input className='loginInput' name='email' onChange={handleChange} placeholder='Email' value={info.email} /> }
+        <input className='loginInput' name='password' onChange={handleChange} placeholder='Password' value={info.password} />
+        <button className="greenButton" onClick={loginButton}>{isSignUp? 'Sign Up now' : 'Login'}</button>
+        {!isSignUp && <button className="greenButton" onClick={()=>setIsSignUp(true)}>Sign up</button>}
+        {spin && <Loader
+         type="ThreeDots"
+         color="#24B61A"
+         height={100}
+         width={100}
+         />}
     </div>
   );
 }
