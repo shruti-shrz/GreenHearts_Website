@@ -1,0 +1,76 @@
+var Contests=[
+    {
+        name:"blah",
+        Leaderboard:["swathi", "swetha","Datta", "Prawn"],
+        chat:[
+            {
+                sender:"swathi",
+                message:"hello",
+                time:"12:30"
+            },
+            {
+                sender:"swetha",
+                message:"hi",
+                time:"12:30"
+            },
+            {
+                sender:"Datta",
+                message:"vanakkam",
+                time:"12:30"
+            },
+            {
+                sender:"prwan",
+                message:"namaste",
+                time:"12:30"
+            },
+            {
+                sender:"swathi",
+                message:"hello",
+                time:"12:30"
+            },
+            {
+                sender:"swetha",
+                message:"hi",
+                time:"12:30"
+            },
+            {
+                sender:"Datta",
+                message:"vanakkam",
+                time:"12:30"
+            },
+            {
+                sender:"prwan",
+                message:"namaste",
+                time:"12:30"
+            }
+        ]
+    },
+    {
+        name:"blah blah",
+        Leaderboard:["swathi", "swetha","Datta", "Prawn"],
+        chat:[
+            {
+                sender:"swathi",
+                message:"hello",
+                time:"12:30"
+            },
+            {
+                sender:"swetha",
+                message:"hi",
+                time:"12:30"
+            },
+            {
+                sender:"Datta",
+                message:"vanakkam",
+                time:"12:30"
+            },
+            {
+                sender:"prwan",
+                message:"namaste",
+                time:"12:30"
+            }
+        ]
+    },
+];
+
+export default Contests;

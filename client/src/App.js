@@ -6,8 +6,8 @@ import Header from './Header.jsx'
 import Body from './Body.jsx'
 
 function App() {
-  const [pageState, setPageState] = useState('FeedPage');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [pageState, setPageState] = useState('ContestPage');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <div>
       <Header

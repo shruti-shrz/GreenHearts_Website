@@ -16,8 +16,8 @@ const cards=[{name:"ABC" , url:"https://library.kissclipart.com/20180906/otq/kis
             {name:"DEF" , url:"https://www.vhv.rs/dpng/d/124-1243789_office-man-clipart-png-download-person-on-phone.png" },
             {name:"ghi" , url:"https://smallimg.pngkey.com/png/small/1008-10086714_person-symbol-icon-abstract-png-image-clipart-person.png" },
             {name:"ABC" , url:"https://library.kissclipart.com/20180906/otq/kissclipart-people-clipart-clip-art-women-clip-art-33ca5f3583e732e3.jpg" },
-                        {name:"DEF" , url:"https://www.vhv.rs/dpng/d/124-1243789_office-man-clipart-png-download-person-on-phone.png" },
-                        {name:"ghi" , url:"https://smallimg.pngkey.com/png/small/1008-10086714_person-symbol-icon-abstract-png-image-clipart-person.png" }];
+            {name:"DEF" , url:"https://www.vhv.rs/dpng/d/124-1243789_office-man-clipart-png-download-person-on-phone.png" },
+            {name:"ghi" , url:"https://smallimg.pngkey.com/png/small/1008-10086714_person-symbol-icon-abstract-png-image-clipart-person.png" }];
 
 function rowRenderer({
                           key, // Unique key within array of rows
