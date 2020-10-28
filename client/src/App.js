@@ -6,7 +6,7 @@ import Header from './Header.jsx'
 import Body from './Body.jsx'
 
 function App() {
-  const [pageState, setPageState] = useState('ContestPage');
+  const [pageState, setPageState] = useState("HomePage");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <div>

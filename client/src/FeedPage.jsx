@@ -1,8 +1,10 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Posts from './Posts'
 
 const filterOptions=['All', "My", "Following", "Pinned"];
 function FeedPage(){
+    const [postMessage, setpostMessage] = useState("");
+    const [image, setimage] = useState("");
     return(
         <div style={{alignContent: "center"}}>
             <div className="filterSection">
@@ -22,7 +24,7 @@ function FeedPage(){
             <div className="postSection">
                 <div className="postTemplate">
                     <button className="icon"><img style={{height:"20px"},{width:"20px"}} src="./camera-icon.png"/></button>
-                    <input style={ {height:"20px"},{width:"500px"}} placeholder="Type your message here!!" type="text" id="message"/>
+                    <input style={ {height:"20px"},{width:"490px"}} placeholder="Type your message here!!" type="text" id="message"/>
                     <button className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
                 <Posts/>

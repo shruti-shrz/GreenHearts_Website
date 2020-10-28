@@ -1,16 +1,40 @@
 import React from 'react';
 import data from './PostsData';
 
+
+function renderComment(props){
+return(
+    <div style={{marginBottom:"0px"}}>
+        <p style={{marginBottom:"0px"}} ><strong>{props.name}</strong>  {props.comment}</p>
+    </div>
+);
+}
+
 function createPost(props){
     return(
         <div className="postCard">
             <div>
-                <img src={props.profile} alt="the profile photo"/>
+                <div>
+                <img className="profilePhoto" src={props.profile} alt="the profile photo"/>
                 <h3>{props.name}</h3>
+                </div>
             </div>
-            
             <img src={props.img} alt="the posted image"/>
-            <p>{props.likes} likes</p>
+            <p>"Hrdldfngdlbjv j</p>
+            <div style={{marginBottom:"0px"}}>
+                <button style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><img style={{height:"15px"},{width:"15px"}} src="./superb-icon.png"/></button>
+                <button style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><img style={{height:"15px"},{width:"15px"}} src="./superb-icon.png"/></button>
+                <button style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><img style={{height:"15px"},{width:"15px"}} src="./superb-icon.png"/></button>
+            </div>
+            <div>
+            <p style={{float:"left"}}><strong>{props.likes}</strong> likes </p>
+            <p style={{float:"left"}}>&nbsp;&nbsp;&nbsp;<strong>{props.comments.length}</strong> comments</p>
+            </div>
+            <div style={{marginBottom:"5px"}}>
+                <u>Comments</u>
+                {/* <p style={{marginTop:"0px"}}>Comments</p> */}
+                {props.comments.map(renderComment)}
+            </div>
         </div>
     );
 }

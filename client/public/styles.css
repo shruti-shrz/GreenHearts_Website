@@ -50,7 +50,7 @@ header h1 {
   margin-bottom: 50px;
 }
 
-.postCard div img{
+.postCard div div img{
   object-fit: cover;
   float: left;
   border-radius: 50%;

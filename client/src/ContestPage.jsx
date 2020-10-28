@@ -71,7 +71,7 @@ function ContestPage(props){
                             src="./send-icon.png"/>
                     </button>
                 </div>
-                <div style={{position}}>
+                <div style={{position:"relative"}}>
                     <button className="addContestant">
                             Add Contestant
                     </button>
