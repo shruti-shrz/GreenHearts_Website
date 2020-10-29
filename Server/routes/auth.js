@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
 const requireLogin = require('../middleware/requireLogin');
 
-router.get('/', function(req, res) {
+router.get('/home', function(req, res) {
   Tip.countDocuments().exec(function (err, count) {
 
   const random = Math.floor(Math.random() * count);
