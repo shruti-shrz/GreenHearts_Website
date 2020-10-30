@@ -3,9 +3,22 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = mongoose.model("User");
 const requireLogin = require('../middleware/requireLogin');
+const requireLogin2 = require('../middleware/requireLogin2');
 
-router.get("/profile", requireLogin, function(req, res) {
+router.get("/profile", requireLogin2, function(req, res) {
   res.json({user: req.user});
+});
+
+router.get("/updatepic", requireLogin, function(req, res) {
+  User.findByIdAndUpdate(req.user._id, {
+    url: req.body.url
+    }, {new: true})
+    .then(function(result) {
+      res.json({user: result});
+    })
+    .catch(function(error) {
+      res.json({error: "error updating pic"});
+    });
 });
 
 router.put("/follow", requireLogin, function(req,res) {

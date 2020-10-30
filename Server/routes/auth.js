@@ -13,8 +13,8 @@ router.get('/home', function(req, res) {
 
   const random = Math.floor(Math.random() * count);
   Tip.findOne().skip(random).exec(
-    function (err, result) {
-      if(err) {
+    function (err1, result) {
+      if(err1) {
         return res.json({error: err});
       }
       res.json({randtip: result});
