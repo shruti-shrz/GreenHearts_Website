@@ -13,9 +13,9 @@ const contestSchema = new mongoose.Schema({
 	comments:[{
 		text:String,
 		photo:String,
-		time:String,
 		postedBy:{type:ObjectId,ref:"User"}
-	}],
+	},
+	{timestamps:true}],
 	createdBy:
 	{
 		type:ObjectId,
