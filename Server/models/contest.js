@@ -7,9 +7,8 @@ const contestSchema = new mongoose.Schema({
 	},
 	contestants:[{
 		type:Object,
-		ref:"User",
-		// score:String,
-		// no_tress:String
+		 score:Number,
+		 no_tress:Number
 	}],
 	comments:[{
 		text:String,
