@@ -9,7 +9,7 @@ router.get("/profile", requireLogin2, function(req, res) {
   res.json({user: req.user});
 });
 
-router.get("/updatepic", requireLogin, function(req, res) {
+router.post("/updatepic", requireLogin, function(req, res) {
   User.findByIdAndUpdate(req.user._id, {
     url: req.body.url
     }, {new: true})
