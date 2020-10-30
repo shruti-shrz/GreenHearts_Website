@@ -1,6 +1,4 @@
 import React from 'react';
-import data from './PostsData';
-
 
 function renderComment(props){
 return(
@@ -21,28 +19,26 @@ function createPost(props){
             </div>
             <img src={props.img} alt="the posted image"/>
             <p>"Hrdldfngdlbjv j</p>
-            <div style={{marginBottom:"0px"}}>
+            <div style={{marginBottom:"10px"}}>
                 <button style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><img style={{height:"15px"},{width:"15px"}} src="./superb-icon.png"/></button>
                 <button style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><img style={{height:"15px"},{width:"15px"}} src="./superb-icon.png"/></button>
                 <button style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><img style={{height:"15px"},{width:"15px"}} src="./superb-icon.png"/></button>
             </div>
-            <div>
-            <p style={{float:"left"}}><strong>{props.likes}</strong> likes </p>
-            <p style={{float:"left"}}>&nbsp;&nbsp;&nbsp;<strong>{props.comments.length}</strong> comments</p>
+            <div style={{marginTop:"-40px"}}>
+            <p style={{float:"right"}}>&nbsp;&nbsp;&nbsp;<strong>{props.likes}</strong> likes </p>
+            <p style={{float:"right"}}><strong>{props.comments.length}</strong> comments</p>
             </div>
             <div style={{marginBottom:"5px"}}>
-                <u>Comments</u>
-                {/* <p style={{marginTop:"0px"}}>Comments</p> */}
                 {props.comments.map(renderComment)}
             </div>
         </div>
     );
 }
 
-function Posts(){
+function Posts(props){
     return(
         <div>
-            {data.map(createPost)}
+            {props.data.map(createPost)}
         </div>
     );
 }

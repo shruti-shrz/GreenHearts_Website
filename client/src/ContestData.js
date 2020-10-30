@@ -1,7 +1,32 @@
 var Contests=[
     {
         name:"blah",
-        Leaderboard:["swathi", "swetha","Datta", "Prawn"],
+        Leaderboard:{
+            top5:[
+                {
+                    name:"swathi",
+                    score:100
+                },
+                {
+                    name:"swetha",
+                    score:90
+                },
+                {
+                    name:"Datta",
+                    score:50
+                },
+                {
+                    name:"Prawn",
+                    score:42
+                },
+                {
+                    name:"Sruthi",
+                    score:41
+                }
+            ],
+            score:50,
+            rank:3
+        },
         chat:[
             {
                 sender:"swathi",
@@ -47,7 +72,32 @@ var Contests=[
     },
     {
         name:"blah blah",
-        Leaderboard:["swathi", "swetha","Datta", "Prawn"],
+        Leaderboard:{
+            top5:[
+                {
+                    name:"swathi",
+                    score:100
+                },
+                {
+                    name:"swetha",
+                    score:90
+                },
+                {
+                    name:"Datta",
+                    score:50
+                },
+                {
+                    name:"Prawn",
+                    score:42
+                },
+                {
+                    name:"Sruthi",
+                    score:41
+                }
+            ],
+            score:50,
+            rank:3
+        },
         chat:[
             {
                 sender:"swathi",

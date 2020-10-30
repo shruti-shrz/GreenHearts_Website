@@ -81,10 +81,16 @@ function ContestPage(props){
                 </div>
             </div>
             <div className="leaderBoardSection">
-                
                 <div>
-
-                </div>
+                    <h2 style={{textAlign:"center"}}>Leader Board</h2>
+                </div> 
+                {contests[currentContest].Leaderboard.top5.length>=1 && <h5 className="lbRow"><strong>{contests[currentContest].Leaderboard.top5[0].name}</strong>&nbsp;&nbsp;&nbsp;{contests[currentContest].Leaderboard.top5[0].score}</h5>}
+                {contests[currentContest].Leaderboard.top5.length>=2 && <h5 className="lbRow"><strong>{contests[currentContest].Leaderboard.top5[1].name}</strong>&nbsp;&nbsp;&nbsp;{contests[currentContest].Leaderboard.top5[1].score}</h5>}
+                {contests[currentContest].Leaderboard.top5.length>=3 && <h5 className="lbRow"><strong>{contests[currentContest].Leaderboard.top5[2].name}</strong>&nbsp;&nbsp;&nbsp;{contests[currentContest].Leaderboard.top5[2].score}</h5>}
+                {contests[currentContest].Leaderboard.top5.length>=4 && <h5 className="lbRow"><strong>{contests[currentContest].Leaderboard.top5[3].name}</strong>&nbsp;&nbsp;&nbsp;{contests[currentContest].Leaderboard.top5[3].score}</h5>}
+                {contests[currentContest].Leaderboard.top5.length>=5 && <h5 className="lbRow"><strong>{contests[currentContest].Leaderboard.top5[4].name}</strong>&nbsp;&nbsp;&nbsp;{contests[currentContest].Leaderboard.top5[4].score}</h5>}
+            <h2 style={{textAlign:"center"}}>Your Score:<strong></strong>{contests[currentContest].Leaderboard.score}</h2>
+            <h2 style={{textAlign:"center"}}>Your Rank:<strong></strong>{contests[currentContest].Leaderboard.rank}</h2>
             </div>
         </div>
     );

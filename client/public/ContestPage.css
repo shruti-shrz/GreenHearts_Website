@@ -15,8 +15,9 @@
 }
 
 .leaderBoardSection{
-    float:right;
-    margin: 30px 40px;
+    float: right;
+    width: 15%;
+    margin: 30px 50px;
     box-shadow:0px 0px 5px gray ;
 }
     
@@ -29,6 +30,18 @@
     width: 100%;
     padding-top: 7px;
     padding-bottom: 7px;
+}
+
+.lbRow{
+    background-repeat: no-repeat;
+    background-color: transparent;
+    font-size: large;
+    border:none;
+    border-bottom: 1px solid lightgray; 
+    width: 100%;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
 }
 
 .chatWindow{

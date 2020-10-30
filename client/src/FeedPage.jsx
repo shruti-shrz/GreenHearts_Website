@@ -1,7 +1,9 @@
 import React,{useState} from 'react';
-import Posts from './Posts'
+import Posts from './Posts';
+import data from './PostsData';
 
 const filterOptions=['All', "My", "Following", "Pinned"];
+
 function FeedPage(){
     const [postMessage, setpostMessage] = useState("");
     const [image, setimage] = useState("");
@@ -27,7 +29,7 @@ function FeedPage(){
                     <input style={ {height:"20px"},{width:"490px"}} placeholder="Type your message here!!" type="text" id="message"/>
                     <button className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
-                <Posts/>
+                <Posts data={data}/>
             </div>
         </div>
     );

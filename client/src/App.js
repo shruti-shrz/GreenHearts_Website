@@ -6,17 +6,12 @@ import Header from './Header.jsx'
 import Body from './Body.jsx'
 
 function App() {
-<<<<<<< HEAD
-  const [pageState, setPageState] = useState("HomePage");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-=======
   const [pageState, setPageState] = useState('HomePage');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   if(localStorage.getItem("jwt")!== null)
     if(!isLoggedIn)setIsLoggedIn(true);
 
->>>>>>> 54f6553f85616e4c9f2d6a53925bffc6f3ffef0f
   return (
     <div>
       <Header
