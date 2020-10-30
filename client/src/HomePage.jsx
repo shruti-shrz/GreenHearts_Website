@@ -1,8 +1,18 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 
 function HomePage(props)
 {
-  
+  const [tftd, setTftd]= useState("");
+
+
+
+    fetch('/home',{})
+    .then(result=>{
+      console.log("here");
+      console.log(result);
+    })
+
+
   function handleLogin()
   {
     props.Setter('LoginPage')
@@ -22,7 +32,7 @@ function HomePage(props)
 
   return (
     <div className="homeDiv ">
-    <div className="thoughtForTheDay"><h3><em>So this is today's tip ahiateghka j mgiulkqhknwe ejhcilwqjtkjq thoiqwtckqhtaiueht mlkhiuwqethlch</em></h3></div>
+    <div className="thoughtForTheDay"><h3><em>{tftd}</em></h3></div>
     <button className="homeButton">✅Questionnaire</button>
     <button className="homeButton" onClick={handleLogin}>🏅Contests</button>
     <button className="homeButton" onClick={handleMyPlants}>🍀MyPlants</button>

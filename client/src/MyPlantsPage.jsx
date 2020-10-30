@@ -73,8 +73,7 @@ function MyPlantsPage(props)
     }).then(res=>res.json())
     .then(result=>{
       setPlants(result.plants)
-      console.log(result)
-    })
+    }).catch(x=>console.log(x))
   },[])
 
   function plantmaker(p)
@@ -82,11 +81,38 @@ function MyPlantsPage(props)
     return (
         <div className="plantCard">
           <img src={p.url} />
-          <button>🗑</button>
+          <button onClick={()=>removePlant(p._id)} >🗑</button>
           <h4>{p.name}</h4>
           <p>{p.date}</p>
         </div>
     );
+  }
+
+  function removePlant(x)
+  {
+    setSpin(true)
+    fetch("/removeplant",{
+      method:"post",
+      headers:{"Content-Type":"application/json",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+    },
+      body:JSON.stringify({
+        id:x
+      })
+    }).then(res=>res.json())
+    .then(data=>{
+      if(data.error)
+      {
+      M.toast({html: data.error})
+      }
+      else
+      {
+        M.toast({html: "removed plant"})
+        var pl= plants.filter((y)=>(y._id!==x))
+        setPlants(pl)
+      }
+      setSpin(false);
+    });
   }
 
   return (
