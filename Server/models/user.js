@@ -29,7 +29,11 @@ const UserSchema = new mongoose.Schema({
   numplants: {
     type: Number,
     default: 0
-  }
+  },
+  contest: [{
+    type: ObjectId,
+    ref: "Contest"
+  }]
 });
 
 mongoose.model("User", UserSchema);
