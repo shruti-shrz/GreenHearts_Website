@@ -58,24 +58,25 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 
 router.post('/searchcontest',requireLogin,(req,res)=>{
 	let pattern = new RegExp("^"+ req.body.query);
-  Contest.find({title: {$regex: pattern}})
-    .then(function(contest) {
-      res.json({contest: contest});
+  User.find({title: {$regex: pattern}})
+    .then(function(user) {
+      res.json({user: user});
     })
     .catch(function(err) {
       console.log(err);
     });
 })
 
-router.put('/joincontest',requireLogin,(req,res)=>{
-	Contest.findByIdAndUpdate(req.body.contestId,{
-		$push: {contestants: {user:req.user,score:0,no_trees:req.user.numplants}}
+router.put('/addcontest',requireLogin,(req,res)=>{
+	User.findByIdAndUpdate(req.body.followId,{
+		$push: {contest: req.body.contestId}
+		
 	},{new:true},function(err,result){
 		if(err) {
         return res.status(422).json({error: err});
     }
-    User.findByIdAndUpdate(req.user._id,{
-    	$push: {contest: req.body.contestId}
+    Contest.findByIdAndUpdate(req.body.contestId,{
+    	$push: {contestants: {user:req.body.followId,score:0,no_trees:req.body.numplants}}
     },{new:true})
     .then(function(result1) {
           res.json({result: result});
