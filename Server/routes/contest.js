@@ -113,7 +113,7 @@ router.put('/comment',requireLogin,(req,res)=>{
 		photo: req.body.photo,
 		postedBy:req.user._id
 	}
- 	Post.findByIdAndUpdate(req.body.postId,{
+ 	Contest.findByIdAndUpdate(req.body.contestId,{
  		$push:{comments:comment}
  	},{
  		new:true
