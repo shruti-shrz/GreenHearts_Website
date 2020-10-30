@@ -70,7 +70,7 @@ router.get('/myplants',requireLogin,function(req, res) {
     })
     .catch(function(err) {
       res.json({error: err});
-    });POSTPOST
+    });
 });
 
 

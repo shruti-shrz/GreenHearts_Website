@@ -154,76 +154,6 @@ margin-left: 10px;
   padding-top: 40px;
 }
 
-.profileDiv {
-  align-items: center;
-  text-align: center;
-  /*
-  display: flex;
-  justify-content: center;
-  align-items: center;*/
-  /*align-content: center;
-  text-align: center;*/
-  background: white;
-  border-radius: 20px;
-  box-shadow: 4px 3px 7px 2px #00000040;
-  box-sizing: border-box;
-  margin: 100px auto 100px auto;
-  min-height: 600px;
-  width: 60%;
-  min-width: 900px;
-
-}
-
-
-
-.profileRight {
-  float:right;
-  margin: 40px;
-}
-
-.profileLeft {
-  float:left;
-  margin: 40px;
-  align-content: center;
-  padding: 10px;
-}
-
-.profileLeft img {
-  width: 300px;
-  height: 300px;
-}
-
-.profileFoll{
-  margin-left: 100px
-  min-width: 400px;
-}
-
-.profileSearch {
-  position: absolute;
-  right: 22%;
-  padding: 40px;
-}
-
-.fCard{
-  background: #f1f5f8;
-  width: 400px;
-  /*padding:10px;*/
-  text-align: left;
-  display: flex;
-  align-items: center;
-  border-bottom-style: groove;
-  border-top: none;
-  border-bottom-width: thin;
-}
-
-.fCard img{
-  object-fit: cover;
-  float: left;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-}
-
 
 #toast-container{
   top: 30px !important;
@@ -313,9 +243,9 @@ margin-left: 10px;
    background-image: -webkit-gradient(to bottom, #3DF63F, #3FD01E);
    -webkit-border-radius: 7px;
    -moz-border-radius: 7px;
-   border-radius: 7px;
+   border-radius: 5px;
    color: #FFFFFF;
-   font-family: Open Sans;
+   font-family: 'Nunito', sans-serif;
    font-size: 20px;
    font-weight: 100;
    padding: 10px;
@@ -343,6 +273,6 @@ margin-left: 10px;
    background-image: -webkit-gradient(to bottom, #41D01E, #65F63D);
    -webkit-border-radius: 7px;
    -moz-border-radius: 7px;
-   border-radius: 7px;
+   border-radius: 5px;
    text-decoration: none;
 }
