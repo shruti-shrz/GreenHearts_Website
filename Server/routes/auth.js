@@ -10,12 +10,12 @@ const requireLogin = require('../middleware/requireLogin');
 
 router.get('/home', function(req, res) {
   //res.json({hey: "hey"});
-  Tip.findOne().exec(function(err, tip) {
+  /*Tip.findOne().exec(function(err, tip) {
     if(err)
       return res.json({error: "gone"});
     res.json({tip: tip});
-  });
-  /*
+  });*/
+
   Tip.countDocuments().exec(function (err, count) {
 
   const random = Math.floor(Math.random() * count);
@@ -26,7 +26,7 @@ router.get('/home', function(req, res) {
       }
       res.json({randtip: result});
     });
-});*/
+});
 });
 
 router.get('/hey', requireLogin, function(req, res) {
