@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
 import Posts from './Posts';
-import TheData from './PostsData';
 import M from 'materialize-css';
 
 const filterOptions=['/allpost', '/mypost', "Following", "Pinned"];
@@ -13,6 +12,8 @@ function FeedPage(){
     const [user, setuser] = useState({});
     const [filterType, setfilterType] = useState(filterOptions[0]);
     
+
+
     useEffect(()=>{
         fetch('/profile',{
             headers:{
@@ -32,14 +33,16 @@ function FeedPage(){
                 }
               }).then(res=>res.json())
               .then(result=>{
-                console.log(result)
-                setposts(result.posts);
+                if(filterType==filterOptions[0])
+                setposts(result.posts.reverse());
+                else
+                setposts(result.myposts.reverse());
               });
-        },[])
+        },[filterType])
 
     useEffect(() => {
         if(imageURL){
-            fetch("/createpost",{
+                fetch("/createpost",{
                 method:"post",
                 headers:{"Content-Type":"application/json",
                         "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -60,7 +63,7 @@ function FeedPage(){
                   M.toast({html: "Posted!!"})
                   setpostMessage("")
                   setimage("")
-                  setposts([...posts,{
+                  setposts([{
                       postedBy:{
                         profileImage: user.url,
                         name: user.name,
@@ -69,7 +72,7 @@ function FeedPage(){
                     body: postMessage,
                     likes: [],
                     comments:[]
-                   }])
+                   },...posts])
                 }
               });
         }
