@@ -9,23 +9,24 @@ const {JWT_SECRET} = require('../keys');
 const requireLogin = require('../middleware/requireLogin');
 
 router.get('/home', function(req, res) {
+  //res.json({hey: "hey"});
+  /*Tip.findOne().exec(function(err, tip) {
+    if(err)
+      return res.json({error: "gone"});
+    res.json({tip: tip});
+  });*/
+
   Tip.countDocuments().exec(function (err, count) {
 
   const random = Math.floor(Math.random() * count);
   Tip.findOne().skip(random).exec(
-    function (err, result) {
-      if(err) {
-        return res.json({error: err});
+    function (err1, result) {
+      if(err1) {
+        return res.json({error: "something wrong"});
       }
       res.json({randtip: result});
     });
 });
-  /*Tip.findOne(function(err, randtip) {
-    if(err) {
-      return res.json({error: "got no tip"});
-    }
-    res.json({tip: randtip.tip});
-  });*/
 });
 
 router.get('/hey', requireLogin, function(req, res) {
@@ -53,8 +54,8 @@ router.post('/signup', function(req, res) {
               const user = new User({
                 email: email,
                 password: hashedpass,
-                name: name//,
-                //url: url
+                name: name,
+
               });
               user.save()
                 .then(function(user1) {

@@ -13,7 +13,7 @@ function App() {
     if(!isLoggedIn)setIsLoggedIn(true);
 
   return (
-    <div>
+    <div className={pageState==="HomePage"?"wallpaper" : "normal"}>
       <Header
         PageName={pageState}
         Setter={setPageState}

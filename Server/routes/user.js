@@ -2,10 +2,48 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = mongoose.model("User");
+const Plant = mongoose.model("Plant");
 const requireLogin = require('../middleware/requireLogin');
+const requireLogin2 = require('../middleware/requireLogin2');
 
-router.get("/profile", requireLogin, function(req, res) {
+router.get("/user/:id", requireLogin, function(req, res) {
+  User.findById(req.param.id)
+    .select("-password")
+    .populate({
+      path: 'followers',
+      populate: { path: 'followers' }
+    })
+    .populate({
+      path: 'following',
+      populate: { path: 'following' }
+    })
+    .then(function(user) {
+      Plant.find({owner: user._id}, function(err, plants) {
+        if(err) {
+          return res.status(422).json({error: "plants not found"});
+        }
+        res.json({user:user, plants:plants});
+      });
+    })
+    .catch(function(err) {
+      return res.status(404).json({error: "user not found"});
+    });
+});
+
+router.get("/profile", requireLogin2, function(req, res) {
   res.json({user: req.user});
+});
+
+router.post("/updatepic", requireLogin, function(req, res) {
+  User.findByIdAndUpdate(req.user._id, {
+    url: req.body.url
+    }, {new: true})
+    .then(function(result) {
+      res.json({user: result});
+    })
+    .catch(function(error) {
+      res.json({error: "error updating pic"});
+    });
 });
 
 router.put("/follow", requireLogin, function(req,res) {

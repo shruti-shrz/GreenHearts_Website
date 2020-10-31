@@ -1,8 +1,18 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 
 function HomePage(props)
 {
-  
+  const [tftd, setTftd]= useState("");
+
+
+  useEffect(()=>{
+  fetch('/home',{
+  }).then(res=>res.json())
+  .then(result=>{
+    setTftd(result.randtip.tip)
+  }).catch(x=>console.log(x))
+  },[])
+
   function handleLogin()
   {
     props.Setter('LoginPage')
@@ -27,9 +37,9 @@ function HomePage(props)
 
   return (
     <div className="homeDiv ">
-    <div className="thoughtForTheDay"><h3><em>So this is today's tip ahiateghka j mgiulkqhknwe ejhcilwqjtkjq thoiqwtckqhtaiueht mlkhiuwqethlch</em></h3></div>
-    <button className="homeButton" onClick={handleLogin}>✅Questionnaire</button>
-    <button className="homeButton" onClick={handleContest}>🏅Contests</button>
+    <div className="thoughtForTheDay"><h3><em>{tftd}</em></h3></div>
+    <button className="homeButton">✅Questionnaire</button>
+    <button className="homeButton" onClick={handleLogin}>🏅Contests</button>
     <button className="homeButton" onClick={handleMyPlants}>🍀MyPlants</button>
     <button className="homeButton" onClick={handleFeed}>🖼FEED</button>
     </div>

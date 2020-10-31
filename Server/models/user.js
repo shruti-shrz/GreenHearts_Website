@@ -14,9 +14,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true
   },
+  score:{
+    type: Number,
+    default:0
+  },
   url: {
     type: String,
-    default: "placeholder.png"
+    default: ".../client/public/placeholder.png"
   },
   followers: [{
     type: ObjectId,
@@ -29,7 +33,11 @@ const UserSchema = new mongoose.Schema({
   numplants: {
     type: Number,
     default: 0
-  }
+  },
+  contest: [{
+    type: ObjectId,
+    ref: "Contest"
+  }]
 });
 
 mongoose.model("User", UserSchema);

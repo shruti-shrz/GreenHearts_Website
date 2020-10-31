@@ -1,9 +1,96 @@
+.profileDiv {
+  align-items: center;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  /*
+  display: flex;
+  justify-content: center;
+  align-items: center;*/
+  /*align-content: center;
+  text-align: center;*/
+
+  background: white;
+  background-image: url("profilebg.png");
+  border-radius: 20px;
+  box-shadow: 4px 3px 7px 2px #00000040;
+  box-sizing: border-box;
+  margin: 100px auto 100px auto;
+  min-height: 600px;
+  width: 65%;
+  min-width: 800px;
+
+}
+
+
+
+.profileRight {
+
+  float:right;
+  margin: 40px;
+}
+
+.profileLeft {
+  float:left;
+  margin-left: 40px;
+  margin-top: 40px;
+  text-align: center;
+  padding: 10px;
+}
+
+.profileLeft img {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+}
+
+.profileLeft p {
+  color:white;
+  margin: 0;
+  border-bottom-style: dotted;
+  border-color: white;
+}
+
+.profileLeft div {
+  text-align: right;
+  margin-bottom: -10px;
+}
+
+.profileLeft div h3 {
+  font-size: 2em;
+  display: inline;
+  color: #11690B;
+  float:left;
+  margin-top: 0;
+}
+.profileLeft div h4{
+  font-size: 1.8em;
+  display: inline;
+
+}
+
+.profileFoll{
+  margin-top: 210px;
+  margin-left: 150px;
+  min-width: 300px;
+  padding-top: -40px;
+}
+
+.profileSearch {
+  position: absolute;
+  right: 22%;
+  padding: 40px 40px 0 40px;
+}
+
+.profileSearch input {
+  width:270px;
+}
+
 input[type="file"] {
     display: none;
 }
 
 .custom-file-upload {
-    border-style: none;
+
     color:#24B61A;
     display: inline-block;
     padding: 6px 12px;
@@ -11,5 +98,34 @@ input[type="file"] {
 }
 
 .custom-file-upload:hover {
-    color:#41D01E; 
+    color:#41D01E;
+}
+
+
+.fCard{
+  background: #f1f5f8;
+  width: 200px;
+  /*padding:10px;*/
+  display: flex;
+  align-items: center;
+  text-align: left;
+  border-bottom-style: groove;
+  border-top: none;
+  border-bottom-width: thin;
+}
+
+.fCard img{
+  object-fit: cover;
+  float: left;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.fCard button{
+  margin-left: 10px;
+}
+
+.followCards {
+  margin: 10px auto 10px auto;
 }
