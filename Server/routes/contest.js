@@ -46,10 +46,11 @@ router.post('/createcontest',requireLogin,(req,res)=>{
 })
 
 router.get('/mycontest',requireLogin,(req,res)=>{
+	console.log(req.user.contest)
 	Contest.find({_id:req.user.contest})
 	.populate("createdBy","name")
-	.then(myposts=>{
-		res.json({myposts})
+	.then(mycontests=>{
+		res.json({mycontests})
 	})
 	.catch(err=>{
 		console.log(err)
@@ -67,16 +68,16 @@ router.post('/searchcontest',requireLogin,(req,res)=>{
     });
 })
 
-router.put('/addcontest',requireLogin,(req,res)=>{
+router.put('/addcontestant',requireLogin,(req,res)=>{
+	let no_trees =0;
 	User.findByIdAndUpdate(req.body.followId,{
 		$push: {contest: req.body.contestId}
-		
 	},{new:true},function(err,result){
 		if(err) {
         return res.status(422).json({error: err});
     }
     Contest.findByIdAndUpdate(req.body.contestId,{
-    	$push: {contestants: {user:req.body.followId,score:0,no_trees:req.body.numplants}}
+    	$push: {contestants: {user:req.body.followId,score:0,no_trees:result.numplants}}
     },{new:true})
     .then(function(result1) {
           res.json({result: result});
@@ -90,7 +91,7 @@ router.put('/addcontest',requireLogin,(req,res)=>{
 router.put('/leavecontest',requireLogin,(req,res)=>{
 	Contest.findByIdAndUpdate(req.body.contestId,{
 		//let obj2 =  {user:req.user,score:0,no_trees:req.user.numplants}
-		$pull: {contestants: {user:req.user}}
+		$pull: {contestants: {user:req.user,score:0,no_trees:req.user.numplants}}
 	},{new:true},function(err,result){
 		if(err) {
         return res.status(422).json({error: err});
@@ -127,5 +128,7 @@ router.put('/comment',requireLogin,(req,res)=>{
  		}
  	})
  })
+
+
 
 module.exports = router
