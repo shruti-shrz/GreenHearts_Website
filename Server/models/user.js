@@ -14,6 +14,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true
   },
+  score:{
+    type: Number,
+    default:0
+  },
   url: {
     type: String,
     default: "placeholder.png"

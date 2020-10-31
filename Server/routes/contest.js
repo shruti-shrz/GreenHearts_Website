@@ -5,6 +5,7 @@ const Contest = mongoose.model("Contest")
 const User = mongoose.model("User")
 const requireLogin = require('../middleware/requireLogin')
 
+
 router.post('/createcontest',requireLogin,(req,res)=>{
 	const {title} = req.body
 	if(!title)
@@ -129,6 +130,18 @@ router.put('/comment',requireLogin,(req,res)=>{
  	})
  })
 
+router.post('/questionnaire',requireLogin,(req,res)=>{
+	 var g_score = req.user.numplants*req.body.no_y
 
+	User.findByIdAndUpdate(req.user._id,{
+		score:g_score
+	},{new:true})
+	.then(function(result1) {
+          res.json({result: result1});
+      })
+      .catch(function(err1) {
+        res.status(422).json({error: err1});
+      });
+})
 
 module.exports = router
