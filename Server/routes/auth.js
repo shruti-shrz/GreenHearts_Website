@@ -9,23 +9,18 @@ const {JWT_SECRET} = require('../keys');
 const requireLogin = require('../middleware/requireLogin');
 
 router.get('/home', function(req, res) {
-  Tip.countDocuments().exec(function (err, count) {
+  res.json({hey: "hey"});
+  /*Tip.countDocuments().exec(function (err, count) {
 
   const random = Math.floor(Math.random() * count);
   Tip.findOne().skip(random).exec(
     function (err1, result) {
       if(err1) {
-        return res.json({error: err});
+        return res.json({error: "something wrong"});
       }
       res.json({randtip: result});
     });
-});
-  /*Tip.findOne(function(err, randtip) {
-    if(err) {
-      return res.json({error: "got no tip"});
-    }
-    res.json({tip: randtip.tip});
-  });*/
+});*/
 });
 
 router.get('/hey', requireLogin, function(req, res) {
