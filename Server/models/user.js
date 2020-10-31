@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    default: "placeholder.png"
+    default: ".../client/public/placeholder.png"
   },
   followers: [{
     type: ObjectId,

@@ -55,7 +55,11 @@ router.post('/signup', function(req, res) {
                 email: email,
                 password: hashedpass,
                 name: name,
+<<<<<<< HEAD
                // url: url
+=======
+                //url: url
+>>>>>>> 2b0050fce15a592b5dd85b1fae40a076e8cf4e50
               });
               user.save()
                 .then(function(user1) {
