@@ -7,10 +7,7 @@ function Header(props)
     if(props.LoginStat) props.Setter('MyProfilePage');
     else props.Setter('LoginPage');}
 
-  function maketrue()
-  {
-    props.LoginSetter(true);
-  }
+
 
   function logout()
   {
@@ -22,8 +19,11 @@ function Header(props)
     <header>
     <h1 onClick={handleHome}>GreenHearts</h1>
     <button className="headerButton" onClick={handleLogin}>👩</button>
-    <button className="headerButton" onClick={maketrue}>maketrue</button>
     {props.LoginStat && <button className="headerButton" onClick={logout}>LogOut</button>}
+    {props.LoginStat && props.PageName!=="HomePage" && <button className="headerButton" onClick={logout}>✅</button>}
+    {props.LoginStat && props.PageName!=="HomePage" && <button className="headerButton" onClick={logout}>🎖</button>}
+    {props.LoginStat && props.PageName!=="HomePage" && props.PageName!=="MyPlantsPage" && <button className="headerButton" onClick={()=>props.Setter("MyPlantsPage")}>🌵</button>}
+    {props.LoginStat && props.PageName!=="HomePage" && props.PageName!=="FeedPage" && <button className="headerButton" onClick={()=>props.Setter("FeedPage")}>🖼</button>}
     </header>
   );
 }

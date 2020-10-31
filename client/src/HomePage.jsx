@@ -5,13 +5,13 @@ function HomePage(props)
   const [tftd, setTftd]= useState("");
 
 
-
-    fetch('/home',{})
-    .then(result=>{
-      console.log("here");
-      console.log(result);
-    })
-
+  useEffect(()=>{
+  fetch('/home',{
+  }).then(res=>res.json())
+  .then(result=>{
+    setTftd(result.randtip.tip)
+  }).catch(x=>console.log(x))
+  },[])
 
   function handleLogin()
   {
