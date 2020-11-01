@@ -37,7 +37,15 @@ const UserSchema = new mongoose.Schema({
   contest: [{
     type: ObjectId,
     ref: "Contest"
-  }]
+  }],
+  pinnedpost: [{
+    type: ObjectId,
+    ref: "Post"
+  }],
+ response:{
+    type:Number,
+    default:0
+  }
 });
 
 mongoose.model("User", UserSchema);
