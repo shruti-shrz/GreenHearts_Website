@@ -8,9 +8,28 @@ function renderComment(props){
     );
     }
 
+/**************************************
+label
+label_outline
+bookmark
+bookmark_border
+
+thumb_up
+thumb_down
+mms
+receipt
+format_list_numbered
+playlist_add_check
+view_day
+spa
+local_florist
+group
+assignment_turned_in
+
+*/
 
 function Posts(props1){
-    const [data, setdata] = useState([]); 
+    const [data, setdata] = useState([]);
     const [comment, setcomment] = useState("");
     const [postID, setpostID]  = useState("")
     //const {state,dispatch} = useContext(UserContext)
@@ -32,7 +51,7 @@ function Posts(props1){
                     return result;
                 }
                 else{
-                  return item; 
+                  return item;
                 }
             })
             setdata(newData);
@@ -59,7 +78,7 @@ function Posts(props1){
                       return result;
                   }
                   else{
-                    return item; 
+                    return item;
                   }
               })
               setdata(newData);
@@ -87,8 +106,8 @@ function Posts(props1){
                    if(item._id==result._id){
                        return result;
                    }
-                   else{ 
-                     return item; 
+                   else{
+                     return item;
                    }
                })
                setdata(newData);
@@ -97,7 +116,7 @@ function Posts(props1){
          });
      }
 
-    
+
     return(
         <div>
             {props1.data.map(props=>{
@@ -114,11 +133,11 @@ function Posts(props1){
                 <div style={{marginBottom:"10px"}}>
                     {
                         props.likes.includes("5f9b8f31c1280e1d98dee46f")?
-                        <button 
+                        <button
                         onClick={()=>{unlikePost(props._id)}}
                         style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}>Dislike</button>
                         :
-                        <button 
+                        <button
                         onClick={()=>{likePost(props._id)}}
                         style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}>Like</button>
                         }
@@ -129,14 +148,14 @@ function Posts(props1){
                 <p style={{float:"right"}}><strong>{props.comments.length}</strong> comments</p>
                 </div>
                 <div style={{marginBottom:"0px"}}>
-                    <input 
+                    <input
                         onChange={(event)=>{
                             setcomment(event.target.value)
                             setpostID(props._id)
-                        }} 
-                        value={postID===props._id? comment :""} 
+                        }}
+                        value={postID===props._id? comment :""}
                     style={{marginLeft:"50px"},{height:"20px"},{width:"530px"}} placeholder="Comment..." type="text" id="message"/>
-                    <button 
+                    <button
                     onClick={()=>{makeComment(comment,postID)} }
                     className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
