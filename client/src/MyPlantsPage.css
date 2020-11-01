@@ -2,7 +2,7 @@ input[type="file"] {
     display: none;
 }
 
-.custom-file-upload {
+.c-file-upload {
     border-style: none;
     color:#24B61A;
     display: inline-block;
@@ -11,6 +11,6 @@ input[type="file"] {
     font-size: 15px;
 }
 
-.custom-file-upload:hover {
+.c-file-upload:hover {
     color:#41D01E;
 }

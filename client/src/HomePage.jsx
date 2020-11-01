@@ -36,10 +36,10 @@ function HomePage(props)
   }
 
 function handleQuestionnaire(){
-    if(props.LoginStat) props.Setter('Questionnare');
+    if(props.LoginStat) props.Setter('Questionnaire');
     else alert("Please Sign In");
   }
-  
+
   return (
     <div className="homeDiv ">
     <div className="thoughtForTheDay"><h3><em>{tftd}</em></h3></div>

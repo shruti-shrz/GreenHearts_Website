@@ -26,6 +26,11 @@ header h1 {
 
 }
 
+.headerButton:hover {
+  font-size: 180%;
+
+}
+
 .postCard{
   background: white;
   /* box-shadow: 0px 0px 10px gray; */

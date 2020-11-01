@@ -18,7 +18,7 @@ function Body(props)
         {props.PageName==='MyProfilePage' && <MyProfilePage Setter={props.Setter} />}
         {props.PageName==='FeedPage' && <FeedPage Setter={props.Setter} />}
         {props.PageName==='ContestPage' && <ContestPage Setter={props.Setter}/>}
-        {props.PageName==='Questionnare' && <Questionnaire Setter={props.Setter}/>}
+        {props.PageName==='Questionnaire' && <Questionnaire Setter={props.Setter}/>}
     </div>
   );
 }
