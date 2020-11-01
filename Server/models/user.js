@@ -45,6 +45,10 @@ const UserSchema = new mongoose.Schema({
  response:{
     type:Number,
     default:0
+  },
+  allowAccess:{
+    type:Number,
+    default:1
   }
 });
 

@@ -137,10 +137,34 @@ router.put('/contest_comment',requireLogin,(req,res)=>{
 router.post('/accessquestion',requireLogin,(req,res)=>{
 	var n = req.user.response
 	var d = new Date();
-    var n = d.getHours();
-    var n2 = d.getMinutes();
-    var n3 = n*60 + n2
-	if(n)
+	var n2 = (((d.getMonth()+1)*31 + d.getDate())*24 + d.getHours())*60 + d.getMinutes();
+	let allowAccess=0;
+	let response;
+	if(n==0)
+	{
+		allowAccess = 1;
+		response = n2;
+	}else
+	if((n2-n)>=1440)
+	{
+		allowAccess = 1;
+		response = n2;
+	}else
+	{
+		allowAccess = 0;
+		response = n;
+
+	}
+	User.findByIdAndUpdate(req.user._id,{
+		allowAccess:allowAccess,
+		response:response
+	},{new:true})
+	.then(function(result1) {
+          res.json({result: result1});
+      })
+      .catch(function(err1) {
+        res.status(422).json({error: err1});
+      });
 })
 
 router.post('/questionnaire',requireLogin,(req,res)=>{
