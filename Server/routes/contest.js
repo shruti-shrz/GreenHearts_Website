@@ -227,6 +227,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // })
 router.get('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
+	.sort({score: -1})
 	.then(user=>{
 		res.json(user)
 	})
