@@ -117,14 +117,14 @@ router.put('/contest_comment',requireLogin,(req,res)=>{
 		text: req.body.text,
 		photo: req.body.photo,
 		time: n+":"+n2,
-		postedBy:req.user._id
+		sentBy:req.user.name
 	}
  	Contest.findByIdAndUpdate(req.body.contestId,{
  		$push:{comment_contest:comment}
  	},{
  		new:true
  	})
- 	.populate("comment_contest.postedBy","_id name")
+ 	//.populate("comment_contest.sentBy")
  	.exec((err,result)=>{
  		if(err){
  			return res.status(422).json({error:err})

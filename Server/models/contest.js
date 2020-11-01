@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const User = mongoose.model("User")
 const {ObjectId} = mongoose.Schema.Types
 const contestSchema = new mongoose.Schema({
 	title:{
@@ -14,7 +15,7 @@ const contestSchema = new mongoose.Schema({
 		text:String,
 		photo:String,
 		time:String,
-		postedBy:{type:ObjectId,ref:"User"}
+		sentBy:String
 	}],
 	createdBy:
 	{
