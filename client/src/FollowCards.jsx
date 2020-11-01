@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import {List} from 'react-virtualized';
-
+import './MyProfilePage.css';
 
 
 function FollowCards(props)
@@ -18,7 +18,7 @@ function FollowCards(props)
                           }) {
                             return (
                               <div key={key} style={style} className="fCard">
-                                <img src={fcards[index].url} alt="ProfilePic" />
+                                <img src={fcards[index].url} alt="Pic" />
                                 <p>{fcards[index].name}</p>
                               </div>
                             );

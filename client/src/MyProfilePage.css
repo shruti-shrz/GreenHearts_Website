@@ -91,30 +91,38 @@ input[type="file"] {
 
 .custom-file-upload {
 
-    color:#24B61A;
+    color:white;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+    font-size: 0.7em;
 }
 
 .custom-file-upload:hover {
-    color:#41D01E;
+    color:white;
+    font-size: 0.8em;
 }
 
 
 .fCard{
-  background: #f1f5f8;
+  background: rgba(203, 251, 171, 0.4);
   width: 200px;
+  height:50px;
   /*padding:10px;*/
   display: flex;
   align-items: center;
   text-align: left;
   border-bottom-style: groove;
+  border-left-style:dotted;
+  border-left-color: green;
+  border-left-width: thick;
   border-top: none;
   border-bottom-width: thin;
+  color: black;
 }
 
 .fCard img{
+  background-image:url('placeholder.png');
   object-fit: cover;
   float: left;
   border-radius: 50%;
@@ -124,6 +132,12 @@ input[type="file"] {
 
 .fCard button{
   margin-left: 10px;
+}
+
+.fCard p{
+  margin-left: 10px;
+  color: black;
+  border-bottom-style: none;
 }
 
 .followCards {

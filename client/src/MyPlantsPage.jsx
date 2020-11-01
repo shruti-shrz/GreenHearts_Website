@@ -120,7 +120,7 @@ function MyPlantsPage(props)
       <div className="addPlant">
         <input placeholder="Plant Name" onChange={(event)=> setPname(event.target.value)} value={pname}/>
         <input type="file"/>
-        <label className="custom-file-upload">
+        <label className="c-file-upload">
           <input type="file" onChange={(event)=> setImgfile(event.target.files[0])} />
           Upload Picture
         </label>
