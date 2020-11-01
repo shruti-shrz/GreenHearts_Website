@@ -61,7 +61,7 @@ function ContestPage(props){
     }
 
     const createContest=(name)=>{
-        fetch("/createcontestant",{
+        fetch("/createcontest",{
             method:"post",
             headers:{"Content-Type":"application/json",
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -141,31 +141,28 @@ function ContestPage(props){
           });
     }
 
-    const removeContestant=(userID,contestID)=>{
-        console.log("we are here")
-        console.log(contestID)
-        console.log(userID) 
+    const removeContestant=(contestID)=>{
         fetch('/leavecontest',{
             method:"put",
             headers:{"Content-Type":"application/json",
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
           },
             body:JSON.stringify({
-                followId:userID,
                 contestId:contestID
             })
           })
           .then(res=>res.json())
           .then(data=>{
-              console.log("hereeeee")
+              console.log("hellllllo")
               console.log(data)
-               if(data.error)
-               {
-                   M.toast({html: data.error})}
-               else
-               {
-                 M.toast({html: "Created!!"})
-               }
+              setCurrentContest(0);
+            //    if(data.error)
+            //    {
+            //        M.toast({html: data.error})}
+            //    else
+            //    {
+            //      M.toast({html: "Created!!"})
+            //    }
           });
     }
 
@@ -183,15 +180,15 @@ function ContestPage(props){
 
     return(
         <div>
-            <div className="contestantListSection" >
-                <div className="contestantListSection" style={{width:"65%"}}>
-                <input 
-                    className="contestButton"
-                    style={{border:"10px solid black"},{width:"100%"},{size:"25px"},{padding:"5px"}}
+            <div className="contestantListSection" style={{boxShadow:"0px 0px 5px gray"},{paddingTop:"5px"}} >
+            <input 
+                    //className="contestButton"
+                    style={{border:"10px solid black"},{size:"15px"},{padding:"5px"},{marginBottom:"-5px"},{marginLeft:"30px"}}
                     onChange={(event)=>{
                         setcontestName(event.target.value);
                     }}
-                    type="text" placeholder="contest name"></input>
+                    type="text" placeholder="Enter contest name"></input>
+                <div className="contestantListSection" style={{width:"65%"}}>
                     <button 
                         onClick ={()=>{
                         createContest(contestName)
@@ -201,6 +198,7 @@ function ContestPage(props){
                             Create Contest
                     </button>
                 </div>
+                <text style={{marginBottom:"-20px"},{marginLeft:"60px"}}><u><strong>Your Contests</strong></u></text>
                 <div className="contestantListSection" style={{width:"65%"}}>
                     {contests.map((props,index)=>{
                         return(
@@ -254,6 +252,7 @@ function ContestPage(props){
             <div className="leaderBoardSection">
                 <div>
                     <h2 style={{textAlign:"center"}}>Leader Board</h2>
+                    <text style={{textAlign:"center"},{marginBottom:"-60px"},{marginLeft:"83px"}}>User name &nbsp;&nbsp; Score</text>
                 </div> 
                 {contests[currentContest].contestants.map(contestant=>{
                    return(
@@ -261,30 +260,34 @@ function ContestPage(props){
                    );
                })}
             </div>
-            <div style={{marginTop:"-300px"}}>
+            <div style={{marginTop:"-200px"}}>
+            <div style={{width:"220px"},{marginLeft:"40px"}}>
                     <input 
                         onChange={(event)=>{
                             setuserName(event.target.value);
                         }}
-                        style={{height:"30px"},{width:"100px"}} 
+                        style={{height:"30px"},{width:"220px"}} 
                         placeholder="enter username... " 
                         type="text" id="userName"
                         value={userName}/>
+                    <br></br>
                     <button
                     onClick={()=>{
                         searchContestant(userName);
                     }}
+                    
                     className="addContestant">
                             Add Contestant
                     </button>
                     <button 
                      onClick={()=>{
-                         
+                         removeContestant(contests[currentContest]._id)
                     }}
                     className="exitContest">
                             Exit Contest
                     </button>
                 </div>
+            </div>
             </div>
             :
             <h1>nothing to display</h1>
