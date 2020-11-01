@@ -35,11 +35,16 @@ function HomePage(props)
     else alert("Please Sign In");
   }
 
+function handleQuestionnaire(){
+    if(props.LoginStat) props.Setter('Questionnare');
+    else alert("Please Sign In");
+  }
+  
   return (
     <div className="homeDiv ">
     <div className="thoughtForTheDay"><h3><em>{tftd}</em></h3></div>
-    <button className="homeButton">✅Questionnaire</button>
-    <button className="homeButton" onClick={handleLogin}>🏅Contests</button>
+    <button className="homeButton" onClick={handleQuestionnaire}>✅Questionnaire</button>
+    <button className="homeButton" onClick={handleContest}>🏅Contests</button>
     <button className="homeButton" onClick={handleMyPlants}>🍀MyPlants</button>
     <button className="homeButton" onClick={handleFeed}>🖼FEED</button>
     </div>
