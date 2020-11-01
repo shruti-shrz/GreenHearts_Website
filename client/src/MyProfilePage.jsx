@@ -96,11 +96,6 @@ function MyProfilePage(props)
                           }
 
 
-  function searchClick()
-  {
-
-  }
-
   function setImage()
   {
     setSpin(true);
@@ -167,10 +162,9 @@ console.log("qwer")
   return(
     <div className="profileDiv" style={{alignContent: "center"}}>
       <div className="profileSearch">
-        <input name="search" onChange={(event)=>setSearch(event.target.value)} placeholder="search people" value={search} />
-        <button onClick={searchClick}>🔍</button>
+        <input name="search" onChange={(event)=>setSearch(event.target.value)} placeholder="🔍search people" value={search} />
         <List
-        width={400}
+        width={280}
         height={200}
         rowCount={found.length}
         rowHeight={60}
@@ -184,12 +178,12 @@ console.log("qwer")
           <h3>{userdetails.name}</h3>
           <h4>🌵{userdetails.numplants}</h4>
         </div>
-        <p>{userdetails.email}</p>
+        <p><strong>{userdetails.email}</strong></p>
         <label className="custom-file-upload">
           <input type="file" onChange={(event)=> setImgfile(event.target.files[0])} />
           Upload Profile Pic
         </label>
-        <button onClick={setImage}>Set</button>
+        <button onClick={setImage}>✔</button>
         {spin && <Loader
          type="TailSpin"
          color="#24B61A"

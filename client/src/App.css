@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.wallpaper {
+  background-image: url("wallpaper.png");
+  height: 750px;
+}
+
+ .normal {
+   background-color: whitesmoke;
+ }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

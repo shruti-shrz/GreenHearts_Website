@@ -5,13 +5,13 @@ function HomePage(props)
   const [tftd, setTftd]= useState("");
 
 
-
-    fetch('/home',{})
-    .then(result=>{
-      console.log("here");
-      console.log(result);
-    })
-
+  useEffect(()=>{
+  fetch('/home',{
+  }).then(res=>res.json())
+  .then(result=>{
+    setTftd(result.randtip.tip)
+  }).catch(x=>console.log(x))
+  },[])
 
   function handleLogin()
   {
@@ -27,6 +27,11 @@ function HomePage(props)
   function handleFeed()
   {
     if(props.LoginStat) props.Setter('FeedPage');
+    else alert("Please Sign In");
+  }
+
+  function handleContest(){
+    if(props.LoginStat) props.Setter('ContestPage');
     else alert("Please Sign In");
   }
 

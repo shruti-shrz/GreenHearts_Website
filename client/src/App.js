@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,createContext} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -13,7 +13,7 @@ function App() {
     if(!isLoggedIn)setIsLoggedIn(true);
 
   return (
-    <div>
+    <div className={pageState==="HomePage"?"wallpaper" : "normal"}>
       <Header
         PageName={pageState}
         Setter={setPageState}
@@ -31,3 +31,4 @@ function App() {
 }
 
 export default App;
+export const UserContext=createContext();
