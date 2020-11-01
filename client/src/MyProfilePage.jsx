@@ -12,7 +12,7 @@ function MyProfilePage(props)
   const [imgfile, setImgfile]= useState("");
   const [url, setUrl]= useState("");
   const [foll, setFoll]= useState("Followers")
-  const [userdetails, setUserdetails]= useState({name:"", email:"", url:"",numplants:"",followers:[], following:[]})
+  const [userdetails, setUserdetails]= useState({name:"", email:"", url:"placeholder.png",numplants:"",followers:[], following:[]})
   const [found, setFound]=useState([])
 
   useEffect(()=>{

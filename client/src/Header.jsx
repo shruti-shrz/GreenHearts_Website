@@ -23,7 +23,7 @@ function Header(props)
     <header>
     <h1 onClick={handleHome}>GreenHearts</h1>
     {props.LoginStat && <button className={cname} onClick={logout}>LogOut</button>}
-    <button className={cname} onClick={handleLogin}><i class="material-icons">account_circle</i></button>
+    <button className={cname} onClick={handleLogin}>{props.LoginStat? <i class="material-icons">account_circle</i>  : "Login"}</button>
 
     {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("Questionnaire")}><i class="material-icons">assignment_turned_in</i></button>}
     {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("ContestPage")}>🎖</button>}
