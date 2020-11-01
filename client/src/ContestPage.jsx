@@ -169,7 +169,7 @@ function ContestPage(props){
                         value={message}/>
                     <button 
                     onClick={()=>{
-                        sendMessage(message,contests.[currentContest]._id)
+                        sendMessage(message,contests[currentContest]._id)
                     }}
                     className="icon" >
                         <img 

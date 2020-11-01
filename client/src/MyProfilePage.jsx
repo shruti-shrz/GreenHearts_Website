@@ -87,10 +87,10 @@ function MyProfilePage(props)
                             style, // Style object to be applied to row (to position it)
                           }) {
                             return (
-                              <div name={found.[index]._id} style={style} className="fCard">
-                                <img src={found.[index].url} alt="ProfilePic" />
+                              <div name={found[index]._id} style={style} className="fCard">
+                                <img src={found[index].url} alt="ProfilePic" />
                                 <p>{found[index].name}</p>
-                                <button name={found.[index]._id} onClick={(x)=>followThis(x)}>Follow</button>
+                                <button name={found[index]._id} onClick={(x)=>followThis(x)}>Follow</button>
                               </div>
                             );
                           }
@@ -113,7 +113,6 @@ function MyProfilePage(props)
       setUrl(data.url);})
     .catch(x=> console.log(x));
   }
-
   useEffect(()=>{
     if(url)
     {
