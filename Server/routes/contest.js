@@ -36,14 +36,14 @@ router.post('/createcontest',requireLogin,(req,res)=>{
 				}).then(res1=>{
 					res.json({contest:result})
 				})
-				
+
 			})
 			.catch(err=>{
 				console.log(err)
 			})
 			console.log(contest._id)
 		}
-		
+
 	})
 })
 
@@ -189,7 +189,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 				.catch(function(err3) {
 			      res.status(422).json({error: err3});
 			      });
-		          
+
 		      })
 		      .catch(function(err1) {
 		        res.status(422).json({error: err1});
@@ -204,17 +204,17 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // // 	Contest.load(function(err, contest) {
 // //     var pl = contest.toObject();
 // //     pl.contestants.sort(function(m1, m2) { return m1.score - m2.score; });
-// //     // pl contains the playlist now 
+// //     // pl contains the playlist now
 // // });
 // 		Contest.findOne({_id:req.body.contestId}, function(err, result){
 // 			if(!err)
 // 			{
 // 				if(result)
-// 				{	
+// 				{
 // 					var c = result.toObject();
 // 					c.contestants.sort(function(m1, m2) { return m1.score - m2.score; })
 
-					
+
 // 				}
 // 			}
 // 		})
@@ -228,6 +228,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // })
 router.get('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
+	.sort({score: -1})
 	.then(user=>{
 		res.json(user)
 	})
