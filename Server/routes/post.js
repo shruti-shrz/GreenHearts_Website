@@ -28,6 +28,22 @@ router.get('/followingpost',requireLogin,(req,res)=>{
 		console.log(err)
 	})
 })
+
+router.get('/pinnedpost',requireLogin,(req,res)=>{
+	User.find({_id:req.user._id})
+	.populate({
+		path: 'pinnedpost',
+		populate: { path: 'pinnedpost' }
+	})
+	.select("pinnedpost")
+	.then(posts=>{
+		res.json({posts})
+	})
+	.catch(err=>{
+		console.log(err)
+	})
+})
+
 router.post('/createpost',requireLogin,(req,res)=>{
 	const {title,body,photo} = req.body
 	//console.log(req.body)
@@ -67,7 +83,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 		console.log(err)
 	})
 	}
-	
+
 })
 router.get('/mypost',requireLogin,(req,res)=>{
 	Post.find({postedBy:req.user._id})
@@ -97,7 +113,7 @@ router.put('/pinpost',requireLogin,(req,res)=>{
 	 		}
 		})
 	})
-	
+
 })
  router.put('/like',requireLogin,(req,res)=>{
  	Post.findByIdAndUpdate(req.body.postId,{
