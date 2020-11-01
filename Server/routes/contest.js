@@ -134,9 +134,17 @@ router.put('/contest_comment',requireLogin,(req,res)=>{
  	})
  })
 
+router.post('/accessquestion',requireLogin,(req,res)=>{
+	var n = req.user.response
+	var d = new Date();
+    var n = d.getHours();
+    var n2 = d.getMinutes();
+    var n3 = n*60 + n2
+	if(n)
+})
+
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.numplants*req.body.no_y +1
-
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
@@ -176,9 +184,8 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // })
 router.get('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
-	.populate("_id name")
 	.then(user=>{
-		res.json({user})
+		res.json(user)
 	})
 	.catch(err=>{
 		console.log(err)

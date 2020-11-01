@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Post = mongoose.model("Post")
+const User = mongoose.model("User")
 const requireLogin = require('../middleware/requireLogin')
 
 
@@ -78,6 +79,25 @@ router.get('/mypost',requireLogin,(req,res)=>{
 	.catch(err=>{
 		console.log(err)
 	})
+})
+
+router.put('/pinpost',requireLogin,(req,res)=>{
+
+	Post.findOne({_id:req.body.postId}, function(err,result){
+		console.log(result)
+		User.findByIdAndUpdate(req.user._id,{
+			$push:{pinnedpost:result._id}
+		},{
+			new:true
+		}).exec((err1,result1)=>{
+			if(err){
+ 			return res.status(422).json({error:err1})
+	 		}else{
+	 			res.json(result)
+	 		}
+		})
+	})
+	
 })
  router.put('/like',requireLogin,(req,res)=>{
  	Post.findByIdAndUpdate(req.body.postId,{
