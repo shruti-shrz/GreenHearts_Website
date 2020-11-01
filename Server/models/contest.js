@@ -10,7 +10,7 @@ const contestSchema = new mongoose.Schema({
 		 score:Number,
 		 no_tress:Number
 	}],
-	comments:[{
+	comment_contest:[{
 		text:String,
 		photo:String,
 		postedBy:{type:ObjectId,ref:"User"}
