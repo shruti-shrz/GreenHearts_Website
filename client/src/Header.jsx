@@ -16,15 +16,19 @@ function Header(props)
     props.LoginSetter(false);
     props.Setter("HomePage");
   }
+
+  var cname = props.PageName==="HomePage"? "headerButton lighter" : "headerButton darker"
+
   return (
     <header>
     <h1 onClick={handleHome}>GreenHearts</h1>
-    <button className="headerButton" onClick={handleLogin}>👩</button>
-    {props.LoginStat && <button className="headerButton" onClick={logout}>LogOut</button>}
-    {props.LoginStat && props.PageName!=="HomePage" && props.PageName!=="Questionnaire" && <button className="headerButton" onClick={()=>props.Setter("Questionnaire")}>✅</button>}
-    {props.LoginStat && props.PageName!=="HomePage" && props.PageName!=="ContestPage" && <button className="headerButton" onClick={()=>props.Setter("ContestPage")}>🎖</button>}
-    {props.LoginStat && props.PageName!=="HomePage" && props.PageName!=="MyPlantsPage" && <button className="headerButton" onClick={()=>props.Setter("MyPlantsPage")}>🌵</button>}
-    {props.LoginStat && props.PageName!=="HomePage" && props.PageName!=="FeedPage" && <button className="headerButton" onClick={()=>props.Setter("FeedPage")}>🖼</button>}
+    {props.LoginStat && <button className={cname} onClick={logout}>LogOut</button>}
+    <button className={cname} onClick={handleLogin}><i class="material-icons">account_circle</i></button>
+
+    {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("Questionnaire")}><i class="material-icons">assignment_turned_in</i></button>}
+    {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("ContestPage")}>🎖</button>}
+    {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("MyPlantsPage")}><i class="material-icons">local_florist</i></button>}
+    {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("FeedPage")}><i class="material-icons">view_day</i></button>}
     </header>
   );
 }
