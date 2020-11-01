@@ -92,7 +92,7 @@ router.put('/addcontestant',requireLogin,(req,res)=>{
 router.put('/leavecontest',requireLogin,(req,res)=>{
 	Contest.findByIdAndUpdate(req.body.contestId,{
 		//let obj2 =  {user:req.user,score:0,no_trees:req.user.numplants}
-		$pull: {contestants: {user:req.user.name,score:req.user.score,no_trees:req.user.numplants}}
+		$pull: {contestants: {user:req.user.name}}
 	},{new:true},function(err,result){
 		if(err) {
         return res.status(422).json({error: err});
@@ -169,12 +169,13 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
+	 console.log(prv_score)
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
 	.then(function(result1) {
 		Contest.findByIdAndUpdate(result1.contest,{
-			$pull: {contestants: {user:req.user.name,score:req.user.score,no_trees:req.user.numplants}}
+			$pull: {contestants: {user:req.user.name}}
 		//	$push: {contestants: {user:req.user.name,score:g_score,no_trees:req.user.numplants}}
 		},{new:true})
 		    .then(function(result2) {
