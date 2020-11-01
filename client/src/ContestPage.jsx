@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import M from 'materialize-css';
 import {List} from 'react-virtualized';
-import contests from './ContestData';
 
 var messages;
 function ContestPage(props){
@@ -10,9 +9,11 @@ function ContestPage(props){
     const [contests, setcontests] = useState([]);
     const [currentContest, setCurrentContest]= useState(0);
     const [message, setmessage] = useState("")
+    const [userName, setuserName] = useState("")
+    const [newUser, setnewUser] = useState("")
+    //const [messages, setmessages] = useState([]);
     if(contests.length>0)
     messages=contests[currentContest].comment_contest;
-
 
     function messageRenderer({
         key, // Unique key within array of rows
@@ -24,13 +25,13 @@ function ContestPage(props){
         return(
             <div key={key} style={style} className="chatCard">
                 <p className="sender">
-                    {messages[index].postedBy}
+                    {messages[index].sentBy}
                 </p>
                 <p className="message">
                     {messages[index].text}
                 </p>
                 <p className="time">
-                    {messages[index].photo}
+                    {messages[index].time}
                 </p>
             </div>
         );
@@ -51,24 +52,16 @@ function ContestPage(props){
           .then(res=>res.json())
           .then(result=>{
            setmessage("")
+           console.log("so this is the message")
            console.log(result);
-            //   const newData =data.map(item=>{
-            //       if(item._id==result._id){
-            //           return result;
-            //       }
-            //       else{ 
-            //         return item; 
-            //       }
-            //   })
-            //   setdata(newData);
+            messages=result.comment_contest;
           }).catch(error=>{
             console.log(error);
         });
     }
 
-
     const createContest=(name)=>{
-        fetch("/createcontest",{
+        fetch("/createcontestant",{
             method:"post",
             headers:{"Content-Type":"application/json",
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -79,6 +72,7 @@ function ContestPage(props){
           })
           .then(res=>res.json())
           .then(data=>{
+              console.log("created")
               console.log(data)
              if(data.error)
              {
@@ -92,6 +86,89 @@ function ContestPage(props){
           });
     }
     
+    const searchContestant=(name)=>{
+        fetch("/searchcontestant",{
+            method:"post",
+            headers:{"Content-Type":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+            body:JSON.stringify({
+                query:name
+            })
+          })
+          .then(res=>res.json())
+          .then(data=>{
+              console.log(data)
+              if(data.error)
+              {
+                  M.toast({html: data.error})}
+              else
+              {
+                setuserName("")
+                if(data.user.length>0)
+                addContestant(data.user[0]._id,contests[currentContest]._id)
+                else
+                M.toast({html: "couldn't find user!!"})
+              }
+          });
+    }
+
+    const addContestant=(userID,contestID)=>{
+        console.log("we are here")
+        console.log(contestID)
+        console.log(userID) 
+        fetch("/addcontestant",{
+            method:"put",
+            headers:{"Content-Type":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+            body:JSON.stringify({
+                followId:userID,
+                contestId:contestID
+            })
+          })
+          .then(res=>res.json())
+          .then(data=>{
+              console.log("hereeeee")
+              console.log(data)
+               if(data.error)
+               {
+                   M.toast({html: data.error})}
+               else
+               {
+                 M.toast({html: "Created!!"})
+               }
+          });
+    }
+
+    const removeContestant=(userID,contestID)=>{
+        console.log("we are here")
+        console.log(contestID)
+        console.log(userID) 
+        fetch('/leavecontest',{
+            method:"put",
+            headers:{"Content-Type":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+            body:JSON.stringify({
+                followId:userID,
+                contestId:contestID
+            })
+          })
+          .then(res=>res.json())
+          .then(data=>{
+              console.log("hereeeee")
+              console.log(data)
+               if(data.error)
+               {
+                   M.toast({html: data.error})}
+               else
+               {
+                 M.toast({html: "Created!!"})
+               }
+          });
+    }
+
     useEffect(()=>{
         fetch('/mycontest',{
             headers:{
@@ -99,20 +176,18 @@ function ContestPage(props){
             }
           }).then(res=>res.json())
           .then(result=>{
-              console.log("result hre")
-            console.log(result)
             setcontests(result.mycontests)
           });
-    },[])
+    },[messages])
 
 
     return(
         <div>
-            <div style={{float:"left"}}>
-                <div className="contestantListSection">
+            <div className="contestantListSection" >
+                <div className="contestantListSection" style={{width:"65%"}}>
                 <input 
                     className="contestButton"
-                    style={{border:"10px solid black"},{width:"100%"},{size:"15px"},{padding:"5px"}}
+                    style={{border:"10px solid black"},{width:"100%"},{size:"25px"},{padding:"5px"}}
                     onChange={(event)=>{
                         setcontestName(event.target.value);
                     }}
@@ -126,7 +201,7 @@ function ContestPage(props){
                             Create Contest
                     </button>
                 </div>
-                <div className="contestantListSection">
+                <div className="contestantListSection" style={{width:"65%"}}>
                     {contests.map((props,index)=>{
                         return(
                             <button
@@ -144,11 +219,8 @@ function ContestPage(props){
             {contests.length >currentContest
             ?
             <div>
-                <h1>{contests[currentContest].title}</h1>
+                <h1 style={{marginBottom:"-5px"}}>{contests[currentContest].title}</h1>
             <div className="chatSection" >
-                <div>
-
-                </div>
                 <div className="chatBox">
                     <div className="chatWindow">
                         <List
@@ -177,14 +249,7 @@ function ContestPage(props){
                             src="./send-icon.png"/>
                     </button>
                 </div>
-                <div style={{position:"relative"}}>
-                    <button className="addContestant">
-                            Add Contestant
-                    </button>
-                    <button className="exitContest">
-                            Exit Contest
-                    </button>
-                </div>
+                
             </div>
             <div className="leaderBoardSection">
                 <div>
@@ -196,6 +261,30 @@ function ContestPage(props){
                    );
                })}
             </div>
+            <div style={{marginTop:"-300px"}}>
+                    <input 
+                        onChange={(event)=>{
+                            setuserName(event.target.value);
+                        }}
+                        style={{height:"30px"},{width:"100px"}} 
+                        placeholder="enter username... " 
+                        type="text" id="userName"
+                        value={userName}/>
+                    <button
+                    onClick={()=>{
+                        searchContestant(userName);
+                    }}
+                    className="addContestant">
+                            Add Contestant
+                    </button>
+                    <button 
+                     onClick={()=>{
+                         
+                    }}
+                    className="exitContest">
+                            Exit Contest
+                    </button>
+                </div>
             </div>
             :
             <h1>nothing to display</h1>

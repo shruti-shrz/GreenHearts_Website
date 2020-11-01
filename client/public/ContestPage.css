@@ -4,19 +4,19 @@
     border-radius: 3px;
     float: left;
     width: 15%;
-    margin: 30px 40px;
+    margin: 10px 40px;
     box-shadow:0px 0px 5px gray ;
 }
 
 .chatSection{
     display: inline-block;
     margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 40px;
 }
 
 .leaderBoardSection{
     float: right;
-    width: 15%;
+    width: 20%;
     margin: 30px 50px;
     box-shadow:0px 0px 5px gray ;
 }
@@ -103,10 +103,10 @@
 
 .addContestant{
     padding: 10px;
-    margin: auto;
+    margin-left: 5px;
 }
 
 .exitContest{
     padding:10px;
-    margin: auto;
+    margin-left: 5px;
 }

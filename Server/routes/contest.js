@@ -58,9 +58,9 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 	})
 })
 
-router.post('/searchcontest',requireLogin,(req,res)=>{
+router.post('/searchcontestant',requireLogin,(req,res)=>{
 	let pattern = new RegExp("^"+ req.body.query);
-  User.find({title: {$regex: pattern}})
+  User.find({name: {$regex: pattern}})
     .then(function(user) {
       res.json({user: user});
     })
