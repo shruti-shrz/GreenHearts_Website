@@ -109,7 +109,7 @@ router.put('/leavecontest',requireLogin,(req,res)=>{
 	})
 })
 
-router.put('/comment',requireLogin,(req,res)=>{
+router.put('/chatmessage',requireLogin,(req,res)=>{
 	const comment = {
 		text: req.body.text,
 		photo: req.body.photo,
