@@ -109,11 +109,7 @@ router.put('/leavecontest',requireLogin,(req,res)=>{
 	})
 })
 
-<<<<<<< HEAD
-router.put('/chatmessage',requireLogin,(req,res)=>{
-=======
 router.put('/contest_comment',requireLogin,(req,res)=>{
->>>>>>> 2dfbdf88d5d3060dcd36246d14dccba24d1b4ca4
 	const comment = {
 		text: req.body.text,
 		photo: req.body.photo,

@@ -1,0 +1,29 @@
+.Questionnaire{
+    width: 500px;
+    margin: auto;
+}
+
+.Question{
+    background:white;
+    border: 1px solid gray;
+    border-radius: 3px;
+    margin: 10px 10px;
+    box-shadow:0px 0px 5px gray ;
+    padding-bottom: 10px;
+}
+
+.Question p{
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.input_button{
+    margin:auto;
+    width: 12%;
+}
+
+.submit_ques{
+    background-color: yellowgreen;
+    font-weight: 400;
+    font-size: large;
+}

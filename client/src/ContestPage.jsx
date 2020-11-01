@@ -11,7 +11,7 @@ function ContestPage(props){
     const [currentContest, setCurrentContest]= useState(0);
     const [message, setmessage] = useState("")
     if(contests.length>0)
-    messages=contests[currentContest].comments;
+    messages=contests[currentContest].comment_contest;
 
 
     function messageRenderer({
@@ -24,20 +24,20 @@ function ContestPage(props){
         return(
             <div key={key} style={style} className="chatCard">
                 <p className="sender">
-                    {messages[index].sender}
+                    {messages[index].postedBy}
                 </p>
                 <p className="message">
-                    {messages[index].message}
+                    {messages[index].text}
                 </p>
                 <p className="time">
-                    {messages[index].time}
+                    {messages[index].photo}
                 </p>
             </div>
         );
     }
 
     const sendMessage=(message,id)=>{
-        fetch("/chatmessage",{
+        fetch("/contest_comment",{
             method:"put",
             headers:{"Content-Type":"application/json",
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -154,7 +154,7 @@ function ContestPage(props){
                         <List
                             width={698}
                             height={500}
-                            rowCount={contests[currentContest].comments.length}
+                            rowCount={contests[currentContest].comment_contest.length}
                             rowHeight={100}
                             rowRenderer={messageRenderer}
                         />
@@ -169,7 +169,7 @@ function ContestPage(props){
                         value={message}/>
                     <button 
                     onClick={()=>{
-                        sendMessage(message)
+                        sendMessage(message,contests.[currentContest]._id)
                     }}
                     className="icon" >
                         <img 
