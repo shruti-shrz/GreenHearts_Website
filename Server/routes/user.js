@@ -65,9 +65,11 @@ router.put("/follow", requireLogin, function(req,res) {
   });
 });
 
-router.post("/search", function(req, res) {
+router.post("/search", requireLogin, function(req, res) {
   const pattern = new RegExp("^"+ req.body.query);
-  User.find({name: {$regex: pattern}})
+  User.find({name: {$regex: pattern},
+              _id: {$nin: req.user.following}
+            })
     .then(function(user) {
       res.json({user: user});
     })

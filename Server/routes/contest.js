@@ -36,14 +36,14 @@ router.post('/createcontest',requireLogin,(req,res)=>{
 				}).then(res1=>{
 					res.json({contest:result})
 				})
-				
+
 			})
 			.catch(err=>{
 				console.log(err)
 			})
 			console.log(contest._id)
 		}
-		
+
 	})
 })
 
@@ -140,7 +140,7 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
     var n = d.getHours();
     var n2 = d.getMinutes();
     var n3 = n*60 + n2
-	if(n)
+	//if(n)
 })
 
 router.post('/questionnaire',requireLogin,(req,res)=>{
@@ -160,17 +160,17 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // // 	Contest.load(function(err, contest) {
 // //     var pl = contest.toObject();
 // //     pl.contestants.sort(function(m1, m2) { return m1.score - m2.score; });
-// //     // pl contains the playlist now 
+// //     // pl contains the playlist now
 // // });
 // 		Contest.findOne({_id:req.body.contestId}, function(err, result){
 // 			if(!err)
 // 			{
 // 				if(result)
-// 				{	
+// 				{
 // 					var c = result.toObject();
 // 					c.contestants.sort(function(m1, m2) { return m1.score - m2.score; })
 
-					
+
 // 				}
 // 			}
 // 		})
