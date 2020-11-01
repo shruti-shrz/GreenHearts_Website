@@ -6,16 +6,16 @@ const contestSchema = new mongoose.Schema({
 		required:true
 	},
 	contestants:[{
-		type:Object,
+		user:String,
 		 score:Number,
 		 no_tress:Number
 	}],
 	comment_contest:[{
 		text:String,
 		photo:String,
+		time:String,
 		postedBy:{type:ObjectId,ref:"User"}
-	},
-	{timestamps:true}],
+	}],
 	createdBy:
 	{
 		type:ObjectId,

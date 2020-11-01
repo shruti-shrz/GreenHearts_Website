@@ -20,10 +20,11 @@ router.post('/createcontest',requireLogin,(req,res)=>{
 			{
 				return res.status(422).json({error: "Contest Name already exist"});
 			}
-			var obj =  {user:req.user,score:req.user.score,no_trees:req.user.numplants}
+			//var obj =  {user:req.user,score:req.user.score,no_trees:req.user.numplants}
+			console.log(req.user)
 			const contest = new Contest({
 				title,
-				contestants:[obj],
+				contestants:[{user:req.user.name,score:req.user.score,no_trees:req.user.numplants}],
 				createdBy:req.user
 
 			})
@@ -47,7 +48,6 @@ router.post('/createcontest',requireLogin,(req,res)=>{
 })
 
 router.get('/mycontest',requireLogin,(req,res)=>{
-	console.log(req.user.contest)
 	Contest.find({_id:req.user.contest})
 	.populate("createdBy","name")
 	.then(mycontests=>{
@@ -78,7 +78,7 @@ router.put('/addcontestant',requireLogin,(req,res)=>{
         return res.status(422).json({error: err});
     }
     Contest.findByIdAndUpdate(req.body.contestId,{
-    	$push: {contestants: {user:result,score:result.score,no_trees:result.numplants}}
+    	$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
     },{new:true})
     .then(function(result1) {
           res.json({result: result});
@@ -92,7 +92,7 @@ router.put('/addcontestant',requireLogin,(req,res)=>{
 router.put('/leavecontest',requireLogin,(req,res)=>{
 	Contest.findByIdAndUpdate(req.body.contestId,{
 		//let obj2 =  {user:req.user,score:0,no_trees:req.user.numplants}
-		$pull: {contestants: {user:req.user,score:req.user.score,no_trees:req.user.numplants}}
+		$pull: {contestants: {user:req.user.name,score:req.user.score,no_trees:req.user.numplants}}
 	},{new:true},function(err,result){
 		if(err) {
         return res.status(422).json({error: err});
@@ -110,9 +110,13 @@ router.put('/leavecontest',requireLogin,(req,res)=>{
 })
 
 router.put('/contest_comment',requireLogin,(req,res)=>{
+	var d = new Date();
+    var n = d.getHours();
+    var n2 = d.getMinutes();
 	const comment = {
 		text: req.body.text,
 		photo: req.body.photo,
+		time: n+":"+n2,
 		postedBy:req.user._id
 	}
  	Contest.findByIdAndUpdate(req.body.contestId,{
