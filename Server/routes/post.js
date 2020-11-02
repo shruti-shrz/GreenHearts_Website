@@ -33,7 +33,20 @@ router.get('/pinnedpost',requireLogin,(req,res)=>{
 	User.find({_id:req.user._id})
 	.populate({
 		path: 'pinnedpost',
-		populate: { path: 'pinnedpost' }
+		model: 'Post',
+		populate: {
+			path: 'postedBy',
+			model: 'User'
+		}
+		//populate: { path: 'pinnedpost', populate: {path:'postedBy'} }
+	})
+	.populate({
+		path: 'pinnedpost',
+		model: 'Post',
+		populate: {
+			path: 'comments.postedBy',
+			model: 'User'
+		}
 	})
 	.select("pinnedpost")
 	.then(posts=>{
