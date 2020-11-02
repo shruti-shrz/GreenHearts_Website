@@ -139,7 +139,7 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 	var d = new Date();
 	var n2 = (((d.getMonth()+1)*31 + d.getDate())*24 + d.getHours())*60 + d.getMinutes();
 	let allowAccess=0;
-	let response;
+	let response=n;
 	if(n==0)
 	{
 		allowAccess = 1;
@@ -149,11 +149,6 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 	{
 		allowAccess = 1;
 		response = n2;
-	}else
-	{
-		allowAccess = 0;
-		response = n;
-
 	}
 	User.findByIdAndUpdate(req.user._id,{
 		allowAccess:allowAccess,
@@ -167,6 +162,24 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
       });
 })
 
+
+router.post('/submitquestion',requireLogin,(req,res)=>{
+	var n = req.user.response
+	var d = new Date();
+	var n2 = (((d.getMonth()+1)*31 + d.getDate())*24 + d.getHours())*60 + d.getMinutes();
+	let allowAccess=0;
+	let response = n2;
+	User.findByIdAndUpdate(req.user._id,{
+		allowAccess:allowAccess,
+		response:response
+	},{new:true})
+	.then(function(result1) {
+          res.json({result: result1});
+      })
+      .catch(function(err1) {
+        res.status(422).json({error: err1});
+      });
+})
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
 	 console.log(prv_score)
@@ -199,6 +212,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
         res.status(422).json({error: err2});
       });
 })
+
 
 // router.get('/leaderboard',requireLogin,(req,res)=>{
 // // 	Contest.load(function(err, contest) {
