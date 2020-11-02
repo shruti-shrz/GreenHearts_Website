@@ -1,5 +1,5 @@
 # GreenHearts_Website
-A web app to encourage people to get involved in gardening and spread awareness by making posts. This app provides a competitive platform for plant lovers to showcase their gardening skill by 
+A web app to encourage people to get involve in gardening and spread awareness by making posts. This app provides a competitive platform for plant lovers to showcase their gardening skill by 
 participating in the contest and answering questions in general feed. Queries and advice can be posted on the feed. Users can stay connected with their fellow contestants 
 through contest chats.
 
