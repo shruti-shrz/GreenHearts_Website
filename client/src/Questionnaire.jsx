@@ -62,7 +62,7 @@ function Questionnaire(){
           });
     }
 
-    //check()
+    check()
     if(allow==1){
     return(
         <div className="Questionnaire">
@@ -140,11 +140,7 @@ function Questionnaire(){
             <h6>{error}</h6>
         </div>
     );}
-    else{
-        return(
-            <h2>You have already Submitted your response</h2>
-            )
-    }
+    
 }
 
 export default Questionnaire;
