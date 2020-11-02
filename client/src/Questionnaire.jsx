@@ -7,9 +7,10 @@ function Questionnaire(){
     const [q3, setq3] = useState(-1);
     const [q4, setq4] = useState(-1);
     const [error, seterror] = useState("")
+    var allow=0;
 
     const submit=(score)=>{
-        fetch("/questionnaire",{
+        fetch('/questionnaire',{
             method:"post",
             headers:{"Content-Type":"application/json",
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -20,6 +21,7 @@ function Questionnaire(){
           })
           .then(res=>res.json())
           .then(data=>{
+              console.log("byee")
               console.log(data)
             //  if(data.error)
             //  {
@@ -33,6 +35,35 @@ function Questionnaire(){
           });
     }
 
+    const check=()=>{
+        fetch('/accessquestion',{
+            method:"post",
+            headers:{"Content-Type":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+            body:JSON.stringify({
+            })
+          })
+          .then(res=>res.json())
+          .then(data=>{
+              console.log("ooooooo")
+              console.log(data)
+              allow=data.result.allowAccess
+              console.log(allow)
+            //  if(data.error)
+            //  {
+            //      M.toast({html: data.error})}
+            //  else
+            //  {
+            //    M.toast({html: "Created!!"})
+            //    setcontestName("")
+            //    //setcontests([{data},...contests])
+            //  }
+          });
+    }
+
+    //check()
+    if(allow==1){
     return(
         <div className="Questionnaire">
             <div className="Question">
@@ -97,6 +128,7 @@ function Questionnaire(){
                             console.log("the score is : ")
                             console.log(4-(q1+q2+q3+q4))
                             submit(4-(q1+q2+q3+q4))
+                            window.location.reload();
                         }
                         else{
                             seterror("Please answer all the Questions")
@@ -107,7 +139,12 @@ function Questionnaire(){
                     </button>
             <h6>{error}</h6>
         </div>
-    );
+    );}
+    else{
+        return(
+            <h2>You have already Submitted your response</h2>
+            )
+    }
 }
 
 export default Questionnaire;

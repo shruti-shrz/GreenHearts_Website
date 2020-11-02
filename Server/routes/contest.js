@@ -169,7 +169,7 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
-	 console.log(prv_score)
+	 //console.log(prv_score)
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
@@ -226,7 +226,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // 		console.log(err)
 // 	})
 // })
-router.get('/leaderboard',requireLogin,(req,res)=>{
+router.put('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
 	.sort({score: -1})
 	.then(user=>{

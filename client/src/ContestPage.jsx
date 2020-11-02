@@ -10,7 +10,8 @@ function ContestPage(props){
     const [currentContest, setCurrentContest]= useState(0);
     const [message, setmessage] = useState("")
     const [userName, setuserName] = useState("")
-    const [newUser, setnewUser] = useState("")
+    const [leader, setleader] = useState([])
+
     //const [messages, setmessages] = useState([]);
     if(contests.length>0)
     messages=contests[currentContest].comment_contest;
@@ -156,13 +157,10 @@ function ContestPage(props){
               console.log("hellllllo")
               console.log(data)
               setCurrentContest(0);
-            //    if(data.error)
-            //    {
-            //        M.toast({html: data.error})}
-            //    else
-            //    {
-            //      M.toast({html: "Created!!"})
-            //    }
+            if(data.error)
+            { M.toast({html: data.error})}
+            else
+            {M.toast({html: "Created!!"}) }
           });
     }
 
@@ -176,6 +174,23 @@ function ContestPage(props){
             setcontests(result.mycontests)
           });
     },[messages])
+
+    useEffect(()=>{
+        if(contests.length>0){
+        fetch('/leaderboard',{
+            method:"put",
+            headers:{"Content-Type":"application/json",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body:JSON.stringify({
+                contestId:contests[currentContest]._id
+            })
+          }).then(res=>res.json())
+          .then(result=>{
+            setleader(result)
+          });
+        }
+    },[messages ])
 
 
     return(
@@ -254,9 +269,9 @@ function ContestPage(props){
                     <h2 style={{textAlign:"center"}}>Leader Board</h2>
                     <text style={{textAlign:"center"},{marginBottom:"-60px"},{marginLeft:"83px"}}>User name &nbsp;&nbsp; Score</text>
                 </div> 
-                {contests[currentContest].contestants.map(contestant=>{
+                {leader.map(contestant=>{
                    return(
-                    <h5 className="lbRow"><strong>{contestant.user}</strong>&nbsp;&nbsp;&nbsp;{contestant.score}</h5>
+                    <h5 className="lbRow"><strong>{contestant.name}</strong>&nbsp;&nbsp;&nbsp;{contestant.score}</h5>
                    );
                })}
             </div>
