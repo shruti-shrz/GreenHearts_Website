@@ -58,9 +58,9 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 	})
 })
 
-router.post('/searchcontest',requireLogin,(req,res)=>{
+router.post('/searchcontestant',requireLogin,(req,res)=>{
 	let pattern = new RegExp("^"+ req.body.query);
-  User.find({title: {$regex: pattern}})
+  User.find({name: {$regex: pattern}})
     .then(function(user) {
       res.json({user: user});
     })
@@ -182,7 +182,7 @@ router.post('/submitquestion',requireLogin,(req,res)=>{
 })
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
-	 console.log(prv_score)
+	 //console.log(prv_score)
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
@@ -240,7 +240,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // 		console.log(err)
 // 	})
 // })
-router.get('/leaderboard',requireLogin,(req,res)=>{
+router.put('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
 	.sort({score: -1})
 	.then(user=>{

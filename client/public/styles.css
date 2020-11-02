@@ -3,7 +3,7 @@ body {
 }
 
 header {
-  background-image: url("transpfabric.png");
+  background:transparent;
   margin: auto -10px;
   padding: 1px 32px 0 32px;
   box-shadow: 0px  0px 10px grey;
@@ -13,7 +13,7 @@ header h1 {
   display: inline;
   font-family: 'Dancing Script', cursive;
   font-size: 300%;
-  color: #397412 ;
+  color: #4A9F11 ;
   text-shadow: 0 3px 3px 0;
   cursor: pointer;
 }
@@ -22,9 +22,32 @@ header h1 {
   background: transparent;
   border: none;
   float: right;
-  font-size: 170%;
+  font-size: 150%;
+  margin-top: 20px;
 
 }
+
+.headerButton:hover {
+  font-size: 155%;
+
+}
+
+.headerButton i {
+  font-size: 1.7rem;
+}
+
+.headerButton i:hover {
+  font-size: 1.8rem;
+  color: #4FAA13;
+}
+
+.lighter {
+  color:#72F21D;
+}
+.darker{
+  color:#479613;
+}
+
 
 .postCard{
   background: white;
@@ -112,10 +135,15 @@ margin-left: 10px;
 }
 
 .homeButton {
+  color: white;
   background: transparent;
   border: none;
   margin: auto auto 0 auto;
-  font-size: 200%;
+  font-size: 150%;
+}
+
+.homeButton:hover{
+  color:#3DF63F;
 }
 
 .homeDiv {
@@ -128,13 +156,17 @@ margin-left: 10px;
 
 .thoughtForTheDay{
   position: absolute;
-  bottom: 200px;
+  top: 300px;
   left: 200px;
   border-style: double;
   min-width: 200px;
   max-width: 400px;
   padding: 20px;
   color:white;
+}
+
+.thoughtForTheDay h2{
+  margin-bottom: -10px;
 }
 
 .bodyDiv{
@@ -168,7 +200,7 @@ margin-left: 10px;
 
 #toast-container{
   top: 30px !important;
-  right: 20px !important;
+  right: 20px !important
   left: auto !important;
   background-color: #135B07 !important;
   color: #ffffff !important;

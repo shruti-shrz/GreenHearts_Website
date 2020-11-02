@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react';
+import M from 'materialize-css'
 
 function HomePage(props)
 {
@@ -36,17 +37,20 @@ function HomePage(props)
   }
 
 function handleQuestionnaire(){
-    if(props.LoginStat) props.Setter('Questionnare');
+    if(props.LoginStat) props.Setter('Questionnaire');
     else alert("Please Sign In");
   }
-  
+
   return (
     <div className="homeDiv ">
-    <div className="thoughtForTheDay"><h3><em>{tftd}</em></h3></div>
-    <button className="homeButton" onClick={handleQuestionnaire}>✅Questionnaire</button>
-    <button className="homeButton" onClick={handleContest}>🏅Contests</button>
-    <button className="homeButton" onClick={handleMyPlants}>🍀MyPlants</button>
-    <button className="homeButton" onClick={handleFeed}>🖼FEED</button>
+    <div className="thoughtForTheDay">
+      <h2>A lil tip...</h2>
+      <h3><em>{tftd}</em></h3>
+    </div>
+    <button className="homeButton" onClick={handleQuestionnaire}><i class="material-icons">assignment_turned_in</i>Questionnaire</button>
+    <button className="homeButton" onClick={handleContest}>🎖Contests</button>
+    <button className="homeButton" onClick={handleMyPlants}><i class="material-icons">local_florist</i>MyPlants</button>
+    <button className="homeButton" onClick={handleFeed}><i class="material-icons">view_day</i>Feed</button>
     </div>
   );
 }
