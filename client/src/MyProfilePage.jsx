@@ -12,7 +12,7 @@ function MyProfilePage(props)
   const [imgfile, setImgfile]= useState("");
   const [url, setUrl]= useState("");
   const [foll, setFoll]= useState("Followers")
-  const [userdetails, setUserdetails]= useState({name:"", email:"", url:"",numplants:"",followers:[], following:[]})
+  const [userdetails, setUserdetails]= useState({name:"", email:"", url:"placeholder.png",numplants:"",followers:[], following:[]})
   const [found, setFound]=useState([])
 
   useEffect(()=>{
@@ -88,7 +88,7 @@ function MyProfilePage(props)
                           }) {
                             return (
                               <div name={found[index]._id} style={style} className="fCard">
-                                <img src={found[index].url} alt="ProfilePic" />
+                                <img src={found[index].url}  />
                                 <p>{found[index].name}</p>
                                 <button name={found[index]._id} onClick={(x)=>followThis(x)}>Follow</button>
                               </div>
@@ -180,7 +180,7 @@ console.log("qwer")
         <p><strong>{userdetails.email}</strong></p>
         <label className="custom-file-upload">
           <input type="file" onChange={(event)=> setImgfile(event.target.files[0])} />
-          Upload Profile Pic
+          <strong>Upload Profile Pic</strong>
         </label>
         <button onClick={setImage}>✔</button>
         {spin && <Loader

@@ -4,19 +4,18 @@
     border-radius: 3px;
     float: left;
     width: 15%;
-    margin: 30px 40px;
-    box-shadow:0px 0px 5px gray ;
+    margin: 10px 40px;
 }
 
 .chatSection{
     display: inline-block;
     margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 40px;
 }
 
 .leaderBoardSection{
     float: right;
-    width: 15%;
+    width: 20%;
     margin: 30px 50px;
     box-shadow:0px 0px 5px gray ;
 }
@@ -37,7 +36,7 @@
     background-color: transparent;
     font-size: large;
     border:none;
-    border-bottom: 1px solid lightgray; 
+    border-top: 1px solid lightgray; 
     width: 100%;
     padding-top: 7px;
     padding-bottom: 7px;
@@ -103,10 +102,10 @@
 
 .addContestant{
     padding: 10px;
-    margin: auto;
+    margin-left: 5px;
 }
 
 .exitContest{
     padding:10px;
-    margin: auto;
+    margin-left: 5px;
 }

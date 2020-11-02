@@ -58,9 +58,9 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 	})
 })
 
-router.post('/searchcontest',requireLogin,(req,res)=>{
+router.post('/searchcontestant',requireLogin,(req,res)=>{
 	let pattern = new RegExp("^"+ req.body.query);
-  User.find({title: {$regex: pattern}})
+  User.find({name: {$regex: pattern}})
     .then(function(user) {
       res.json({user: user});
     })
@@ -92,7 +92,7 @@ router.put('/addcontestant',requireLogin,(req,res)=>{
 router.put('/leavecontest',requireLogin,(req,res)=>{
 	Contest.findByIdAndUpdate(req.body.contestId,{
 		//let obj2 =  {user:req.user,score:0,no_trees:req.user.numplants}
-		$pull: {contestants: {user:req.user.name,score:req.user.score,no_trees:req.user.numplants}}
+		$pull: {contestants: {user:req.user.name}}
 	},{new:true},function(err,result){
 		if(err) {
         return res.status(422).json({error: err});
@@ -139,7 +139,7 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 	var d = new Date();
 	var n2 = (((d.getMonth()+1)*31 + d.getDate())*24 + d.getHours())*60 + d.getMinutes();
 	let allowAccess=0;
-	let response;
+	let response=n;
 	if(n==0)
 	{
 		allowAccess = 1;
@@ -149,11 +149,6 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 	{
 		allowAccess = 1;
 		response = n2;
-	}else
-	{
-		allowAccess = 0;
-		response = n;
-
 	}
 	User.findByIdAndUpdate(req.user._id,{
 		allowAccess:allowAccess,
@@ -167,14 +162,33 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
       });
 })
 
+
+router.post('/submitquestion',requireLogin,(req,res)=>{
+	var n = req.user.response
+	var d = new Date();
+	var n2 = (((d.getMonth()+1)*31 + d.getDate())*24 + d.getHours())*60 + d.getMinutes();
+	let allowAccess=0;
+	let response = n2;
+	User.findByIdAndUpdate(req.user._id,{
+		allowAccess:allowAccess,
+		response:response
+	},{new:true})
+	.then(function(result1) {
+          res.json({result: result1});
+      })
+      .catch(function(err1) {
+        res.status(422).json({error: err1});
+      });
+})
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
+	 //console.log(prv_score)
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
 	.then(function(result1) {
 		Contest.findByIdAndUpdate(result1.contest,{
-			$pull: {contestants: {user:req.user.name,score:req.user.score,no_trees:req.user.numplants}}
+			$pull: {contestants: {user:req.user.name}}
 		//	$push: {contestants: {user:req.user.name,score:g_score,no_trees:req.user.numplants}}
 		},{new:true})
 		    .then(function(result2) {
@@ -198,6 +212,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
         res.status(422).json({error: err2});
       });
 })
+
 
 // router.get('/leaderboard',requireLogin,(req,res)=>{
 // // 	Contest.load(function(err, contest) {
@@ -225,7 +240,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // 		console.log(err)
 // 	})
 // })
-router.get('/leaderboard',requireLogin,(req,res)=>{
+router.put('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
 	.sort({score: -1})
 	.then(user=>{
