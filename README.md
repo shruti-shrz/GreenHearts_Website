@@ -48,3 +48,6 @@ Web-app can be access at ```localhost:3000```
 ## How to Contribute
 Fork this repository, then clone it into your system.
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Deployed Release 1 Website: https://greenheart-webapp.herokuapp.com/
+
