@@ -150,16 +150,10 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 		allowAccess = 1;
 		response = n2;
 	}
-	User.findByIdAndUpdate(req.user._id,{
-		allowAccess:allowAccess,
-		response:response
-	},{new:true})
-	.then(function(result1) {
-          res.json({result: result1});
-      })
-      .catch(function(err1) {
-        res.status(422).json({error: err1});
-      });
+	
+          res.json({result: allowAccess});
+
+
 })
 
 

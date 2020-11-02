@@ -115,9 +115,6 @@ function ContestPage(props){
     }
 
     const addContestant=(userID,contestID)=>{
-        console.log("we are here")
-        console.log(contestID)
-        console.log(userID) 
         fetch("/addcontestant",{
             method:"put",
             headers:{"Content-Type":"application/json",
@@ -154,13 +151,11 @@ function ContestPage(props){
           })
           .then(res=>res.json())
           .then(data=>{
-              console.log("hellllllo")
-              console.log(data)
               setCurrentContest(0);
             if(data.error)
             { M.toast({html: data.error})}
             else
-            {M.toast({html: "Created!!"}) }
+            {M.toast({html: "Bye Bye!!"}) }
           });
     }
 
@@ -232,7 +227,7 @@ function ContestPage(props){
             {contests.length >currentContest
             ?
             <div>
-                <h1 style={{marginBottom:"-5px"}}>{contests[currentContest].title}</h1>
+                <h1 style={{marginBottom:"-5px"},{color:"brown"}}><i>{contests[currentContest].title}</i></h1>
             <div className="chatSection" >
                 <div className="chatBox">
                     <div className="chatWindow">

@@ -17,6 +17,7 @@
     float: right;
     width: 20%;
     margin: 30px 50px;
+    background-color: white;
     box-shadow:0px 0px 5px gray ;
 }
     
@@ -36,7 +37,7 @@
     background-color: transparent;
     font-size: large;
     border:none;
-    border-top: 1px solid lightgray; 
+    border-top: 1px solid gray; 
     width: 100%;
     padding-top: 7px;
     padding-bottom: 7px;
@@ -74,7 +75,7 @@
   border-style: solid;
   border-color: white;
   border-radius: 20px;
-  background-color: lightgray;
+  background-color:green;
   padding-left: 10px;
   padding-bottom: 5px;
   padding-right: 10px;
@@ -83,7 +84,7 @@
 .time{
     font-size: 10px;
     font-style: italic;
-    color: gray;
+    color: lightgray;
     margin-top: -20px;
     margin-bottom: 20px;
     margin-left: 620px;
@@ -92,20 +93,24 @@
 .message{
     font-size: 15px;
     margin-top: 0px;
+    color: white;
 }
 
 .sender{
     font-size: 20px;
     font-weight: 500;
     margin-top: 10px;
+    color: white;
 }
 
 .addContestant{
     padding: 10px;
     margin-left: 5px;
+    background-color: limegreen;
 }
 
 .exitContest{
     padding:10px;
     margin-left: 5px;
+    background-color: salmon;
 }

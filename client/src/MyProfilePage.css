@@ -48,6 +48,7 @@
   margin: 0;
   border-bottom-style: dotted;
   border-color: white;
+  min-width: 350px;
 }
 
 .profileLeft div {

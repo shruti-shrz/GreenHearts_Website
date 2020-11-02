@@ -86,7 +86,7 @@ function LoginPage(props)
     <div className="loginDiv">
       <input className='loginInput' name='name' onChange={handleChange} placeholder='Username' value={info.name} />
         {isSignUp && <input className='loginInput' name='email' onChange={handleChange} placeholder='Email' value={info.email} /> }
-        <input className='loginInput' name='password' onChange={handleChange} placeholder='Password' value={info.password} />
+        <input className='loginInput' name='password' type='password' onChange={handleChange} placeholder='Password' value={info.password} />
         <button className="greenButton" onClick={loginButton}>{isSignUp? 'Sign Up now' : 'Login'}</button>
         {!isSignUp && <button className="greenButton" onClick={()=>setIsSignUp(true)}>Sign up</button>}
         {spin && <Loader
