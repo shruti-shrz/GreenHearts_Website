@@ -44,7 +44,7 @@
 }
 
 .profileLeft p {
-  color:white;
+  color:black;
   margin: 0;
   border-bottom-style: dotted;
   border-color: white;
@@ -92,7 +92,7 @@ input[type="file"] {
 
 .custom-file-upload {
 
-    color:white;
+    color:black;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
