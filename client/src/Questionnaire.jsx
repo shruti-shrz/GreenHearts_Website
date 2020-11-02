@@ -7,7 +7,7 @@ function Questionnaire(){
     const [q3, setq3] = useState(-1);
     const [q4, setq4] = useState(-1);
     const [error, seterror] = useState("")
-    var allow=0;
+    const [allow, setallow] = useState(0)
 
     const submit=(score)=>{
         fetch('/questionnaire',{
@@ -48,7 +48,7 @@ function Questionnaire(){
           .then(data=>{
               console.log("ooooooo")
               console.log(data)
-              allow=data.result.allowAccess
+              setallow(data.result)
               console.log(allow)
             //  if(data.error)
             //  {
@@ -62,9 +62,23 @@ function Questionnaire(){
           });
     }
 
+    const update=()=>{
+        fetch('/submitquestion',{
+            method:"post",
+            headers:{"Content-Type":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+            body:JSON.stringify({
+            })
+          })
+          .then(res=>res.json())
+          .then(data=>{
+          });
+    }
+
     check()
-    if(allow==1){
     return(
+        allow===1?
         <div className="Questionnaire">
             <div className="Question">
                 <p>did you water your plants today??</p>
@@ -128,6 +142,7 @@ function Questionnaire(){
                             console.log("the score is : ")
                             console.log(4-(q1+q2+q3+q4))
                             submit(4-(q1+q2+q3+q4))
+                            update()
                             window.location.reload();
                         }
                         else{
@@ -139,8 +154,9 @@ function Questionnaire(){
                     </button>
             <h6>{error}</h6>
         </div>
-    );}
-    
+    :
+     <h1>You have already submitted your response!!</h1>
+    );
 }
 
 export default Questionnaire;
