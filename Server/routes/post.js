@@ -8,7 +8,7 @@ const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allpost',requireLogin,(req,res)=>{
 	Post.find()
-	.populate("postedBy","name")
+	.populate("postedBy","name url")
 	.populate("comments.postedBy", "_id name")
 	.then(posts=>{
 		res.json({posts})
@@ -19,7 +19,7 @@ router.get('/allpost',requireLogin,(req,res)=>{
 })
 router.get('/followingpost',requireLogin,(req,res)=>{
 	Post.find({postedBy:req.user.following})
-	.populate("postedBy","name")
+	.populate("postedBy","name url")
 	.populate("comments.postedBy", "_id name")
 	.then(posts=>{
 		res.json({posts})
@@ -33,6 +33,7 @@ router.get('/pinnedpost',requireLogin,(req,res)=>{
 	User.find({_id:req.user._id})
 	.populate({
 		path: 'pinnedpost',
+
 		model: 'Post',
 		populate: {
 			path: 'postedBy',
@@ -100,7 +101,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 })
 router.get('/mypost',requireLogin,(req,res)=>{
 	Post.find({postedBy:req.user._id})
-	.populate("postedBy","name")
+	.populate("postedBy","name url")
 	.populate("comments.postedBy", "_id name")
 	.then(myposts=>{
 		res.json({myposts})
@@ -115,7 +116,7 @@ router.put('/pinpost',requireLogin,(req,res)=>{
 	Post.findOne({_id:req.body.postId}, function(err,result){
 		console.log(result)
 		User.findByIdAndUpdate(req.user._id,{
-			$push:{pinnedpost:result._id}
+			$push:{pinnedpost:result}
 		},{
 			new:true
 		}).exec((err1,result1)=>{
