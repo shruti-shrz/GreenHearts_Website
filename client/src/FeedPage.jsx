@@ -247,7 +247,7 @@ function FeedPage(){
                 <div className="postCard">
                 <div>
                     <div>
-                    <img className="profilePhoto" src={props.postedBy.profileImage} alt="👤"/>
+                    <img className="profilePhoto" src={props.postedBy.url} alt="👤"/>
                     <h3>{props.postedBy.name}</h3>
                     </div>
                 </div>
