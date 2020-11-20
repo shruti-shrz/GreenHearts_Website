@@ -5,7 +5,7 @@ const User = mongoose.model("User");
 const Tip = mongoose.model("Tip");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = require('../keys');
+const {JWT_SECRET} = require('../config/keys');
 const requireLogin = require('../middleware/requireLogin');
 
 router.get('/home', function(req, res) {
