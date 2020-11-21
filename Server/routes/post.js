@@ -134,7 +134,10 @@ router.put('/pinpost',requireLogin,(req,res)=>{
  		$push:{likes:req.user._id}
  	},{
  		new:true
- 	}).exec((err,result)=>{
+ 	})
+ 	.populate("comments.postedBy","_id name")
+ 	.populate("postedBy","_id name url")
+ 	.exec((err,result)=>{
  		if(err){
  			return res.status(422).json({error:err})
  		}else{
@@ -147,7 +150,10 @@ router.put('/pinpost',requireLogin,(req,res)=>{
  		$pull:{likes:req.user._id}
  	},{
  		new:true
- 	}).exec((err,result)=>{
+ 	})
+ 	.populate("comments.postedBy","_id name")
+ 	.populate("postedBy","_id name url")
+ 	.exec((err,result)=>{
  		if(err){
  			return res.status(422).json({error:err})
  		}else{

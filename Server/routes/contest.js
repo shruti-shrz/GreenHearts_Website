@@ -237,6 +237,8 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 router.put('/leaderboard',requireLogin,(req,res)=>{
 	User.find({contest:req.body.contestId})
 	.sort({score: -1})
+	.populate("user","name url numplants score")
+	.populate("comments.postedBy", "_id name")
 	.then(user=>{
 		res.json(user)
 	})
