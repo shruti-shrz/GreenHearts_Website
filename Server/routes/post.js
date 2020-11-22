@@ -59,9 +59,9 @@ router.get('/pinnedpost',requireLogin,(req,res)=>{
 })
 
 router.post('/createpost',requireLogin,(req,res)=>{
-	const {title,body,photo} = req.body
+	const {title,body,photo,tag} = req.body
 	//console.log(req.body)
-	if(!title||!body)
+	if(!title||!body || !tag)
 	{
 		return res.status(422).json({error:"Please fill required details"})
 
@@ -73,6 +73,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 		const post = new Post({
 		title,
 		body,
+		tag,
 		postedBy:req.user
 	})
 		post.save().then(result=>{
@@ -88,6 +89,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 		title,
 		body,
 		photo,
+		tag,
 		postedBy:req.user
 	})
 		post.save().then(result=>{
@@ -117,6 +119,24 @@ router.put('/pinpost',requireLogin,(req,res)=>{
 		console.log(result)
 		User.findByIdAndUpdate(req.user._id,{
 			$push:{pinnedpost:result}
+		},{
+			new:true
+		}).exec((err1,result1)=>{
+			if(err){
+ 			return res.status(422).json({error:err1})
+	 		}else{
+	 			res.json(result1)
+	 		}
+		})
+	})
+
+})
+router.put('/unpinpost',requireLogin,(req,res)=>{
+
+	Post.findOne({_id:req.body.postId}, function(err,result){
+		console.log(result)
+		User.findByIdAndUpdate(req.user._id,{
+			$pull:{pinnedpost:result}
 		},{
 			new:true
 		}).exec((err1,result1)=>{

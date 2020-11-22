@@ -235,15 +235,17 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // 	})
 // })
 router.put('/leaderboard',requireLogin,(req,res)=>{
-	User.find({contest:req.body.contestId})
+	
+	var query = User.find({contest:req.body.contestId}).select('_id name score numplants url');
+				
+	query
 	.sort({score: -1})
-	.populate("user","name url numplants score")
-	.populate("comments.postedBy", "_id name")
-	.then(user=>{
-		res.json(user)
+	.exec((err,result)=>{
+		if(err)
+			return res.status(422).json({error:err})
+		else
+		res.json(result)
 	})
-	.catch(err=>{
-		console.log(err)
-	})
+	
 })
 module.exports = router
