@@ -1,8 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import M from 'materialize-css';
-import {List} from 'react-virtualized';
+import M, { textareaAutoResize } from 'materialize-css';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 
 var messages;
+const medals=['🥇','🥈','🥉'];
 function ContestPage(props){
 
     const [contestName, setcontestName] = useState("");
@@ -11,34 +14,55 @@ function ContestPage(props){
     const [message, setmessage] = useState("")
     const [userName, setuserName] = useState("")
     const [leader, setleader] = useState([])
+    const [image, setimage] = useState("")
+    const [currentUser, setcurrentUser] = useState("")
+    const [CreateError, setCreateError] = useState(false)
+    const [suggestions, setsuggestions] = useState([])
+    const [addLabel, setaddLabel] = useState("Add Contestant")
 
-    //const [messages, setmessages] = useState([]);
+
     if(contests.length>0)
     messages=contests[currentContest].comment_contest;
 
-    function messageRenderer({
-        key, // Unique key within array of rows
-        index, // Index of row within collection
-        isScrolling, // The List is currently being scrolled
-        isVisible, // This row is visible within the List (eg it is not an overscanned row)
-        style // Style object to be applied to row (to position it)
-      }){
-        return(
-            <div key={key} style={style} className="chatCard">
-                <p className="sender">
-                    {messages[index].sentBy}
-                </p>
-                <p className="message">
-                    {messages[index].text}
-                </p>
-                <p className="time">
-                    {messages[index].time}
-                </p>
-            </div>
-        );
+    //profile
+    useEffect(()=>{
+        fetch('/profile',{
+            headers:{
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+          }).then(res=>res.json())
+          .then(result=>{
+              console.log(result.user);
+            setcurrentUser(result.user);
+          });
+    },[])
+
+    const postDetails=()=>{
+
+        const data=new FormData();
+        data.append("file",image);
+        data.append("upload_preset","gh-images");
+        data.append("cloud_name", "green-hearts");
+        fetch("https://api.cloudinary.com/v1_1/green-hearts/image/upload",{
+        method:"post",
+        body:data
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log("done");
+            console.log(data.url);
+            sendMessage(message,data.url,contests[currentContest]._id);
+            setimage("");
+        })
+        .catch(error=>{console.log(error);})
     }
 
-    const sendMessage=(message,id)=>{
+
+    const sendMessage=(message,url,id)=>{
+        console.log(message);
+        console.log(url);
+        console.log("here");
+        if(!(message==="" && !url)){
         fetch("/contest_comment",{
             method:"put",
             headers:{"Content-Type":"application/json",
@@ -46,7 +70,7 @@ function ContestPage(props){
           },
             body:JSON.stringify({
                 text:message,
-                photo:"default",
+                photo:url,
                 contestId:id
             })
           })
@@ -59,6 +83,7 @@ function ContestPage(props){
           }).catch(error=>{
             console.log(error);
         });
+    }
     }
 
     const createContest=(name)=>{
@@ -73,11 +98,12 @@ function ContestPage(props){
           })
           .then(res=>res.json())
           .then(data=>{
-              console.log("created")
               console.log(data)
              if(data.error)
              {
-                 M.toast({html: data.error})}
+                 M.toast({html: data.error})
+                 setCreateError(true)    
+            }
              else
              {
                M.toast({html: "Created!!"})
@@ -87,14 +113,15 @@ function ContestPage(props){
           });
     }
     
-    const searchContestant=(name)=>{
+    //suggestions
+    useEffect(()=>{
         fetch("/searchcontestant",{
             method:"post",
             headers:{"Content-Type":"application/json",
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
           },
             body:JSON.stringify({
-                query:name
+                query:userName
             })
           })
           .then(res=>res.json())
@@ -105,14 +132,10 @@ function ContestPage(props){
                   M.toast({html: data.error})}
               else
               {
-                setuserName("")
-                if(data.user.length>0)
-                addContestant(data.user[0]._id,contests[currentContest]._id)
-                else
-                M.toast({html: "couldn't find user!!"})
-              }
+                  setsuggestions(data.user);
+                }
           });
-    }
+    },[userName])
 
     const addContestant=(userID,contestID)=>{
         fetch("/addcontestant",{
@@ -159,6 +182,7 @@ function ContestPage(props){
           });
     }
 
+    //myContests    
     useEffect(()=>{
         fetch('/mycontest',{
             headers:{
@@ -170,6 +194,7 @@ function ContestPage(props){
           });
     },[messages])
 
+    //LeaderBoard
     useEffect(()=>{
         if(contests.length>0){
         fetch('/leaderboard',{
@@ -185,122 +210,210 @@ function ContestPage(props){
             setleader(result)
           });
         }
-    },[messages ])
+    },[messages])
 
 
     return(
-        <div>
-            <div className="contestantListSection" style={{boxShadow:"0px 0px 5px gray"},{paddingTop:"5px"}} >
-            <input 
-                    //className="contestButton"
-                    style={{border:"10px solid black"},{size:"15px"},{padding:"5px"},{marginBottom:"-5px"},{marginLeft:"30px"}}
-                    onChange={(event)=>{
-                        setcontestName(event.target.value);
-                    }}
-                    type="text" placeholder="Enter contest name"></input>
-                <div className="contestantListSection" style={{width:"65%"}}>
-                    <button 
-                        onClick ={()=>{
-                        createContest(contestName)
-                        }}
-                        className="contestButton" 
-                        style={{color:"green"},{fontStyle:"italic"}}>
-                            Create Contest
-                    </button>
-                </div>
-                <text style={{marginBottom:"-20px"},{marginLeft:"60px"}}><u><strong>Your Contests</strong></u></text>
-                <div className="contestantListSection" style={{width:"65%"}}>
-                    {contests.map((props,index)=>{
-                        return(
-                            <button
+        <div style={{position:"relative"}}>
+            <div className="navSection"
+            style={{marginTop:contests.length >currentContest? "20px":"0px"}}>
+            <TextField
+                id="outlined-helperText"
+                style={{margin:"5px"}}
+                label="Enter contest name"
+                height="20px"
+                value={contestName}
+                helperText={CreateError?"Contest already exists":""}
+                variant="outlined"
+                onChange={(event)=>{
+                    setcontestName(event.target.value);
+                }}
+            />
+            <Button 
+                variant="contained"
+                color="primary"
+                onClick ={()=>{
+                createContest(contestName)
+                }} 
+                style={{
+                    borderRadius: "8",
+                    backgroundColor: "#21b6ae",
+                    fontSize: "12px",
+                    width: "80%",
+                    marginLeft:"10%",
+                    marginRight:"10%"
+                }}>
+                 Create Contest
+            </Button>
+            <h3 style={{textAlign:"center"}}>YOUR CONTESTS</h3>
+            <ul>
+            {contests.map((props,index)=>{
+                return(
+                    <li>
+                        <a href="#" 
                             onClick={()=>{
                                 setCurrentContest(index);
-                            }}
-                            className="contestButton">
-                                {props.title}
-                            </button>
-                    );
-                    })}
-                </div>
+                            }}>
+                            <span className={index===currentContest?"selectedContest":"contestName"}>{props.title}</span>
+                        </a>
+                    </li>
+                );
+            })}
+            </ul>
+                
             </div>
             
             {contests.length >currentContest
             ?
-            <div>
-                <h1 style={{marginBottom:"-5px"},{color:"brown"}}><i>{contests[currentContest].title}</i></h1>
-            <div className="chatSection" >
-                <div className="chatBox">
-                    <div className="chatWindow">
-                        <List
-                            width={698}
-                            height={500}
-                            rowCount={contests[currentContest].comment_contest.length}
-                            rowHeight={100}
-                            rowRenderer={messageRenderer}
-                        />
-                    </div>
-                    <input 
-                        onChange={(event)=>{
-                            setmessage(event.target.value);
-                        }}
-                        style={{height:"30px"},{width:"650px"}} 
-                        placeholder="Type your message here!!" 
-                        type="text" id="message"
-                        value={message}/>
-                    <button 
-                    onClick={()=>{
-                        sendMessage(message,contests[currentContest]._id)
-                    }}
-                    className="icon" >
-                        <img 
-                            style={{height:"20px"},{width:"20px"}} 
-                            src="./send-icon.png"/>
-                    </button>
-                </div>
-                
-            </div>
-            <div className="leaderBoardSection">
-                <div>
-                    <h2 style={{textAlign:"center"}}>Leader Board</h2>
-                    <text style={{textAlign:"center"},{marginBottom:"-60px"},{marginLeft:"83px"}}>User name &nbsp;&nbsp; Score</text>
-                </div> 
-                {leader.map(contestant=>{
-                   return(
-                    <h5 className="lbRow"><strong>{contestant.name}</strong>&nbsp;&nbsp;&nbsp;{contestant.score}</h5>
-                   );
-               })}
-            </div>
-            <div style={{marginTop:"-200px"}}>
-            <div style={{width:"220px"},{marginLeft:"40px"}}>
-                    <input 
-                        onChange={(event)=>{
-                            setuserName(event.target.value);
-                        }}
-                        style={{height:"30px"},{width:"220px"}} 
-                        placeholder="enter username... " 
-                        type="text" id="userName"
-                        value={userName}/>
-                    <br></br>
-                    <button
-                    onClick={()=>{
-                        searchContestant(userName);
-                    }}
-                    
-                    className="addContestant">
-                            Add Contestant
-                    </button>
-                    <button 
+            <div className="displayContest">
+
+                <div className="heading" style={{alignItems:"center"}}>
+                    <h1 style={{marginLeft:"5%"},{color:"brown"},{width:"45%"}}>{contests[currentContest].title}</h1>
+                    <button style={{marginLeft:"0%"},{marginRight:"16%"}}
                      onClick={()=>{
                          removeContestant(contests[currentContest]._id)
                     }}
                     className="exitContest">
                             Exit Contest
                     </button>
+                    <div style={{float:"right"},{display:"flex"}}>
+                        <div >
+                            <TextField
+                                autoComplete="off"
+                                id="outlined-helperText"
+                                label={addLabel}
+                                height="20px"
+                                value={userName}
+                                helperText={CreateError?"Contest already exists":""}
+                                variant="outlined"
+                                onChange={(event)=>{
+                                    setuserName(event.target.value);
+                                    //searchContestant(userName);
+                                }}
+                                onBlur={(event)=>{
+                                    setaddLabel("Add Contestant");
+                                }}
+                                onFocus={(event)=>{
+                                    setaddLabel("Search by username");
+                                }}
+                            />
+                            {suggestions.length>0 && userName!=""?
+                            <div className="suggestions">
+                            <ul>
+                            {suggestions.map((props,index)=>{
+                                return(
+                                <li>
+                                    <a href="#" 
+                                        onClick={()=>{
+                                            console.log("namaste")
+                                            addContestant(props._id,contests[currentContest]._id);
+                                            setsuggestions([]);
+                                            setuserName("");
+                                        }}>
+                                            <span>{props.name}</span>
+                                    </a>
+                                </li>
+                                );
+                            })}
+                            </ul>
+                           </div>
+                                :
+                                <div></div>
+                            }
+                        </div>
+                    
                 </div>
+                
+            </div>
+                <div>
+                <div className="chatSection" >
+                    <div className="chatBox">
+                    <div className="chatWindow">
+                    {messages.map(message=>{
+                        return(
+                        <div className="shell">
+                            <div className={currentUser.name===message.sentBy?"chatCardR":"chatCardL"}>
+                            <p className="sender">
+                                {message.sentBy}
+                            </p>
+                            {message.photo!="default" ? message.photo ? <img className="imagesent" src={message.photo} alt="the posted image"/> : <div></div> : <div></div>}
+                            
+                            <p className="message">
+                                {message.text}
+                            </p>
+                            <p className="time">
+                                {message.time}
+                            </p>
+                            </div>
+                        </div>
+                        );
+                    })}
+                    </div>
+                    <div className="inputsection">
+                        <input id="image-input" type="file" className="icon" onChange={(event)=>{
+                            setimage(event.target.files[0]);
+                        }} />
+                        <label for="image-input">
+                        <img style={{height:"20px"},{width:"20px"}} src="./camera-icon.png"/>
+                        </label>
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Type Something..."
+                            style={{width:"88%"}}
+                            multiline
+                            rowsMax={4}
+                            value={message}
+                            onChange={(event)=>{
+                                setmessage(event.target.value);
+                            }}
+                            variant="outlined"
+                        />
+                        <button 
+                        onClick={()=>{
+                            postDetails()
+                        }}
+                        className="icon" >
+                            <img 
+                                style={{height:"20px"},{width:"20px"}} 
+                                src="./send-icon.png"/>
+                        </button>
+                    </div>
+                </div>
+                </div>
+                <div className="leaderBoardSection">
+                <div>
+                    <h2 style={{textAlign:"center"}}>Leader Board</h2>
+                </div> 
+                {leader.map((contestant,index)=>{
+                   return(
+                        <div  className="lbRow">
+                            
+                            <div style={{width:"25%"},{marginLeft:"10px"},{float:"left"},{alignItems:"center"}}>
+                                <Avatar style={{marginLeft:"10px"}} alt="profile" src="https://www.cbronline.com/wp-content/uploads/2016/06/what-is-URL-1024x669.jpg" />
+                            </div>
+                            <div style={{width:"60%"}}>
+                            <a style={{textDecoration:"none"}} href="#" onClick={()=>{
+                                        console.log("hi");
+                                    }}>
+                                <h5 style={{margin:"0px"},{color:"lawngreen"}}>
+                                    {contestant.name}
+                                </h5></a>
+                                <h5 style={{margin:"0px"}}>{contestant.score}</h5>
+                            </div>
+                            <div style={{width:"15%"},{paddingTop:"10px"}}>
+                                <h5 style={{margin:"0%"}}>{index<3? medals[index]:""}</h5>
+                            </div>
+                        
+                        </div>
+                     );
+               })}
+            </div>
             </div>
             </div>
             :
+            <div className="displayContest"> 
             <h1>nothing to display</h1>
+            </div>
         }
         </div>
     );
