@@ -60,13 +60,8 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 
 router.post('/searchcontestant',requireLogin,(req,res)=>{
 	const pattern = new RegExp("^"+ req.body.query);
-
- User.find({name: req.user.name})
- .populate("user.followers", "name")
- .find({name:{$regex :pattern}})
+ User.find({name:{$regex :pattern}})
     .then(function(user) {
-    	
-    	console.log(user)
       res.json({user: user});
     })
     .catch(function(err) {
@@ -200,7 +195,7 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 		allowAccess = 1;
 		response = n2;
 	}
-
+	
           res.json({result: allowAccess});
 
 
@@ -225,26 +220,8 @@ router.post('/submitquestion',requireLogin,(req,res)=>{
       });
 })
 router.post('/questionnaire',requireLogin,(req,res)=>{
-	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
+	 var g_score = req.user.score + req.user.numplants*req.body.no_y
 	 //console.log(prv_score)
-	 const {water, manure, weeds} = req.answers
-	 Date date = new Date()
-	 if(water) {
-		 User.findByIdAndUpdate(req.user._id, {
-			 water: date
-		 }, {new:true})
-	 }
-	 if(manure) {
-		 User.findByIdAndUpdate(req.user._id, {
-			 manure: date
-		 }, {new:true})
-	 }
-	 if(weeds) {
-		 User.findByIdAndUpdate(req.user._id, {
-			 weeds: date
-		 }, {new:true})
-	 }
-
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
@@ -303,9 +280,9 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // 	})
 // })
 router.put('/leaderboard',requireLogin,(req,res)=>{
-
+	
 	var query = User.find({contest:req.body.contestId}).select('_id name score numplants url');
-
+				
 	query
 	.sort({score: -1})
 	.exec((err,result)=>{
@@ -314,6 +291,6 @@ router.put('/leaderboard',requireLogin,(req,res)=>{
 		else
 		res.json(result)
 	})
-
+	
 })
 module.exports = router

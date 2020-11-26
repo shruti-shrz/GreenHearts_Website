@@ -3,6 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Contest = mongoose.model("Contest")
 const User = mongoose.model("User")
+const Plant = mongoose.model("IPlant")
 const requireLogin = require('../middleware/requireLogin')
 const fetch = require('node-fetch')
 
@@ -12,7 +13,7 @@ router.post('/api',requireLogin,(req,res)=>{
 
 })
 
-router.get('/plantSuggest/:latlon',async (requ,reu)=>{
+router.get('/plantSuggest/:latlon',async (requ,resu)=>{
 	 const latlon = requ.params.latlon.split(',');
 	 const lat = latlon[0];
 	 const lon = latlon[1];
@@ -29,7 +30,7 @@ const options = {
 	"method": "GET",
 	"hostname": "api.ambeedata.com",
 	"port": null,
-	"path": "/soil/latest/by-lat-lng?lat="+l.toString()+"&lng="+m.toString(),
+	"path": "/soil/latest/by-lat-lng?lat="+lat.toString()+"&lng="+lon.toString(),
 	"headers": {
 		"x-api-key": "JlFnNmzjbH8dX9TYo3GRsa0tCXpmEau72cxomuFl",
 		"Content-type": "application/json"
@@ -50,19 +51,46 @@ const req = http.request(options, function (res) {
 		const moist = json['data'][0]['soil_moisture'];
 		console.log(temper)
 		console.log(moist)
-		Plant.find({requ.body.type})
-		.exec((err,result)=>{
- 		if(err){
- 			return res.status(422).json({error:err})
- 		}else{
- 			res.json(result)
- 		}
- 	})
+		Plant.find({type:requ.body.type})
+		.then(function(result) {
+			if((result.temp <= temper + 10 && result.temp >= temper-10))
+			{
+				if((result.water - (requ.body.water+(moist/100*5)))<=3)
+				{
+					var pl = (result.manure + result.pesticide)/2;
+					var gl = (requ.body.manure + requ.body.pest)/2;
+					if(gl>= pl-1)
+					{
+						resu.json({result: result});
+					}else
+					resu.json({result: result});
+				}else
+				resu.json({result: result});
+			}
+		else
+          resu.json({result: result});
+      })
+      .catch(function(err) {
+        resu.status(422).json({error: err});
+      });
 	});
 });
 
 req.end();
+
+//console.log(temper)
 	
+})
+
+router.post('/searchplant',requireLogin,(req,res)=>{
+	const pattern = new RegExp("^"+ req.body.query);
+ Plant.find({name:{$regex :pattern}})
+    .then(function(plant) {		
+      res.json({plant: plant});
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 })
 
 module.exports = router
