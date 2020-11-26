@@ -49,7 +49,20 @@ const UserSchema = new mongoose.Schema({
   allowAccess:{
     type:Number,
     default:1
+  },
+  water: {
+    type: Date,
+    default:Date.now
+  },
+  manure: {
+    type: Date,
+    default:Date.now
+  },
+  weeds: {
+    type: Date,
+    default:Date.now
   }
+
 });
 
 mongoose.model("User", UserSchema);
