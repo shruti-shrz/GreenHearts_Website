@@ -136,7 +136,7 @@ router.put('/unpinpost',requireLogin,(req,res)=>{
 	Post.findOne({_id:req.body.postId}, function(err,result){
 		console.log(result)
 		User.findByIdAndUpdate(req.user._id,{
-			$pull:{pinnedpost:result}
+			$pull:{pinnedpost:result._id}
 		},{
 			new:true
 		}).exec((err1,result1)=>{

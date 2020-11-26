@@ -9,6 +9,7 @@ mongoose.connect(MONGOURI,{
 	 useNewUrlParser: true,
 	 useUnifiedTopology: true,
 	  useFindAndModify: false 
+	  
 });
 
 mongoose.connection.on('connected',()=>{
@@ -30,6 +31,7 @@ app.use(require('./routes/post'));
 app.use(require('./routes/contest'));
 app.use(require('./routes/user'));
 app.use(require('./routes/post'));
+app.use(require('./routes/plantSugg'));
 
 if(process.env.NODE_ENV=="production"){
 	app.use(express.static('client/build'))
@@ -38,6 +40,8 @@ if(process.env.NODE_ENV=="production"){
 		res.sendFile(path.resolve(__dirname,'client','build','index.html'))
 	})
 }
+
+
 app.listen(PORT,()=>{
 	console.log("server is running on ",PORT)
 });
