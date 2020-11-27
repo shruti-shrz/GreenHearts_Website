@@ -49,8 +49,6 @@ const req = http.request(options, function (res) {
 		const json = JSON.parse(body.toString());
 		const temper = json['data'][0]['soil_temperature'];
 		const moist = json['data'][0]['soil_moisture'];
-		console.log(temper)
-		console.log(moist)
 		Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
 			if((result.temp <= temper + 10 && result.temp >= temper-10))

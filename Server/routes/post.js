@@ -61,13 +61,45 @@ router.get('/pinnedpost',requireLogin,(req,res)=>{
 router.post('/createpost',requireLogin,(req,res)=>{
 	const {title,body,photo,tag} = req.body
 	//console.log(req.body)
-	if(!title||!body || !tag)
+	if(!title||!body)
 	{
 		return res.status(422).json({error:"Please fill required details"})
 
 	}
 	req.user.password = undefined
-	if(!photo)
+	if(!tag && !photo)
+	{
+		console.log("check")
+		const post = new Post({
+		title,
+		body,
+		postedBy:req.user
+	})
+		post.save().then(result=>{
+		res.json({post:result})
+	})
+	.catch(err=>{
+		console.log(err)
+	})
+	}
+	else
+	if(!tag && photo)
+	{
+		console.log("check")
+		const post = new Post({
+		title,
+		body,
+		photo,
+		postedBy:req.user
+	})
+		post.save().then(result=>{
+		res.json({post:result})
+	})
+	.catch(err=>{
+		console.log(err)
+	})
+}else
+	if(!photo && tag)
 	{
 		console.log("check")
 		const post = new Post({
