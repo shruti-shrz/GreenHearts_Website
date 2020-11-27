@@ -6,7 +6,7 @@ const User = mongoose.model("User")
 const Plant = mongoose.model("IPlant")
 const requireLogin = require('../middleware/requireLogin')
 const fetch = require('node-fetch')
-
+const {API_KEY} = require('../config/keys');
 router.post('/api',requireLogin,(req,res)=>{
 
 	const {lan,lat} = req.body;
@@ -32,7 +32,7 @@ const options = {
 	"port": null,
 	"path": "/soil/latest/by-lat-lng?lat="+lat.toString()+"&lng="+lon.toString(),
 	"headers": {
-		"x-api-key": "JlFnNmzjbH8dX9TYo3GRsa0tCXpmEau72cxomuFl",
+		"x-api-key": API_KEY,
 		"Content-type": "application/json"
 	}
 };
@@ -51,7 +51,7 @@ const req = http.request(options, function (res) {
 		const moist = json['data'][0]['soil_moisture'];
 		console.log(temper)
 		console.log(moist)
-		Plant.find({type:requ.body.type})
+		Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
 			if((result.temp <= temper + 10 && result.temp >= temper-10))
 			{
