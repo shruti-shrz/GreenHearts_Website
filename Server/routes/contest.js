@@ -59,8 +59,8 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 })
 
 router.post('/searchcontestant',requireLogin,(req,res)=>{
-	let pattern = new RegExp("^"+ req.body.query);
-  User.find({name: {$regex: pattern}})
+	const pattern = new RegExp("^"+ req.body.query);
+ User.find({name:{$regex :pattern}})
     .then(function(user) {
       res.json({user: user});
     })
@@ -69,25 +69,70 @@ router.post('/searchcontestant',requireLogin,(req,res)=>{
     });
 })
 
-router.put('/addcontestant',requireLogin,(req,res)=>{
-	let no_trees =0;
-	User.findByIdAndUpdate(req.body.followId,{
-		$push: {contest: req.body.contestId}
-	},{new:true},function(err,result){
-		if(err) {
-        return res.status(422).json({error: err});
+router.put('/addcontestant',requireLogin,async (req,res)=>{
+	let flag=1;
+  let no_trees =0;
+  let users;
+  try {
+    users = await User.findOne({_id:req.body.followId},{contest:req.body.contestId})
+    if(users){
+      flag=0
+      return res.status(422).json({error: "Contestant Already Exist"});
     }
-    Contest.findByIdAndUpdate(req.body.contestId,{
-    	$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
-    },{new:true})
-    .then(function(result1) {
-          res.json({result: result});
-      })
-      .catch(function(err1) {
-        res.status(422).json({error: err1});
-      });
-	})
+    let result;
+    let result1;
+    if(!flag){
+      result = await User.findByIdAndUpdate(req.body.followId,
+      	{$push: {contest: req.body.contestId}
+      },{new:true});
+      result1 = await Contest.findByIdAndUpdate(req.body.contestId,
+      	{$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
+      },{new:true});
+    }
+    res.json(result1);
+  } catch (error) {
+    res.json(error)
+  }
 })
+// router.put('/addcontestant',requireLogin,(req,res)=>{
+// 	let flag=1;
+// 	let no_trees =0;
+// 	User.findOne({_id:req.body.followId},{contest:req.body.contestId},function(err2,result2){
+// 		if(!err2)
+// 		{
+// 			if(result2)
+// 			{
+// 				flag=0;
+// 			console.log("Exist")
+// 			return res.json({error: "Contestant Already Exist"});
+// 			}
+			
+// 		}
+// 	})
+	
+
+// 	if(flag===1)
+// 	{
+// 		User.findByIdAndUpdate(req.body.followId,{
+// 		$push: {contest: req.body.contestId}
+// 	},{new:true},function(err,result){
+// 		if(err) {
+//         return res.status(422).json({error: err});
+//     }
+//     Contest.findByIdAndUpdate(req.body.contestId,{
+//     	$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
+//     },{new:true})
+//     .then(function(result1) {
+//           res.json({result: result});
+//       })
+//       .catch(function(err1) {
+//         res.status(422).json({error: err1});
+//       });
+// 	})
+	
+// 	}
+	
+// })
 
 router.put('/leavecontest',requireLogin,(req,res)=>{
 	Contest.findByIdAndUpdate(req.body.contestId,{
@@ -175,7 +220,7 @@ router.post('/submitquestion',requireLogin,(req,res)=>{
       });
 })
 router.post('/questionnaire',requireLogin,(req,res)=>{
-	 var g_score = req.user.score + req.user.numplants*req.body.no_y +1
+	 var g_score = req.user.score + req.user.numplants*req.body.no_y
 	 //console.log(prv_score)
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
