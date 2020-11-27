@@ -6,8 +6,8 @@ const Plant = mongoose.model("Plant");
 const requireLogin = require('../middleware/requireLogin');
 const requireLogin2 = require('../middleware/requireLogin2');
 
-router.get("/user/:id", requireLogin, function(req, res) {
-  User.findById(req.param.id)
+router.get("/user", requireLogin, function(req, res) {
+  User.findById(req.id)
     .select("-password")
     .populate({
       path: 'followers',
