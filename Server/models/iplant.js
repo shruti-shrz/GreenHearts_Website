@@ -11,17 +11,17 @@ const IPlantSchema = new mongoose.Schema({
     require: true
   },
   soilType: {
-    type: Number,
+    type: String,
     require: true
   },
   url: {
     type: String,
     require: true
   },
-  type: {
+  type: [{
     type: Number,
     require: true
-  },
+  }],
   temp: {
     type: Number,
     require: true
