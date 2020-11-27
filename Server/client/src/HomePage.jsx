@@ -19,9 +19,9 @@ function HomePage(props)
     props.Setter('LoginPage')
   }
 
-  function handleMyPlants()
+  function handlePlantSuggester()
   {
-    if(props.LoginStat) props.Setter('MyPlantsPage');
+    if(props.LoginStat) props.Setter('PlantSuggester');
     else alert("Please Sign In");
   }
 
@@ -49,7 +49,7 @@ function handleQuestionnaire(){
     </div>
     <button className="homeButton" onClick={handleQuestionnaire}><i class="material-icons">assignment_turned_in</i>Questionnaire</button>
     <button className="homeButton" onClick={handleContest}>🎖Contests</button>
-    <button className="homeButton" onClick={handleMyPlants}><i class="material-icons">local_florist</i>MyPlants</button>
+    <button className="homeButton" onClick={handlePlantSuggester}><i class="material-icons">local_florist</i>MyPlants</button>
     <button className="homeButton" onClick={handleFeed}><i class="material-icons">view_day</i>Feed</button>
     </div>
   );
