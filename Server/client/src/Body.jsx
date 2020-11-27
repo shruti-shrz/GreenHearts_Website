@@ -3,10 +3,10 @@ import FeedPage from './FeedPage';
 import ContestPage from './ContestPage';
 import HomePage from './HomePage.jsx';
 import LoginPage from './LoginPage.jsx';
-import MyPlantsPage from './MyPlantsPage.jsx';
 import MyProfilePage from './MyProfilePage.jsx';
 import Questionnaire from './Questionnaire';
 import CustomizedDialogs from './schumma.jsx';
+import PlantSuggester from './PlantSuggester';
 
 function Body(props)
 {
@@ -17,6 +17,7 @@ function Body(props)
         {props.PageName==='LoginPage' && <LoginPage Setter={props.Setter} LoginSetter={props.LoginSetter} />}
         {props.PageName==='MyPlantsPage' && <CustomizedDialogs Setter={props.Setter} />}
         {props.PageName==='MyProfilePage' && <div><MyProfilePage Setter={props.Setter} /><MyPlantsPage Setter={props.Setter} /></div>}
+        {props.PageName==='PlantSuggester' && <PlantSuggester Setter={props.Setter} />}
         {props.PageName==='FeedPage' && <FeedPage Setter={props.Setter} />}
         {props.PageName==='ContestPage' && <ContestPage Setter={props.Setter}/>}
         {props.PageName==='Questionnaire' && <Questionnaire Setter={props.Setter}/>}
