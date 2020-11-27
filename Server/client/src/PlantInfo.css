@@ -1,0 +1,22 @@
+.leftInfo {
+  float:left;
+  margin-left: 40px;
+  margin-top: 20px;
+  text-align: left;
+  padding: 10px;
+}
+
+.leftInfo img {
+  width:400px;
+  border-radius: 7px;
+  shadow: 0 10px 10px 0;
+
+}
+
+.leftInfo p {
+margin-left: 40px;
+}
+
+.totalInfo {
+  margin: 10px;
+}

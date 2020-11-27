@@ -14,3 +14,22 @@ input[type="file"] {
 .c-file-upload:hover {
     color:#41D01E;
 }
+
+.PoPplantHolder {
+  width:auto;
+  height: auto;
+  background-color: white;
+  border-radius: 7px;
+  float: right;
+  margin-right: 40px;
+  margin-top: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.PoPfoll {
+  float:right;
+  margin: 20px 40px;
+}
