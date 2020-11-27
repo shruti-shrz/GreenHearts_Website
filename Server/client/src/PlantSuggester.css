@@ -1,0 +1,16 @@
+.questionQuiz{
+    width:100%;
+    margin:10px 0px;
+    border-bottom:1px dotted gray ;
+}
+
+.questionQuiz:last-child{
+    border: none;
+}
+
+.questionQuiz p{
+    text-align: center;
+    color: lightseagreen;
+    font-size: larger;
+    font-weight: bold;
+}

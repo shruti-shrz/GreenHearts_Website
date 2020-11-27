@@ -11,15 +11,14 @@ function ContestPage(props){
     const [contestName, setcontestName] = useState("");
     const [contests, setcontests] = useState([]);
     const [currentContest, setCurrentContest]= useState(0);
-    const [message, setmessage] = useState("")
-    const [userName, setuserName] = useState("")
-    const [leader, setleader] = useState([])
-    const [image, setimage] = useState("")
-    const [currentUser, setcurrentUser] = useState("")
-    const [CreateError, setCreateError] = useState(false)
-    const [suggestions, setsuggestions] = useState([])
-    const [addLabel, setaddLabel] = useState("Add Contestant")
-
+    const [message, setmessage] = useState("");
+    const [userName, setuserName] = useState("");
+    const [leader, setleader] = useState([]);
+    const [image, setimage] = useState("");
+    const [currentUser, setcurrentUser] = useState("");
+    const [CreateError, setCreateError] = useState(false);
+    const [suggestions, setsuggestions] = useState([]);
+    const [addLabel, setaddLabel] = useState("Add Contestant");
 
     if(contests.length>0)
     messages=contests[currentContest].comment_contest;
@@ -56,7 +55,6 @@ function ContestPage(props){
         })
         .catch(error=>{console.log(error);})
     }
-
 
     const sendMessage=(message,url,id)=>{
         console.log(message);
