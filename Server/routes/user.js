@@ -7,7 +7,7 @@ const requireLogin = require('../middleware/requireLogin');
 const requireLogin2 = require('../middleware/requireLogin2');
 
 router.get("/user", requireLogin, function(req, res) {
-  User.findById(req.id)
+  User.findById(req.body.id)
     .select("-password")
     .populate({
       path: 'followers',
