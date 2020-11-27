@@ -106,10 +106,10 @@ router.put('/addcontestant',requireLogin,async (req,res)=>{
 // 			console.log("Exist")
 // 			return res.json({error: "Contestant Already Exist"});
 // 			}
-			
+
 // 		}
 // 	})
-	
+
 
 // 	if(flag===1)
 // 	{
@@ -129,9 +129,9 @@ router.put('/addcontestant',requireLogin,async (req,res)=>{
 //         res.status(422).json({error: err1});
 //       });
 // 	})
-	
+
 // 	}
-	
+
 // })
 
 router.put('/leavecontest',requireLogin,(req,res)=>{
@@ -195,7 +195,7 @@ router.post('/accessquestion',requireLogin,(req,res)=>{
 		allowAccess = 1;
 		response = n2;
 	}
-	
+
           res.json({result: allowAccess});
 
 
@@ -222,6 +222,27 @@ router.post('/submitquestion',requireLogin,(req,res)=>{
 router.post('/questionnaire',requireLogin,(req,res)=>{
 	 var g_score = req.user.score + req.user.numplants*req.body.no_y
 	 //console.log(prv_score)
+
+// pranathi's code to help planttalk begin
+	 const {water, manure, weeds} = req.body.answers
+	 Date date = new Date()
+	 if(water) {
+		 User.findByIdAndUpdate(req.user._id, {
+			 water: date
+		 }, {new:true})
+	 }
+	 if(manure) {
+		 User.findByIdAndUpdate(req.user._id, {
+			 manure: date
+		 }, {new:true})
+	 }
+	 if(weeds) {
+		 User.findByIdAndUpdate(req.user._id, {
+			 weeds: date
+		 }, {new:true})
+	 }
+//pranathi code ends
+
 	User.findByIdAndUpdate(req.user._id,{
 		score:g_score
 	},{new:true})
@@ -280,9 +301,9 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 // 	})
 // })
 router.put('/leaderboard',requireLogin,(req,res)=>{
-	
+
 	var query = User.find({contest:req.body.contestId}).select('_id name score numplants url');
-				
+
 	query
 	.sort({score: -1})
 	.exec((err,result)=>{
@@ -291,6 +312,6 @@ router.put('/leaderboard',requireLogin,(req,res)=>{
 		else
 		res.json(result)
 	})
-	
+
 })
 module.exports = router
