@@ -7,6 +7,7 @@ import MyProfilePage from './MyProfilePage.jsx';
 import Questionnaire from './Questionnaire';
 import CustomizedDialogs from './schumma.jsx';
 import PlantSuggester from './PlantSuggester';
+import MyPlantsPage from './MyPlantsPage';
 
 function Body(props)
 {

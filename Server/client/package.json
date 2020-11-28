@@ -5,8 +5,8 @@
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
-    "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -16,7 +16,6 @@
     "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.4",
-    "react-simple-gauges": "^1.0.2",
     "react-virtualized": "^9.22.2",
     "styled-components": "^5.2.0"
   },

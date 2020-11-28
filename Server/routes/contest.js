@@ -225,7 +225,7 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 
 // pranathi's code to help planttalk begin
 	 const {water, manure, weeds} = req.body.answers
-	 Date date = new Date()
+	 var date = new Date()
 	 if(water) {
 		 User.findByIdAndUpdate(req.user._id, {
 			 water: date

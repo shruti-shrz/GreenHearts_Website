@@ -17,10 +17,11 @@ input[type="file"] {
 
 .PoPplantHolder {
   width:auto;
+  min-width: 70%;
   height: auto;
   background-color: white;
   border-radius: 7px;
-  float: right;
+  float: left;
   margin-right: 40px;
   margin-top: 20px;
   padding: 20px;

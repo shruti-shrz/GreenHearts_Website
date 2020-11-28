@@ -197,8 +197,8 @@ console.log("qwer")
           <h3>{userdetails.name}</h3>
           <h4>🌵{userdetails.numplants}</h4>
           <button className="greenButton" onClick={showDialog}>Click</button>
+<CustomizedDialogs userDet={{user:userdetails, plants:[{name: "Lilz",url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",date: "Mon Nov 02 2020"}]}} clickSetter={setclick} click={click} />
 
-<PlantInfoDialog clickSetter={setclick} click={click} />
         </div>
         <p><strong>{userdetails.email}</strong></p>
         <label className="custom-file-upload">
@@ -225,7 +225,7 @@ console.log("qwer")
   );
 
 //<CustomizedDialogs userDet={userdetails} clickSetter={setclick} click={click} />
-
+//<PlantInfoDialog clickSetter={setclick} click={click} />
 }
 
 export default MyProfilePage ;

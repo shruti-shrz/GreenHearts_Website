@@ -3,6 +3,7 @@ import M, { textareaAutoResize } from 'materialize-css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
+import CustomizedDialogs from './schumma.jsx';
 
 var messages;
 const medals=['🥇','🥈','🥉'];
@@ -19,6 +20,8 @@ function ContestPage(props){
     const [CreateError, setCreateError] = useState(false);
     const [suggestions, setsuggestions] = useState([]);
     const [addLabel, setaddLabel] = useState("Add Contestant");
+    const [infouser, setInfouser] = useState({user:{name:'', url:'', followers:[], following:[]}, plants:[]});
+    const [clicked, setClicked] = useState(false);
 
     if(contests.length>0)
     messages=contests[currentContest].comment_contest;
@@ -100,7 +103,7 @@ function ContestPage(props){
              if(data.error)
              {
                  M.toast({html: data.error})
-                 setCreateError(true)    
+                 setCreateError(true)
             }
              else
              {
@@ -110,7 +113,7 @@ function ContestPage(props){
              }
           });
     }
-    
+
     //suggestions
     useEffect(()=>{
         fetch("/searchcontestant",{
@@ -180,7 +183,7 @@ function ContestPage(props){
           });
     }
 
-    //myContests    
+    //myContests
     useEffect(()=>{
         fetch('/mycontest',{
             headers:{
@@ -211,6 +214,33 @@ function ContestPage(props){
     },[messages])
 
 
+    function getProfile(id)
+    {
+
+      fetch("/user",{
+        method:"post",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+        body:JSON.stringify({
+          id
+        })
+      }).then(res=>res.json())
+      .then(data=>{
+        if(data.error)
+        {
+          console.log(data.error);
+        }
+        else
+        {
+          console.log(data);
+          setInfouser(data);
+          setClicked(true);
+        }
+      });
+    }
+
     return(
         <div style={{position:"relative"}}>
             <div className="navSection"
@@ -227,12 +257,12 @@ function ContestPage(props){
                     setcontestName(event.target.value);
                 }}
             />
-            <Button 
+            <Button
                 variant="contained"
                 color="primary"
                 onClick ={()=>{
                 createContest(contestName)
-                }} 
+                }}
                 style={{
                     borderRadius: "8",
                     backgroundColor: "#21b6ae",
@@ -248,7 +278,7 @@ function ContestPage(props){
             {contests.map((props,index)=>{
                 return(
                     <li>
-                        <a href="#" 
+                        <a href="#"
                             onClick={()=>{
                                 setCurrentContest(index);
                             }}>
@@ -258,9 +288,9 @@ function ContestPage(props){
                 );
             })}
             </ul>
-                
+
             </div>
-            
+
             {contests.length >currentContest
             ?
             <div className="displayContest">
@@ -301,7 +331,7 @@ function ContestPage(props){
                             {suggestions.map((props,index)=>{
                                 return(
                                 <li>
-                                    <a href="#" 
+                                    <a href="#"
                                         onClick={()=>{
                                             console.log("namaste")
                                             addContestant(props._id,contests[currentContest]._id);
@@ -319,9 +349,9 @@ function ContestPage(props){
                                 <div></div>
                             }
                         </div>
-                    
+
                 </div>
-                
+
             </div>
                 <div>
                 <div className="chatSection" >
@@ -335,7 +365,7 @@ function ContestPage(props){
                                 {message.sentBy}
                             </p>
                             {message.photo!="default" ? message.photo ? <img className="imagesent" src={message.photo} alt="the posted image"/> : <div></div> : <div></div>}
-                            
+
                             <p className="message">
                                 {message.text}
                             </p>
@@ -366,13 +396,13 @@ function ContestPage(props){
                             }}
                             variant="outlined"
                         />
-                        <button 
+                        <button
                         onClick={()=>{
                             postDetails()
                         }}
                         className="icon" >
-                            <img 
-                                style={{height:"20px"},{width:"20px"}} 
+                            <img
+                                style={{height:"20px"},{width:"20px"}}
                                 src="./send-icon.png"/>
                         </button>
                     </div>
@@ -381,18 +411,16 @@ function ContestPage(props){
                 <div className="leaderBoardSection">
                 <div>
                     <h2 style={{textAlign:"center"}}>Leader Board</h2>
-                </div> 
+                </div>
                 {leader.map((contestant,index)=>{
                    return(
                         <div  className="lbRow">
-                            
+
                             <div style={{width:"25%"},{marginLeft:"10px"},{float:"left"},{alignItems:"center"}}>
                                 <Avatar style={{marginLeft:"10px"}} alt="profile" src="https://www.cbronline.com/wp-content/uploads/2016/06/what-is-URL-1024x669.jpg" />
                             </div>
                             <div style={{width:"60%"}}>
-                            <a style={{textDecoration:"none"}} href="#" onClick={()=>{
-                                        console.log("hi");
-                                    }}>
+                            <a style={{textDecoration:"none"}} href="#" onClick={()=>getProfile(contestant._id)}>
                                 <h5 style={{margin:"0px"},{color:"lawngreen"}}>
                                     {contestant.name}
                                 </h5></a>
@@ -401,7 +429,7 @@ function ContestPage(props){
                             <div style={{width:"15%"},{paddingTop:"10px"}}>
                                 <h5 style={{margin:"0%"}}>{index<3? medals[index]:""}</h5>
                             </div>
-                        
+
                         </div>
                      );
                })}
@@ -409,10 +437,11 @@ function ContestPage(props){
             </div>
             </div>
             :
-            <div className="displayContest"> 
+            <div className="displayContest">
             <h1>nothing to display</h1>
             </div>
         }
+        <CustomizedDialogs userDet={infouser} clickSetter={setClicked} click={clicked} />
         </div>
     );
 }

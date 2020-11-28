@@ -76,18 +76,6 @@ function showcard(x)
 export default function CustomizedDialogs(props) {
   //const [open, setOpen] = React.useState(true);
   const [fcards, setFcards]=useState([])
-  const [plants, setPlants]= useState([{_id: "5fa03e3b6e295600179ba46c",
-                                        name: "Lilz", url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",
-                                        date: "Mon Nov 02 2020"},
-                                        {_id: "5fa03e3b6e295600179ba46c",
-                                        name: "Lilz", url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",
-                                        date: "Mon Nov 02 2020"},
-                                        {_id: "5fa03e3b6e295600179ba46c",
-                                        name: "Lilz", url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",
-                                        date: "Mon Nov 02 2020"},
-                                        {_id: "5fa03e3b6e295600179ba46c",
-                                        name: "Lilz", url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",
-                                        date: "Mon Nov 02 2020"}]);
 
   const handleClickOpen = () => {
     props.clickSetter(true);
@@ -105,26 +93,26 @@ export default function CustomizedDialogs(props) {
   return (
       <div>
 
-        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={props.click} maxWidth='md'>
+        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={props.click} maxWidth='md' fullWidth='true'>
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Here goes the title
+            Profile
           </DialogTitle>
           <DialogContent dividers>
             <Typography gutterBottom>
               <div className="profileLeft">
-                <img src={props.userDet.url} alt="a leaf pic" />
+                <img src={props.userDet.user.url} alt="a leaf pic" />
                 <div>
-                  <h3>{props.userDet.name}</h3>
-                  <h4>🌵{props.userDet.numplants}</h4>
+                  <h3>{props.userDet.user.name}</h3>
+                  <h4>🌵{props.userDet.user.numplants}</h4>
                 </div>
-                <p><strong>{props.userDet.email}</strong></p>
+                <p><strong>{props.userDet.user.email}</strong></p>
               </div>
             </Typography>
 
             <Typography gutterBottom>
             <div className='PoPfoll'>
-              <button className="greenButton" onClick={()=>{setFcards(props.userDet.followers); console.log("Follower")}}>Followers {props.userDet.followers.length}</button>
-              <button className="greenButton" onClick={()=>setFcards(props.userDet.following)}>Following {props.userDet.following.length}</button>
+              <button className="greenButton" onClick={()=>{setFcards(props.userDet.user.followers); console.log("Follower")}}>Followers {props.userDet.user.followers.length}</button>
+              <button className="greenButton" onClick={()=>setFcards(props.userDet.user.following)}>Following {props.userDet.user.following.length}</button>
               <div className="followCards">
                 {fcards.map(showcard)}
               </div>
@@ -133,7 +121,8 @@ export default function CustomizedDialogs(props) {
 
             <Typography gutterBottom>
             <div className="PoPplantHolder">
-              {plants.map(plantmaker)}
+              <h1>Plants</h1>
+              {props.userDet.plants.map(plantmaker)}
             </div>
             </Typography>
 
