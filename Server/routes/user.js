@@ -6,7 +6,7 @@ const Plant = mongoose.model("Plant");
 const requireLogin = require('../middleware/requireLogin');
 const requireLogin2 = require('../middleware/requireLogin2');
 
-router.get("/user", requireLogin, function(req, res) {
+router.post("/user", requireLogin, function(req, res) {
   User.findById(req.body.id)
     .select("-password")
     .populate({
@@ -66,7 +66,7 @@ router.put("/follow", requireLogin, function(req,res) {
 });
 
 router.post("/search", requireLogin, function(req, res) {
-  const pattern = new RegExp("^"+ req.body.query);
+  const pattern = new RegExp(req.body.query, 'i');
   User.find({name: {$regex: pattern},
               _id: {$nin: req.user.following}
             })

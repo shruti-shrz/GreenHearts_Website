@@ -5,7 +5,10 @@ const User = mongoose.model("User")
 const requireLogin = require('../middleware/requireLogin')
 
 router.get('/planttalk', requireLogin, function(req,res) {
-  {water, manure, weeds} = req.user;
+  {response, water, manure, weeds} = req.user;
+  if(response === 0) {
+    return res.json({error: "never answered questionnaire"});
+  }
   Date cur = new Date();
   waterdiff = Math.abs(cur.getTime() - water)/(1000 * 3600 * 24);
   manurediff = Math.abs(cur.getTime() - manure)/(1000 * 3600 * 24);
