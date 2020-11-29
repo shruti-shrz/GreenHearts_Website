@@ -59,7 +59,7 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 })
 
 router.post('/searchcontestant',requireLogin,(req,res)=>{
-	const pattern = new RegExp("^"+ req.body.query);
+	const pattern = new RegExp("^"+ req.body.query, 'i');
  User.find({name:{$regex :pattern}})
     .then(function(user) {
       res.json({user: user});

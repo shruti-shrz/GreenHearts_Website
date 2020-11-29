@@ -81,7 +81,7 @@ req.end();
 })
 
 router.post('/searchplant',requireLogin,(req,res)=>{
-	const pattern = new RegExp("^"+ req.body.query);
+	const pattern = new RegExp("^"+ req.body.query, 'i');
  Plant.find({name:{$regex :pattern}})
     .then(function(plant) {		
       res.json({plant: plant});
