@@ -78,7 +78,7 @@ const req = http.request(options, function (res) {
 		{
 			Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
-			
+
 				if((result.water - (requ.body.water))<=3)
 				{
 					var pl = (result.manure + result.maintenance)/2;
@@ -95,15 +95,13 @@ const req = http.request(options, function (res) {
         resu.status(422).json({error: err});
       });
 		}
-		
+
 	});
 });
 
 req.end();
 
 //console.log(temper)
-	
-})
 
 
 
