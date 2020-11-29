@@ -53,7 +53,7 @@ router.post('/plantinfo', function(req, res) {
   const pattern = new RegExp("^"+ req.body.name,'i');
   //console.log(name);
   IPlant.findOne({
-    name: {$regex: pattern}
+    name: req.body.name
   })
     .then(function(plant) {
       var type = "";
