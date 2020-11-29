@@ -19,6 +19,14 @@ header h1 {
   cursor: pointer;
 }
 
+header img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  float:right;
+  margin-top: 15px;
+}
+
 .headerButton {
   background: transparent;
   border: none;
@@ -321,4 +329,28 @@ margin-left: 10px;
    -moz-border-radius: 7px;
    border-radius: 5px;
    text-decoration: none;
+}
+
+
+.jar {
+  width:auto;
+  max-width: 400px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  background: rgba(1, 1, 1, 0.4);
+  position: absolute;
+  top: 200px;
+  right: 0;
+}
+
+.jar div {
+  float:left;
+}
+
+.jar p {
+  max-width: 150px;
+  float:right;
+  font-size: 1.2rem;
+  color: white;
+  margin-right: 10px;
 }

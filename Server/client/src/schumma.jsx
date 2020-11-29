@@ -121,7 +121,7 @@ export default function CustomizedDialogs(props) {
 
             <Typography gutterBottom>
             <div className="PoPplantHolder">
-              <h1>Plants</h1>
+              
               {props.userDet.plants.map(plantmaker)}
             </div>
             </Typography>
