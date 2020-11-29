@@ -13,7 +13,7 @@ router.post('/api',requireLogin,(req,res)=>{
 
 })
 
-router.get('/plantSuggest/:latlon',async (requ,resu)=>{
+router.post('/plantSuggest/:latlon',async (requ,resu)=>{
 	 const latlon = requ.params.latlon.split(',');
 	 const lat = latlon[0];
 	 const lon = latlon[1];

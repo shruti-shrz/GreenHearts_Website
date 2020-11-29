@@ -13,11 +13,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import './PlantSuggester.css';
+import { FormGroup } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 function PlantSuggester() {
     const [open, setOpen] = useState(false);
-    const [ans1, setans1] = useState();
+    var ans1dummy=[];
+    const [ans1, setans1] = useState([1]);
+    const [option1, setoption1] = useState(false);
     const [ans2, setans2] = useState();
     const [ans3, setans3] = useState();
     const [ans4, setans4] = useState();
@@ -25,18 +29,28 @@ function PlantSuggester() {
     const [lat, setlat] = useState();
     const [lon, setlon] = useState();
 
+    const handlesubmit=()=>{
+        setOpen(false);
      navigator.geolocation.getCurrentPosition(function(position) {
          setlat(position.coords.latitude);
          setlon(position.coords.longitude);
-    });
+    });}
 
     useEffect(()=>{
         if(lat && lon){
         fetch(`/plantSuggest/${lat},${lon}`,{
+            method:"post",
             headers:{
-              "Authorization": "Bearer " + localStorage.getItem("jwt")
-            }
-          }).then(res=>res.json())
+                'Content-Type': 'application/json',
+                 "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body:JSON.stringify({
+                type: ans1,
+                manure: ans5,
+                water: ans3,
+                maintenance: ans2
+            })
+        }).then(res=>res.json())
           .then(result=>{
             console.log("result is here")
             console.log(result);
@@ -66,7 +80,11 @@ function PlantSuggester() {
                         </DialogContentText>
                         <div className="questionQuiz">
                             <p>What type of plants do you want?</p>
-                            
+                            <FormGroup>
+                            <FormControlLabel label="vegetables"
+                                control={<Checkbox checked={option1} onChange={setoption1(!option1)} color="primary"/>}
+                            />
+                            </FormGroup>
                         </div>
                         <div className="questionQuiz">
                             <p>How much effort will you put in maintenance?</p>
@@ -163,9 +181,7 @@ function PlantSuggester() {
                             }}>
                             Cancel
                         </Button>
-                        <Button color="primary" onClick={()=>{
-
-                            }}>
+                        <Button color="primary" onClick={handlesubmit}>
                             Submit
                         </Button>
                     </DialogActions>
