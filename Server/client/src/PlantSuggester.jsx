@@ -14,28 +14,50 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import './PlantSuggester.css';
 import { FormGroup } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
+import './MyPlantsPage.css';
 
 
 function PlantSuggester() {
     const [open, setOpen] = useState(false);
-    const [ans1, setans1] = useState([1]);
     const [option1, setoption1] = useState(false);
+    const [option2, setoption2] = useState(false);
+    const [option3, setoption3] = useState(false);
+    const [option4, setoption4] = useState(false);
+    const [option5, setoption5] = useState(false);
+    const [option6, setoption6] = useState(false);
+    const [option7, setoption7] = useState(false);
     const [ans2, setans2] = useState();
     const [ans3, setans3] = useState();
     const [ans4, setans4] = useState();
     const [ans5, setans5] = useState();
     const [lat, setlat] = useState();
     const [lon, setlon] = useState();
+    const [ans1, setans1] = useState([]);
 
+    const [plants, setplants] = useState([]);
+
+    var answer1=[];
+    var types=["Vegetable","Flower","Fruit","Creeper","Shrub","Ornamental","Herb"]
+    
     const handlesubmit=()=>{
         setOpen(false);
      navigator.geolocation.getCurrentPosition(function(position) {
          setlat(position.coords.latitude);
          setlon(position.coords.longitude);
-    });}
+    });
+    var options=[option1,option2,option3,option4,option5,option6,option7];
+    for(var i=0;i<7;i++){
+        if(options[i]===true){answer1.push(i);}
+    }
+    setans1(answer1)
+    console.log("set maa")
+    console.log(answer1)
+}
+
 
     useEffect(()=>{
         if(lat && lon){
+            console.log(ans1);
         fetch(`/plantSuggest/${lat},${lon}`,{
             method:"post",
             headers:{
@@ -50,9 +72,11 @@ function PlantSuggester() {
             })
         }).then(res=>res.json())
           .then(result=>{
-            console.log("result is here")
+              
             console.log(result);
+            setplants(result.result);
           });
+          setlat();
         }
     },[lat,lon])
 
@@ -60,7 +84,7 @@ function PlantSuggester() {
         <div>
         <div>
             <div>
-                bar here
+                
             </div>
             <div>
                 <Button variant="outlined" color="primary" onClick={()=>{
@@ -79,8 +103,26 @@ function PlantSuggester() {
                         <div className="questionQuiz">
                             <p>What type of plants do you want?</p>
                             <FormGroup>
-                            <FormControlLabel label="vegetables"
-                                control={<Checkbox checked={option1} onChange={setoption1(!option1)} color="primary"/>}
+                            <FormControlLabel label="Vegetables"
+                                control={<Checkbox checked={option1} onChange={()=>{setoption1(!option1)}} color="primary"/>}
+                            />
+                            <FormControlLabel label="Flowers"
+                                control={<Checkbox checked={option2} onChange={()=>{setoption2(!option2)}} color="primary"/>}
+                            />
+                            <FormControlLabel label="Fruits"
+                                control={<Checkbox checked={option3} onChange={()=>{setoption3(!option3)}} color="primary"/>}
+                            />
+                            <FormControlLabel label="Creeper"
+                                control={<Checkbox checked={option4} onChange={()=>{setoption4(!option4)}} color="primary"/>}
+                            />
+                            <FormControlLabel label="Shrubs"
+                                control={<Checkbox checked={option5} onChange={()=>{setoption5(!option5)}} color="primary"/>}
+                            />
+                            <FormControlLabel label="Ornamental"
+                                control={<Checkbox checked={option6} onChange={()=>{setoption6(!option6)}} color="primary"/>}
+                            />
+                            <FormControlLabel label="Herbs"
+                                control={<Checkbox checked={option7} onChange={()=>{setoption7(!option7)}} color="primary"/>}
                             />
                             </FormGroup>
                         </div>
@@ -190,9 +232,31 @@ function PlantSuggester() {
 
         </div>
         <div>
-            namaste
-            <Avatar variant="rounded" alt="Cindy Baker" src="http://res.cloudinary.com/green-hearts/image/upload/v1605985312/hiwkypdgsa6lugmskhe2.png">
-            </Avatar>
+            
+            {plants
+            ?
+            <ul>
+            {plants.map(plant=>{
+                return(
+                    <li>
+                        <a href="#"
+                           onClick={()=>{
+                                console.log(plant._id)
+                        }}>
+                        <div className="plantCard">
+                            <img src={plant.url} />
+                            <h4>{plant.name}</h4>
+                            <p>{types[plant.type[0]]}</p>
+                        </div>
+                        </a>
+                    </li>
+                );
+            })}
+            </ul>
+            :
+            <div></div>
+        }
+        
         </div>
     </div>
     );
