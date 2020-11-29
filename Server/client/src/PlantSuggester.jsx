@@ -16,6 +16,9 @@ import { FormGroup } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import './MyPlantsPage.css';
 import PlantInfoDialog from './PlantInfo.jsx'
+import Icon from '@material-ui/core/Icon';
+import TextField from '@material-ui/core/TextField';
+
 
 function PlantSuggester() {
     const [open, setOpen] = useState(false);
@@ -39,6 +42,7 @@ function PlantSuggester() {
     const [click, setClick]= useState(false)
     const [infoPlant, setInfoPlant]= useState([])
     const [infoPosts, setInfoPosts]= useState([])
+    const [searchP, setsearchP] = useState("")
 
     var answer1=[];
     var types=["Vegetable","Flower","Fruit","Creeper","Shrub","Ornamental","Herb"]
@@ -134,18 +138,47 @@ function PlantSuggester() {
       })
     }
 
+    const searchPlant=()=>{
+        if(searchP){
+        fetch("/searchplant",{
+            method:"post",
+            headers:{"Content-Type":"application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+            body:JSON.stringify({
+                query:searchP
+            })
+          })
+          .then(res=>res.json())
+          .then(data=>{
+              console.log(data)
+              if(data.error)
+              {
+                 console.log({html: data.error})}
+              else
+              {
+                  setplants(data.result);
+                  setsearchP("");
+                }
+          });
+        }
+    }
+
     return (
         <div>
         <PlantInfoDialog plant={infoPlant} posts={infoPosts} clickSetter={setClick} click={click} />
         <div>
-            <div>
-
-            </div>
-            <div>
-                <Button variant="outlined" color="primary" onClick={()=>{
+            <div className="Topbar">
+                <TextField style={{width:"40%"}} autoComplete="off" id="standard-basic" label="Search..." value={searchP} onChange={(e)=>{setsearchP(e.target.value);}} />
+                <a href='#' onClick={()=>{
+                    searchPlant()
+                }} >
+                    <Icon style={{ fontSize: 40 }}>search</Icon>
+                </a>
+                <Button className="suggestBut" variant="contained" color="primary" onClick={()=>{
                     setOpen(true);
                     }}>
-                    Open form dialog
+                    Plant Suggester
                 </Button>
                 <Dialog open={open} onClose={() => {
                     setOpen(false);
@@ -280,15 +313,17 @@ function PlantSuggester() {
                             Submit
                         </Button>
                     </DialogActions>
-                    <Alert severity="info">This is an info alert — check it out!</Alert>
+                    <Alert severity="info">Your Location will be accesed to show better Suggestions.</Alert>
                 </Dialog>
             </div>
-
-
         </div>
-        <div className="plantViewer">
-            {plants
+            {plants.length===0
             ?
+            <div>
+                <img style={{marginLeft:"20%"},{width:"400px"},{height:"400px"}} src="suggester.png"/>
+            </div>
+            :
+            <div className="plantViewer">{
             plants.map(plant=>{
                 return(
                         <a href="#"
@@ -300,16 +335,15 @@ function PlantSuggester() {
                         <div className="plantCard">
                             <img src={plant.url} />
                             <h4>{plant.name}</h4>
-                            <p>{types[plant.type[0]]}</p>
+                            {plant.type?<p>{types[plant.type[0]]}</p>:<p></p>}
                         </div>
                         </a>
                 );
-            })
-            :
-            <div></div>
+            })}
+            </div>
         }
 
-        </div>
+        
     </div>
     );
 }
