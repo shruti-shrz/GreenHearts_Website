@@ -34,7 +34,7 @@ const IPlantSchema = new mongoose.Schema({
     type: Number,
     require: true
   },
-  pesticide: {
+  maintenance: {
     type: Number,
     require: true
   },

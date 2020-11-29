@@ -55,8 +55,8 @@ const req = http.request(options, function (res) {
 			{
 				if((result.water - (requ.body.water+(moist/100*5)))<=3)
 				{
-					var pl = (result.manure + result.pesticide)/2;
-					var gl = (requ.body.manure + requ.body.pest)/2;
+					var pl = (result.manure + result.maintenance)/2;
+					var gl = (requ.body.manure + requ.body.maintenance)/2;
 					if(gl>= pl-1)
 					{
 						resu.json({result: result});
