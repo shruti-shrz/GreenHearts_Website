@@ -4,6 +4,8 @@ import FollowCards from './FollowCards'
 import Loader from 'react-loader-spinner';
 import {List} from 'react-virtualized';
 import M from 'materialize-css'
+import CustomizedDialogs from './schumma.jsx';
+import PlantInfoDialog from './PlantInfo.jsx';
 
 function MyProfilePage(props)
 {
@@ -14,6 +16,7 @@ function MyProfilePage(props)
   const [foll, setFoll]= useState("Followers")
   const [userdetails, setUserdetails]= useState({name:"", email:"", url:"placeholder.png",numplants:"",followers:[], following:[]})
   const [found, setFound]=useState([])
+  const [fcards, setFcards]=useState([])
 
   useEffect(()=>{
     if(search)
@@ -77,6 +80,15 @@ function MyProfilePage(props)
   }
 
 
+  function showcard(x)
+  {
+    return (
+      <div name={x._id} className="fCard">
+        <img src={x.url} />
+        <p>{x.name}</p>
+      </div>
+    );
+  }
 
 
   function rowRenderer({
@@ -157,6 +169,14 @@ useEffect(()=>{
     })
 },[])
 
+function showDialog()
+  {
+    console.log("here there")
+                            console.log(click)
+                          setclick(true)
+  }
+
+const [click, setclick]=useState(false)
 console.log("qwer")
   return(
     <div className="profileDiv" style={{alignContent: "center"}}>
@@ -176,6 +196,9 @@ console.log("qwer")
         <div>
           <h3>{userdetails.name}</h3>
           <h4>🌵{userdetails.numplants}</h4>
+          <button className="greenButton" onClick={showDialog}>Click</button>
+<CustomizedDialogs userDet={{user:userdetails, plants:[{name: "Lilz",url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",date: "Mon Nov 02 2020"}]}} clickSetter={setclick} click={click} />
+
         </div>
         <p><strong>{userdetails.email}</strong></p>
         <label className="custom-file-upload">
@@ -191,16 +214,18 @@ console.log("qwer")
          />}
       </div>
       <div className="profileFoll profileLeft">
-        <button className="greenButton" onClick={()=>{setFoll("Followers"); console.log("Follower")}}>Followers {userdetails.followers.length}</button>
-        <button className="greenButton" onClick={()=>setFoll("Following")}>Following {userdetails.following.length}</button>
+
+        <button className="greenButton" onClick={()=>{setFcards(userdetails.followers); console.log("Follower")}}> Followers {userdetails.followers.length}</button>
+        <button className="greenButton" onClick={()=>setFcards(userdetails.following)}>Following {userdetails.following.length}</button>
         <div className="followCards">
-          <FollowCards folltype={foll} userd={userdetails} />
+          {fcards.map(showcard)}
         </div>
       </div>
     </div>
   );
 
-
+//<CustomizedDialogs userDet={userdetails} clickSetter={setclick} click={click} />
+//<PlantInfoDialog clickSetter={setclick} click={click} />
 }
 
 export default MyProfilePage ;

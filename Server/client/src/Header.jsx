@@ -29,8 +29,9 @@ function Header(props)
     {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("ContestPage")} title="Contests">🎖</button>}
     {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("MyPlantsPage")} title="My Plants"><i class="material-icons">local_florist</i></button>}
     {props.LoginStat && props.PageName!=="HomePage"  && <button className={cname} onClick={()=>props.Setter("FeedPage")} title="Feed"><i class="material-icons">view_day</i></button>}
+
     </header>
   );
 }
-
+//{props.LoginStat && <img src={localStorage.getItem("user").get("url")} />}
 export default Header;

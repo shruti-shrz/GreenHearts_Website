@@ -8,8 +8,8 @@ const {MONGOURI} = require('./config/keys');
 mongoose.connect(MONGOURI,{
 	 useNewUrlParser: true,
 	 useUnifiedTopology: true,
-	  useFindAndModify: false 
-	  
+	  useFindAndModify: false
+
 });
 
 mongoose.connection.on('connected',()=>{
@@ -33,6 +33,7 @@ app.use(require('./routes/contest'));
 app.use(require('./routes/user'));
 app.use(require('./routes/post'));
 app.use(require('./routes/plantSugg'));
+app.use(require('./routes/plantinfo'));
 
 if(process.env.NODE_ENV=="production"){
 	app.use(express.static('client/build'))
