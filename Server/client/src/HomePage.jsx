@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import M from 'materialize-css'
+import PlantTalk from './PlantTalk.jsx';
 
 function HomePage(props)
 {
@@ -51,7 +52,9 @@ function handleQuestionnaire(){
     <button className="homeButton" onClick={handleContest}>🎖Contests</button>
     <button className="homeButton" onClick={handlePlantSuggester}><i class="material-icons">local_florist</i>MyPlants</button>
     <button className="homeButton" onClick={handleFeed}><i class="material-icons">view_day</i>Feed</button>
+    {props.LoginStat && <PlantTalk />}
     </div>
+
   );
 }
 

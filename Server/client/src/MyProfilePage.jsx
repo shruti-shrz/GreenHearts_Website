@@ -4,7 +4,6 @@ import FollowCards from './FollowCards'
 import Loader from 'react-loader-spinner';
 import {List} from 'react-virtualized';
 import M from 'materialize-css'
-import CustomizedDialogs from './schumma.jsx';
 import PlantInfoDialog from './PlantInfo.jsx';
 
 function MyProfilePage(props)
@@ -149,6 +148,7 @@ function MyProfilePage(props)
           var x= userdetails
           x.url=url
           setUserdetails(x)
+          localStorage.setItem("user",JSON.stringify(x));
           setUrl("")
         }
         setSpin(false);
@@ -166,6 +166,8 @@ useEffect(()=>{
     .then(result=>{
       var x=result.user;
       setUserdetails(x);
+      localStorage.setItem("user",JSON.stringify(x));
+
     })
 },[])
 
@@ -197,7 +199,7 @@ console.log("qwer")
           <h3>{userdetails.name}</h3>
           <h4>🌵{userdetails.numplants}</h4>
           <button className="greenButton" onClick={showDialog}>Click</button>
-<CustomizedDialogs userDet={{user:userdetails, plants:[{name: "Lilz",url: "http://res.cloudinary.com/green-hearts/image/upload/v1604337206/yexp50np2l3sdk7sljxj.jpg",date: "Mon Nov 02 2020"}]}} clickSetter={setclick} click={click} />
+
 
         </div>
         <p><strong>{userdetails.email}</strong></p>
@@ -213,6 +215,7 @@ console.log("qwer")
          width={120}
          />}
       </div>
+      <PlantInfoDialog clickSetter={setclick} click={click} />
       <div className="profileFoll profileLeft">
 
         <button className="greenButton" onClick={()=>{setFcards(userdetails.followers); console.log("Follower")}}> Followers {userdetails.followers.length}</button>
