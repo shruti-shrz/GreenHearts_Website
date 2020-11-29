@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -19,7 +18,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 function PlantSuggester() {
     const [open, setOpen] = useState(false);
-    var ans1dummy=[];
     const [ans1, setans1] = useState([1]);
     const [option1, setoption1] = useState(false);
     const [ans2, setans2] = useState();
