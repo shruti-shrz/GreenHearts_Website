@@ -3,7 +3,7 @@ const metaphone = require('metaphone')
 const stemmer = require('stemmer')
 const router = express.Router()
 const mongoose = require('mongoose')
-const IPlant = mongoose.model("IPlant")
+const IPlant = mongoose.model('IPlant')
 const Post = mongoose.model('Post')
 const requireLogin = require('../middleware/requireLogin')
 
@@ -17,7 +17,7 @@ router.post('/test', function(req,res) {
   }
 })
 
-router.post('/search', function(req, res) {
+router.post('/searchplant', function(req, res) {
   const pattern = new RegExp("^"+ req.body.query,'i');
   IPlant.find({
     name: {$regex: pattern}
@@ -50,7 +50,11 @@ Herbs(6)
 */
 
 router.post('/plantinfo', function(req, res) {
-  Iplant.find({name: req.body.name})
+  const pattern = new RegExp("^"+ req.body.name,'i');
+  //console.log(name);
+  IPlant.findOne({
+    name: {$regex: pattern}
+  })
     .then(function(plant) {
       var type = "";
       var i;
@@ -75,6 +79,7 @@ router.post('/plantinfo', function(req, res) {
         case 4: water = "10-15 gallons/week"; break;
         case 5: water = ">15 gallons/week"; break;
       }
+      var temp = String(plant.temp-3) + " to " + String(plant.temp+3);
       //should do ranges for manure and pesticide also
       res.json({
         name: plant.name,
@@ -82,22 +87,22 @@ router.post('/plantinfo', function(req, res) {
         soilType: plant.soilType,
         url: plant.url,
         type: type,
-        temp: plant.temp,
+        temp: temp,
         water: water,
         manure: plant.manure, //this shud change
-        pesticide: plant.pesticide, //this shud change
+        maintanance: plant.maintenance, //this shud change
         tip: plant.tip,
         companions: comp
       });
     })
     .catch(function(err) {
-      return res.status(422).json({error: "plant not found"});
+      return res.status(422).json({error: err});
     });
 });
 
 router.post('/plantposts', function(req,res) {
-  tag = req.body.name;
-  regex = new RegExp(tag, 'i');
+  const tag = req.body.name;
+  const regex = new RegExp(tag, 'i');
   Post.find({
     tag: {$regex: regex}
   })
