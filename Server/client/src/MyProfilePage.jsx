@@ -49,7 +49,10 @@ function MyProfilePage(props)
 
   function followThis(x)
   {
+    setSpin(true)
     var id=x.target.getAttribute("name")
+    var z= found.filter((t)=>(t._id!==id))
+    setFound(z)
     fetch("/follow",{
       method:"put",
       headers:{"Content-Type":"application/json",
@@ -63,6 +66,7 @@ function MyProfilePage(props)
       if(data.error)
       {
       M.toast({html: data.error})
+      setSpin(false)
       }
       else
       {
@@ -73,6 +77,8 @@ function MyProfilePage(props)
 
         x.following.push(data.result)
         setUserdetails(x)
+        setSpin(false)
+        setSearch("")
       }
     });
   }
@@ -170,12 +176,7 @@ useEffect(()=>{
     })
 },[])
 
-function showDialog()
-  {
-    console.log("here there")
-                            console.log(click)
-                          setclick(true)
-  }
+
 
 console.log("qwer")
   return(
@@ -196,7 +197,6 @@ console.log("qwer")
         <div>
           <h3>{userdetails.name}</h3>
           <h4>🌵{userdetails.numplants}</h4>
-          <button className="greenButton" onClick={showDialog}>Click</button>
 
 
         </div>
@@ -206,21 +206,23 @@ console.log("qwer")
           <strong>Upload Profile Pic</strong>
         </label>
         <button onClick={setImage}>✔</button>
-        {spin && <Loader
-         type="TailSpin"
-         color="#24B61A"
-         height={50}
-         width={120}
-         />}
+
       </div>
       <div className="profileFoll profileLeft">
-
+      {spin && <Loader
+       type="TailSpin"
+       color="#24B61A"
+       height={50}
+       width={120}
+       />}
         <button className="greenButton" onClick={()=>{setFcards(userdetails.followers); console.log("Follower")}}> Followers {userdetails.followers.length}</button>
         <button className="greenButton" onClick={()=>setFcards(userdetails.following)}>Following {userdetails.following.length}</button>
         <div className="followCards">
           {fcards.map(showcard)}
         </div>
+        <strong>scroll down for plants</strong>
       </div>
+
     </div>
   );
 

@@ -68,21 +68,18 @@ function PlantTalk(props)
         else
           {
             var x= 100* (7-result.waterdiff) /7
-            var y= {value:20}
             console.log({value:x})
             setWater({value:x})
             waterGen(result.waterdiff)
           }
 
-          if(result.weedsdiff>14)
-            setWeed("It's high time you remove the weeds")
-          else if(result.weedsdiff>7)
-            setWeed("The weeds are starting to crawl back in")
+          if(result.weedsdiff>3)
+            setWeed("Its been " + Math.round(result.weedsdiff).toString() + " days since you last removed weeds")
+          if(result.manurediff>5)
+            setManure("Its been " + Math.round(result.manurediff).toString() + " days since you manured the plants")
+          else if(weed==='')
+            setWeed("All good with your garden!")
 
-          if(result.manurediff>14)
-            setManure("A bit of manuring would be nice")
-
-        console.log(water);
         setVis(true)
       }
 
