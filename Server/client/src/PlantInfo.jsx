@@ -44,6 +44,7 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
+    backgroundColor: '#E3E9E8',
   },
 }))(MuiDialogContent);
 
@@ -77,13 +78,16 @@ function postmaker(props){
         </div>
     </div>
     {props.img ? <img src={props.img} alt="the posted image"/> : <div></div>}
-    <p>{props.postMessage}</p>
+    <p>{props.postMessage} awet qwgt qyc yq 5wyvqq ybe  vwuwuvq qc3cycwc  5w</p>
     <div style={{marginTop:"-40px"}}>
     <p style={{float:"right"}}>&nbsp;&nbsp;&nbsp;<strong>{props.likes}</strong> likes </p>
     <p style={{float:"right"}}><strong>{props.comments.length}</strong> comments</p>
     </div>
 
     <div style={{marginBottom:"5px"}}>
+    <hr />
+    <em><strong>   Comments</strong></em>
+    <hr />
         {
         props.comments.reverse().map(renderComment)}
     </div>
@@ -115,20 +119,21 @@ export default function PlantInfoDialog(props) {
             Plant Details
           </DialogTitle>
           <DialogContent dividers>
-              <div >
-              <div className="leftInfo">
+              <div>
+              <div className="leftInfo slightgrey">
                 <img src="wallpaper.png" alt="a leaf pic" />
-                <p>Name:<strong>Zinnia</strong></p>
-                <p>Name:<strong>Zinnia</strong></p>
-                <p>Name:<strong>Zinnia</strong></p>
-                <p>Name:<strong>Zinnia</strong></p>
-                <p>Name:<strong>Zinnia</strong></p>
+                <p>Name: <strong>Zinnia</strong></p>
+                <p>Yield Time: <strong>Zinnia</strong></p>
+                <p>Soil Type: <strong>Zinnia</strong></p>
+                <p>Suitable Temperature: <strong>Zinnia</strong></p>
+                <p>Name: <strong>Zinnia</strong></p>
               </div>
-
+                <div className='totalInfo'>
                 <p><strong>Details</strong></p>
                 <p>A long paragraph of utter bullshit. so please bear with this. Onegai. Tanomu. adf lkaej kjga ioeagj  eaeoih aoig sohg
                   ghal hag ne awk. iuh kag uh wga iuh kga iuh  ae k  ilhaee  iuh aegil gra
                 </p>
+                </div>
                 </div>
                 <div className="leftInfo">
                 <h4>Related Posts</h4>
@@ -137,11 +142,7 @@ export default function PlantInfoDialog(props) {
 
 
           </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose} color="primary">
-              Return
-            </Button>
-          </DialogActions>
+          
         </Dialog>
       </div>
     );
