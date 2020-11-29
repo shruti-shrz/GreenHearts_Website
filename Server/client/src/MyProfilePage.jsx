@@ -4,7 +4,6 @@ import FollowCards from './FollowCards'
 import Loader from 'react-loader-spinner';
 import {List} from 'react-virtualized';
 import M from 'materialize-css'
-import PlantInfoDialog from './PlantInfo.jsx';
 
 function MyProfilePage(props)
 {
@@ -178,7 +177,6 @@ function showDialog()
                           setclick(true)
   }
 
-const [click, setclick]=useState(false)
 console.log("qwer")
   return(
     <div className="profileDiv" style={{alignContent: "center"}}>
@@ -215,7 +213,6 @@ console.log("qwer")
          width={120}
          />}
       </div>
-      <PlantInfoDialog clickSetter={setclick} click={click} />
       <div className="profileFoll profileLeft">
 
         <button className="greenButton" onClick={()=>{setFcards(userdetails.followers); console.log("Follower")}}> Followers {userdetails.followers.length}</button>
