@@ -37,7 +37,8 @@ Flowers(1)
 Fruits(2)
 Creeper(3)
 Shrubs(4)
-Ornamental(5)
+Ornamental(5)\
+Herbs(6)
 */
 
 /*
@@ -61,6 +62,7 @@ router.post('/plantinfo', function(req, res) {
           case 3: type += "Creeper "; break;
           case 4: type += "Shrub "; break;
           case 5: type += "Ornamental "; break;
+          case 6: type += "Herb "; break;
         }
       var comp = "";
       for(i of plant.companions)

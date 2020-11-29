@@ -51,16 +51,13 @@ const UserSchema = new mongoose.Schema({
     default:1
   },
   water: {
-    type: Date,
-    default:Date.now
+    type: Date
   },
   manure: {
-    type: Date,
-    default:Date.now
+    type: Date
   },
   weeds: {
-    type: Date,
-    default:Date.now
+    type: Date
   }
 
 });
