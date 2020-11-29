@@ -232,16 +232,35 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 		 User.findByIdAndUpdate(req.user._id, {
 			 water: date
 		 }, {new:true})
+		 .then(function(result) {
+			 console.log(result);
+		 })
+		 .catch(function(err) {
+			 res.json({error: err});
+		 });
 	 }
 	 if(manure) {
 		 User.findByIdAndUpdate(req.user._id, {
 			 manure: date
 		 }, {new:true})
+			 .then(function(result) {
+				 console.log(result);
+			 })
+			 .catch(function(err) {
+				 res.json({error: err});
+			 });
+
 	 }
 	 if(weeds) {
 		 User.findByIdAndUpdate(req.user._id, {
 			 weeds: date
 		 }, {new:true})
+		 .then(function(result) {
+			 console.log(result);
+		 })
+		 .catch(function(err) {
+			 res.json({error: err});
+		 });
 	 }
 //pranathi code ends
 
