@@ -6,7 +6,7 @@ const User = mongoose.model("User")
 const Plant = mongoose.model("IPlant")
 const requireLogin = require('../middleware/requireLogin')
 const fetch = require('node-fetch')
-
+const {API_KEY} = require('../config/keys');
 router.post('/api',requireLogin,(req,res)=>{
 
 	const {lan,lat} = req.body;
@@ -32,7 +32,7 @@ const options = {
 	"port": null,
 	"path": "/soil/latest/by-lat-lng?lat="+lat.toString()+"&lng="+lon.toString(),
 	"headers": {
-		"x-api-key": "JlFnNmzjbH8dX9TYo3GRsa0tCXpmEau72cxomuFl",
+		"x-api-key": API_KEY,
 		"Content-type": "application/json"
 	}
 };
@@ -49,16 +49,14 @@ const req = http.request(options, function (res) {
 		const json = JSON.parse(body.toString());
 		const temper = json['data'][0]['soil_temperature'];
 		const moist = json['data'][0]['soil_moisture'];
-		console.log(temper)
-		console.log(moist)
-		Plant.find({type:requ.body.type})
+		Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
 			if((result.temp <= temper + 10 && result.temp >= temper-10))
 			{
 				if((result.water - (requ.body.water+(moist/100*5)))<=3)
 				{
-					var pl = (result.manure + result.pesticide)/2;
-					var gl = (requ.body.manure + requ.body.pest)/2;
+					var pl = (result.manure + result.maintenance)/2;
+					var gl = (requ.body.manure + requ.body.maintenance)/2;
 					if(gl>= pl-1)
 					{
 						resu.json({result: result});
