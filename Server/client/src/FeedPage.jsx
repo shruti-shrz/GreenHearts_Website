@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import M from 'materialize-css';
+import TextField from '@material-ui/core/TextField';
 
 const filterOptions=['/allpost', '/mypost', "/followingpost", "/pinnedpost"];
 
@@ -19,7 +20,8 @@ function FeedPage(){
     const [user, setuser] = useState({});
     const [filterType, setfilterType] = useState(filterOptions[0]);
     const [comment, setcomment] = useState("");
-    const [postID, setpostID]  = useState("")
+    const [postID, setpostID]  = useState("");
+    const [postTag, setpostTag] = useState("");
 
     const likePost=(id)=>{
       fetch("/like",{
@@ -68,7 +70,24 @@ function FeedPage(){
           console.log(error);
       });
 }
-
+const unpinPost=(id)=>{
+  fetch("/unpinpost",{
+      method:"put",
+      headers:{"Content-Type":"application/json",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+    },
+      body:JSON.stringify({
+          postId:id
+      })
+    })
+    .then(res=>res.json())
+    .then(result=>{
+      console.log(result);
+      setuser(result);
+    }).catch(error=>{
+        console.log(error);
+    });
+}
   const unlikePost=(id)=>{
       fetch("/unlike",{
           method:"put",
@@ -156,7 +175,6 @@ function FeedPage(){
         },[filterType])
 
     useEffect(() => {
-        if(imageURL){
                 fetch("/createpost",{
                 method:"post",
                 headers:{"Content-Type":"application/json",
@@ -165,7 +183,8 @@ function FeedPage(){
                 body:JSON.stringify({
                     title:"dummy title",
                   body: postMessage,
-                  photo: imageURL
+                  photo: imageURL,
+                  tag: postTag
                 })
               })
               .then(res=>res.json())
@@ -177,6 +196,7 @@ function FeedPage(){
                 {
                   M.toast({html: "Posted!!"})
                   setpostMessage("")
+                  setpostTag("")
                   setimage("")
                   setposts([{
                       postedBy:{
@@ -190,10 +210,10 @@ function FeedPage(){
                    },...posts])
                 }
               });
-        }
     }, [imageURL])
 
     const postDetails=()=>{
+      if(!image){
         const data=new FormData();
         data.append("file",image);
         data.append("upload_preset","gh-images");
@@ -207,7 +227,10 @@ function FeedPage(){
             setimageURL(data.url);
         })
         .catch(error=>{console.log(error);})
- 
+      }
+      else{
+        setimageURL("")
+      }
     }
     
     return(
@@ -228,16 +251,30 @@ function FeedPage(){
             </div>
             <div className="postSection">
                 <div className="postTemplate">
-                    <input id="image-input" type="file" className="icon" onChange={(event)=>{
+                    <input onChange={(event)=>{
+                        setpostTag(event.target.value)
+                    }} autoComplete="off" value={postTag} style={{paddingBottom:"5px"},{height:"25px"},{width:"40px"},{display:"flex"}} placeholder="Tag" type="text" id="message"/>
+                  
+                    <TextField
+                      id="outlined-multiline-flexible"
+                      label="Type your message here!!"
+                      style={{margin:"2%"},{width:"87%"}}
+                      multiline
+                      rowsMax={4}
+                      value={postMessage}
+                      autoComplete="off"
+                      onChange={(event)=>{
+                        setpostMessage(event.target.value)
+                      }}
+                      variant="outlined"
+                      />
+                    <input id="image-input" type="file"  onChange={(event)=>{
                         setimage(event.target.files[0]);
                     }} />
-                    <label for="image-input">
+                    <label for="image-input" style={{padding:"5px"}}>
                     <img style={{height:"20px"},{width:"20px"}} src="./camera-icon.png"/>
                     </label>
-                    <input onChange={(event)=>{
-                        setpostMessage(event.target.value)
-                    }} value={postMessage} style={{marginLeft:"10px"},{height:"20px"},{width:"510px"}} placeholder="Type your message here!!" type="text" id="message"/>
-                    <button onClick={postDetails} className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
+                    <button onClick={postDetails} style={{border:"none"},{background: "transparent"},{margin: "5px"}} ><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
                 
                 <div>
@@ -247,8 +284,6 @@ function FeedPage(){
                 <div className="postCard">
                 <div>
                     <div>
-  
-
                       {props.postedBy.url? 
                       <img className="profilePhoto" src={props.postedBy.url} alt="👤"/>:
                       <img className="profilePhoto" src="./profile-default-icon.png" alt="👤"/>
@@ -258,6 +293,7 @@ function FeedPage(){
                 </div>
                 {props.photo ? <img src={props.photo} alt="the posted image"/> : <div></div>}
                 <p>{props.body}</p>
+                {props.tag?<p><strong>Tag: </strong>{props.tag}</p> :<p></p>}
                 <div style={{marginBottom:"10px"}}>
                     {
                         props.likes.includes(user._id)?
@@ -272,7 +308,7 @@ function FeedPage(){
                         {
                           user.pinnedpost.includes(props._id)?
                           <button
-                        //onClick={()=>{pinPost(props._id)}}
+                        onClick={()=>{unpinPost(props._id)}}
                         style={{float:"right"},{border:"10px solid white"},{height:"15px"},{width:"8%"}}><i className="material-icons">bookmark</i></button>
                         :
                         <button
@@ -288,12 +324,11 @@ function FeedPage(){
                     <input
                         onChange={(event)=>{
                             setcomment(event.target.value)
-                            setpostID(props._id)
                         }}
                         value={postID===props._id? comment :""}
                     style={{marginLeft:"50px"},{height:"20px"},{width:"530px"}} placeholder="Comment..." type="text" id="message"/>
                     <button
-                    onClick={()=>{makeComment(comment,postID)} }
+                    onClick={()=>{setpostID(props._id); makeComment(comment,postID)} }
                     className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
                 <div style={{marginBottom:"5px"}}>
