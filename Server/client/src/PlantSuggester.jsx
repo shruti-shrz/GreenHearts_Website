@@ -15,7 +15,7 @@ import './PlantSuggester.css';
 import { FormGroup } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import './MyPlantsPage.css';
-
+import PlantInfoDialog from './PlantInfo.jsx'
 
 function PlantSuggester() {
     const [open, setOpen] = useState(false);
@@ -36,9 +36,13 @@ function PlantSuggester() {
 
     const [plants, setplants] = useState([]);
 
+    const [click, setClick]= useState(false)
+    const [infoPlant, setInfoPlant]= useState([])
+    const [infoPosts, setInfoPosts]= useState([])
+
     var answer1=[];
     var types=["Vegetable","Flower","Fruit","Creeper","Shrub","Ornamental","Herb"]
-    
+
     const handlesubmit=()=>{
         setOpen(false);
      navigator.geolocation.getCurrentPosition(function(position) {
@@ -72,7 +76,7 @@ function PlantSuggester() {
             })
         }).then(res=>res.json())
           .then(result=>{
-              
+
             console.log(result);
             setplants(result.result);
           });
@@ -80,11 +84,62 @@ function PlantSuggester() {
         }
     },[lat,lon])
 
+
+    function plantGetter(name)
+    {
+      fetch("/plantinfo",{
+        method:"post",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+        body:JSON.stringify({
+          name
+        })
+      }).then(res=>res.json())
+      .then(data=>{
+        if(data.error)
+        {
+        console.log(data.error);
+        }
+        else
+        {
+          console.log(data);
+          setInfoPlant(data);
+        }
+      })
+
+      fetch("/plantposts",{
+        method:"post",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+        body:JSON.stringify({
+          name
+        })
+      }).then(res=>res.json())
+      .then(data=>{
+        if(data.error)
+        {
+        console.log(data.error);
+
+        }
+        else
+        {
+          console.log(data.posts);
+          setInfoPosts(data.posts)
+          setClick(true)
+        }
+      })
+    }
+
     return (
         <div>
+        <PlantInfoDialog plant={infoPlant} posts={infoPosts} clickSetter={setClick} click={click} />
         <div>
             <div>
-                
+
             </div>
             <div>
                 <Button variant="outlined" color="primary" onClick={()=>{
@@ -228,11 +283,10 @@ function PlantSuggester() {
                     <Alert severity="info">This is an info alert — check it out!</Alert>
                 </Dialog>
             </div>
-            
+
 
         </div>
         <div className="plantViewer">
-            
             {plants
             ?
             plants.map(plant=>{
@@ -240,7 +294,8 @@ function PlantSuggester() {
                         <a href="#"
                             style={{width:"270px"}}
                            onClick={()=>{
-                                console.log(plant._id)
+                                console.log(plant.name)
+                                plantGetter(plant.name)
                         }}>
                         <div className="plantCard">
                             <img src={plant.url} />
@@ -253,7 +308,7 @@ function PlantSuggester() {
             :
             <div></div>
         }
-        
+
         </div>
     </div>
     );

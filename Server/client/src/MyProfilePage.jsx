@@ -182,7 +182,7 @@ console.log("qwer")
   return(
     <div className="profileDiv" style={{alignContent: "center"}}>
       <div className="profileSearch">
-        <input name="search" onChange={(event)=>setSearch(event.target.value)} placeholder="🔍search people" value={search} />
+        <input name="search" onChange={(event)=>setSearch(event.target.value)} autocomplete="off" placeholder="🔍search people" value={search} />
         <List
         width={280}
         height={200}
