@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 
 function Questionnaire(){
     const options=[0,1];
+    const booli=[true,false];
     const [q1, setq1] = useState(-1);
     const [q2, setq2] = useState(-1);
     const [q3, setq3] = useState(-1);
@@ -16,7 +17,12 @@ function Questionnaire(){
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
           },
             body:JSON.stringify({
-                no_y:score
+                no_y:score,
+                answers:{
+                    water:booli[q1],
+                    manure:booli[q2],
+                    weeds:booli[q3]
+                }
             })
           })
           .then(res=>res.json())
@@ -81,7 +87,7 @@ function Questionnaire(){
         allow===1?
         <div className="Questionnaire">
             <div className="Question">
-                <p>did you water your plants today??</p>
+                <p>Did you water your plants today??</p>
                 <div className="input_button">
                 <input type="radio" checked={q1===options[0]} onChange={()=>{setq1(options[0])}} id="yes1"/>
                 <label for="yes1">Yes</label>
@@ -95,7 +101,7 @@ function Questionnaire(){
             </div>
 
             <div className="Question">
-                <p>did you water your plants today??</p>
+                <p>Did you give them manure?</p>
                 <div className="input_button">
                 <input type="radio" checked={q2===options[0]} onChange={()=>{setq2(options[0])}} id="yes2"/>
                 <label for="yes2">Yes</label>
@@ -109,7 +115,7 @@ function Questionnaire(){
             </div>
 
             <div className="Question">
-                <p>did you water your plants today??</p>
+                <p>Did you Clean / deweed your garden?</p>
                 <div className="input_button">
                 <input type="radio" checked={q3===options[0]} onChange={()=>{setq3(options[0])}} id="yes3"/>
                 <label for="yes3">Yes</label>
@@ -123,7 +129,7 @@ function Questionnaire(){
             </div>
             
             <div className="Question">
-                <p>did you water your plants today??</p>
+                <p>Did you attend to your garden for atleast half an hour?</p>
                 <div className="input_button">
                 <input type="radio" checked={q4===options[0]} onChange={()=>{setq4(options[0])}} id="yes4"/>
                 <label for="yes4">Yes</label>

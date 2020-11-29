@@ -13,7 +13,7 @@ router.post('/api',requireLogin,(req,res)=>{
 
 })
 
-router.get('/plantSuggest/:latlon',async (requ,resu)=>{
+router.post('/plantSuggest/:latlon',async (requ,resu)=>{
 	 const latlon = requ.params.latlon.split(',');
 	 const lat = latlon[0];
 	 const lon = latlon[1];
@@ -55,8 +55,8 @@ const req = http.request(options, function (res) {
 			{
 				if((result.water - (requ.body.water+(moist/100*5)))<=3)
 				{
-					var pl = (result.manure + result.pesticide)/2;
-					var gl = (requ.body.manure + requ.body.pest)/2;
+					var pl = (result.manure + result.maintenance)/2;
+					var gl = (requ.body.manure + requ.body.maintenance)/2;
 					if(gl>= pl-1)
 					{
 						resu.json({result: result});
@@ -81,7 +81,7 @@ req.end();
 })
 
 router.post('/searchplant',requireLogin,(req,res)=>{
-	const pattern = new RegExp("^"+ req.body.query);
+	const pattern = new RegExp("^"+ req.body.query, 'i');
  Plant.find({name:{$regex :pattern}})
     .then(function(plant) {		
       res.json({plant: plant});

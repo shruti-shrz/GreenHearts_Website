@@ -18,7 +18,7 @@ router.post('/test', function(req,res) {
 })
 
 router.post('/search', function(req, res) {
-  const pattern = new RegExp("^"+ req.body.query);
+  const pattern = new RegExp("^"+ req.body.query,'i');
   IPlant.find({
     name: {$regex: pattern}
   })

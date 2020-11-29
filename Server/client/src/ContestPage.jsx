@@ -246,6 +246,7 @@ function ContestPage(props){
             <div className="navSection"
             style={{marginTop:contests.length >currentContest? "20px":"0px"}}>
             <TextField
+                autoComplete="off"
                 id="outlined-helperText"
                 style={{margin:"5px"}}
                 label="Enter contest name"
@@ -387,6 +388,7 @@ function ContestPage(props){
                         <TextField
                             id="outlined-multiline-flexible"
                             label="Type Something..."
+                            autoComplete="off"
                             style={{width:"88%"}}
                             multiline
                             rowsMax={4}

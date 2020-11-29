@@ -59,7 +59,7 @@ router.get('/mycontest',requireLogin,(req,res)=>{
 })
 
 router.post('/searchcontestant',requireLogin,(req,res)=>{
-	const pattern = new RegExp("^"+ req.body.query);
+	const pattern = new RegExp("^"+ req.body.query, 'i');
  User.find({name:{$regex :pattern}})
     .then(function(user) {
       res.json({user: user});
@@ -225,7 +225,9 @@ router.post('/questionnaire',requireLogin,(req,res)=>{
 
 // pranathi's code to help planttalk begin
 	 const {water, manure, weeds} = req.body.answers
+	 console.log( req.body.answers)
 	 var date = new Date()
+	 console.log(date)
 	 if(water) {
 		 User.findByIdAndUpdate(req.user._id, {
 			 water: date
