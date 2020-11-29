@@ -109,6 +109,9 @@ export default function PlantInfoDialog(props) {
     props.clickSetter(false);
   };
 
+  const waterAns={1:'1-2 gallons per week',2:'3-5 gallons per week',3:'5-10 gallons per week',4:'10-15 gallons per week',5:'>15 gallons per week'}
+  const maintainAns={1:'👨🏻‍🌾',2:'👨🏻‍🌾👨🏻‍🌾',3:'👨🏻‍🌾👨🏻‍🌾👨🏻‍🌾',4:'👨🏻‍🌾👨🏻‍🌾👨🏻‍🌾👨🏻‍🌾',5:'👨🏻‍🌾👨🏻‍🌾👨🏻‍🌾👨🏻‍🌾👨🏻‍🌾'}
+  const manureAns={1:'‍🍂',2:'🍂🍂',3:'🍂🍂🍂',4:'🍂🍂🍂🍂',5:'🍂🍂🍂🍂🍂'}
   return (
       <div>
         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -121,12 +124,12 @@ export default function PlantInfoDialog(props) {
           <DialogContent dividers>
               <div>
               <div className="leftInfo slightgrey">
-                <img src="wallpaper.png" alt="a leaf pic" />
-                <p>Name: <strong>Zinnia</strong></p>
-                <p>Yield Time: <strong>Zinnia</strong></p>
-                <p>Soil Type: <strong>Zinnia</strong></p>
-                <p>Suitable Temperature: <strong>Zinnia</strong></p>
-                <p>Name: <strong>Zinnia</strong></p>
+                <img src={props.url} alt="a leaf pic" />
+                <p>Name: <strong>{props.name}</strong></p>
+                <p>Yield Time: <strong>{props.yieldTime}</strong></p>
+                <p>Soil Type: <strong>{props.soiltype}</strong></p>
+                <p>Suitable Temperature: <strong>{props.temp}</strong></p>
+                <p>Water: <strong>1</strong></p>
               </div>
                 <div className='totalInfo'>
                 <p><strong>Details</strong></p>
@@ -142,7 +145,7 @@ export default function PlantInfoDialog(props) {
 
 
           </DialogContent>
-          
+
         </Dialog>
       </div>
     );

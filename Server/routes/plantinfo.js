@@ -50,7 +50,7 @@ Herbs(6)
 */
 
 router.post('/plantinfo', function(req, res) {
-  const pattern = new RegExp("^"+ req.body.name,'i');
+  //const pattern = new RegExp("^"+ req.body.name,'i');
   //console.log(name);
   IPlant.findOne({
     name: req.body.name
@@ -79,7 +79,7 @@ router.post('/plantinfo', function(req, res) {
         case 4: water = "10-15 gallons/week"; break;
         case 5: water = ">15 gallons/week"; break;
       }
-      var temp = String(plant.temp-3) + " to " + String(plant.temp+3);
+      var temp = String(plant.temp-3) + " to " + String(plant.temp+3) + " degrees Celsius";
       //should do ranges for manure and pesticide also
       res.json({
         name: plant.name,
