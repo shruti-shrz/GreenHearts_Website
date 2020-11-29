@@ -77,18 +77,7 @@ const req = http.request(options, function (res) {
 req.end();
 
 //console.log(temper)
-	
-})
 
-router.post('/searchplant',requireLogin,(req,res)=>{
-	const pattern = new RegExp("^"+ req.body.query, 'i');
- Plant.find({name:{$regex :pattern}})
-    .then(function(plant) {		
-      res.json({plant: plant});
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
 })
 
 module.exports = router

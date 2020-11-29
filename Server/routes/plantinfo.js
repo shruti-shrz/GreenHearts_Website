@@ -5,6 +5,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const IPlant = mongoose.model('IPlant')
 const Post = mongoose.model('Post')
+const {ObjectId} = mongoose.Schema.Types
 const requireLogin = require('../middleware/requireLogin')
 
 router.post('/test', function(req,res) {
@@ -106,6 +107,8 @@ router.post('/plantposts', function(req,res) {
   Post.find({
     tag: {$regex: regex}
   })
+    .populate('postedBy', 'name url')
+    .populate('comments.postedBy', 'name url')
     .then(function(posts) {
       res.json({posts: posts});
     })
