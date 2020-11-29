@@ -30,7 +30,7 @@ const options = {
 	"method": "GET",
 	"hostname": "api.ambeedata.com",
 	"port": null,
-	"path": "/soil/latest/by-lat-lng?lat="+lat.toString()+"&lng="+lon.toString(),
+	"path": `/soil/latest/by-lat-lng?lat=${lat}&lng=${lon}`,
 	"headers": {
 		"x-api-key": API_KEY,
 		"Content-type": "application/json"
@@ -47,11 +47,14 @@ const req = http.request(options, function (res) {
 	res.on("end", function () {
 		const body = Buffer.concat(chunks);
 		const json = JSON.parse(body.toString());
-		const temper = json['data'][0]['soil_temperature'];
+		console.log(json)
+		if(json.message === 'Nearest places')
+		{
+			const temper = json['data'][0]['soil_temperature'];
 		const moist = json['data'][0]['soil_moisture'];
 		Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
-			if((result.temp <= temper + 10 && result.temp >= temper-10))
+			if((result.temp <= temper + 5 && result.temp >= temper-5))
 			{
 				if((result.water - (requ.body.water+(moist/100*5)))<=3)
 				{
@@ -71,6 +74,28 @@ const req = http.request(options, function (res) {
       .catch(function(err) {
         resu.status(422).json({error: err});
       });
+		}else
+		{
+			Plant.find({type:{$in :requ.body.type}})
+		.then(function(result) {
+
+				if((result.water - (requ.body.water))<=3)
+				{
+					var pl = (result.manure + result.maintenance)/2;
+					var gl = (requ.body.manure + requ.body.maintenance)/2;
+					if(gl>= pl-1)
+					{
+						resu.json({result: result});
+					}else
+					resu.json({result: result});
+				}else
+				resu.json({result: result});
+      })
+      .catch(function(err) {
+        resu.status(422).json({error: err});
+      });
+		}
+
 	});
 });
 
@@ -78,6 +103,6 @@ req.end();
 
 //console.log(temper)
 
-})
+
 
 module.exports = router

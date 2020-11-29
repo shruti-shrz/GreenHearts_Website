@@ -6,9 +6,11 @@ import LiquidFillGauge from "react-liquid-gauge";
 
 function PlantTalk(props)
 {
-  const [water, setWater]= useState({value:60})
-  const [manure, setManure]= useState("High time to manure yo!!!")
+  const [water,setWater]= useState({value:2})
+  const [manure, setManure]= useState("")
   const [weed, setWeed]= useState("")
+  const [watertext, setWatertext]= useState("")
+  const [vis, setVis]=useState(false)
   var startColor = "blue"; // cornflowerblue
   var endColor = "blue";
   const radius = 100;
@@ -35,19 +37,60 @@ function PlantTalk(props)
     }
   ];
 
+  function waterGen(x)
+  {
+    if(x>7)
+      setWatertext("Desert dry")
+    else if(x>5)
+      setWatertext("Water please!!")
+      else if(x>3)
+        setWatertext("I'm Drying!")
+        else if(x>2)
+          setWatertext("Slightly dry")
+          else
+            setWatertext("Good!")
+  }
+
   useEffect(()=>{
       fetch('/planttalk',{
         headers:{
           "Authorization": "Bearer " + localStorage.getItem("jwt")
         }
-      }).then(result=>{
-        console.log("hi there")
+      }).then(res=>res.json())
+      .then(result=>{
+        console.log("hi there ")
         console.log(result)
+        if(!result.error)
+        {
+        if(result.waterdiff>7)
+          {setWater({value:0})
+          waterGen(result.waterdiff)}
+        else
+          {
+            var x= 100* (7-result.waterdiff) /7
+            console.log({value:x})
+            setWater({value:x})
+            waterGen(result.waterdiff)
+          }
+
+          if(result.weedsdiff>3)
+            setWeed("Its been " + Math.round(result.weedsdiff).toString() + " days since you last removed weeds")
+          if(result.manurediff>5)
+            setManure("Its been " + Math.round(result.manurediff).toString() + " days since you manured the plants")
+          else if(weed==='')
+            setWeed("All good with your garden!")
+
+        setVis(true)
+      }
+
       })
   },[])
 
+  if(!vis)
+    return (<div></div>)
+
   return (
-    <div className="jar">
+    <div className="jar" title="Plant Talk">
     <div>
     <LiquidFillGauge
         style={{ margin: "0 auto" }}
@@ -74,7 +117,7 @@ function PlantTalk(props)
               <tspan className="value" style={valueStyle}>
 
               </tspan>
-              <tspan style={percentStyle}>Water me!</tspan>
+              <tspan style={percentStyle}>{watertext}</tspan>
             </tspan>
           );
         }}

@@ -15,12 +15,15 @@
 
 .leftInfo p {
 margin-left: 40px;
+max-width: 350px;
 }
 
 .totalInfo {
   padding: 10px;
 
 }
+
+
 
 .slightgrey {
   background-color: white;
