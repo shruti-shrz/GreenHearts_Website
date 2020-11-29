@@ -231,15 +231,14 @@ function PlantSuggester() {
             
 
         </div>
-        <div>
+        <div className="plantViewer">
             
             {plants
             ?
-            <ul>
-            {plants.map(plant=>{
+            plants.map(plant=>{
                 return(
-                    <li>
                         <a href="#"
+                            style={{width:"270px"}}
                            onClick={()=>{
                                 console.log(plant._id)
                         }}>
@@ -249,10 +248,8 @@ function PlantSuggester() {
                             <p>{types[plant.type[0]]}</p>
                         </div>
                         </a>
-                    </li>
                 );
-            })}
-            </ul>
+            })
             :
             <div></div>
         }

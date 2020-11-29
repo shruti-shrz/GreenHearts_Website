@@ -15,3 +15,12 @@
     font-weight: bold;
     align-items: center;
 }
+
+.plantViewer{
+    width:500px;
+    display:flex;
+}
+
+.plantViewer a{
+    width:max-content;
+}
