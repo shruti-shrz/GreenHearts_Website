@@ -34,6 +34,7 @@ app.use(require('./routes/user'));
 app.use(require('./routes/post'));
 app.use(require('./routes/plantSugg'));
 app.use(require('./routes/plantinfo'));
+app.use(require('./routes/planttalk'));
 
 if(process.env.NODE_ENV=="production"){
 	app.use(express.static('client/build'))
