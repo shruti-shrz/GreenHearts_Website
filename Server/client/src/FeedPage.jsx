@@ -325,7 +325,7 @@ const unpinPost=(id)=>{
                         value={postID===props._id? comment :""}
                     style={{marginLeft:"50px"},{height:"20px"},{width:"530px"}} placeholder="Comment..." type="text" id="message"/>
                     <button
-                    onClick={()=>{ makeComment(comment,postID)} }
+                    onClick={()=>{ postID===props._id && makeComment(comment,postID)} }
                     className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
                 <div style={{marginBottom:"5px"}}>
