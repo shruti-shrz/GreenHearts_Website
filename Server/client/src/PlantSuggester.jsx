@@ -320,7 +320,7 @@ function PlantSuggester() {
             {plants.length===0
             ?
             <div>
-                <img style={{marginLeft:"20%"},{width:"400px"},{height:"400px"}} src="suggester.png"/>
+                <img className="suggimg" style={{marginLeft:"20%"},{width:"400px"},{height:"400px"}} src="suggester.png"/>
             </div>
             :
             <div className="plantViewer">{

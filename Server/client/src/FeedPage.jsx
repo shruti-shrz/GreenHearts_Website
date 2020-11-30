@@ -35,7 +35,6 @@ function FeedPage(){
         })
         .then(res=>res.json())
         .then(result=>{
-          console.log(result);
           const newData =posts.map(item=>{
               if(item._id==result._id){
                 item.likes=result.likes;
@@ -63,8 +62,6 @@ function FeedPage(){
       })
       .then(res=>res.json())
       .then(result=>{
-        console.log("this is pin")
-        console.log(result);
         setuser(result);
       }).catch(error=>{
           console.log(error);
@@ -82,7 +79,6 @@ const unpinPost=(id)=>{
     })
     .then(res=>res.json())
     .then(result=>{
-      console.log(result);
       setuser(result);
     }).catch(error=>{
         console.log(error);
@@ -101,7 +97,6 @@ const unpinPost=(id)=>{
         .then(res=>res.json())
         .then(result=>{
             const newData =posts.map(item=>{
-                console.log(result);
                 if(item._id==result._id){
                     return result;
                 }
@@ -129,7 +124,6 @@ const unpinPost=(id)=>{
          .then(res=>res.json())
          .then(result=>{
           setcomment("")
-          console.log(result);
              const newData =posts.map(item=>{
                  if(item._id==result._id){
                      return result;
@@ -151,7 +145,6 @@ const unpinPost=(id)=>{
             }
           }).then(res=>res.json())
           .then(result=>{
-              console.log(result.user);
             setuser(result.user);
           });
     },[])
@@ -163,8 +156,6 @@ const unpinPost=(id)=>{
                 }
               }).then(res=>res.json())
               .then(result=>{
-                console.log("you got something")
-                console.log(result)
                 if(filterType===filterOptions[0] || filterType===filterOptions[2])
                 setposts(result.posts.reverse());
                 else if(filterType===filterOptions[3])
@@ -174,7 +165,8 @@ const unpinPost=(id)=>{
               });
         },[filterType])
 
-    useEffect(() => {
+    const newPost=(url) => {
+      console.log("hi");
                 fetch("/createpost",{
                 method:"post",
                 headers:{"Content-Type":"application/json",
@@ -183,7 +175,7 @@ const unpinPost=(id)=>{
                 body:JSON.stringify({
                     title:"dummy title",
                   body: postMessage,
-                  photo: imageURL,
+                  photo: url,
                   tag: postTag
                 })
               })
@@ -203,17 +195,18 @@ const unpinPost=(id)=>{
                         profileImage: user.url,
                         name: user.name,
                       },
-                    photo:imageURL,
+                    photo:url,
                     body: postMessage,
+                    tag:postTag,
                     likes: [],
                     comments:[]
                    },...posts])
                 }
               });
-    }, [imageURL])
+    }
 
     const postDetails=()=>{
-      if(!image){
+      if(image){
         const data=new FormData();
         data.append("file",image);
         data.append("upload_preset","gh-images");
@@ -225,12 +218,16 @@ const unpinPost=(id)=>{
         .then(res=>res.json())
         .then(data=>{
             setimageURL(data.url);
+            console.log(data.url)
+            newPost(data.url)
         })
         .catch(error=>{console.log(error);})
       }
       else{
         setimageURL("")
+        newPost("")
       }
+      
     }
     
     return(
@@ -257,7 +254,7 @@ const unpinPost=(id)=>{
                   
                     <TextField
                       id="outlined-multiline-flexible"
-                      label="Type your message here!!"
+                      label="*Type your message here!!"
                       style={{margin:"2%"},{width:"87%"}}
                       multiline
                       rowsMax={4}
@@ -279,7 +276,6 @@ const unpinPost=(id)=>{
                 
                 <div>
             {posts.map(props=>{
-              console.log(props)
                 return(
                 <div className="postCard">
                 <div>

@@ -139,6 +139,8 @@ function ContestPage(props){
     },[userName])
 
     const addContestant=(userID,contestID)=>{
+        console.log(userID)
+        console.log(contestID)
         fetch("/addcontestant",{
             method:"put",
             headers:{"Content-Type":"application/json",

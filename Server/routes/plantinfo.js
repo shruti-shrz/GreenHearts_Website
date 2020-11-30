@@ -23,7 +23,7 @@ router.post('/searchplant', function(req, res) {
   IPlant.find({
     name: {$regex: pattern}
   })
-    .select("_id name")
+    .select("_id name type url")
     .then(function(result) {
       return res.json({result});
     })
