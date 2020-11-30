@@ -15,3 +15,35 @@
     font-weight: bold;
     align-items: center;
 }
+
+.plantViewer{
+    width: 90%;
+    height: auto;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.plantViewer a{
+    width:max-content;
+    text-decoration: none;
+}
+
+.plantViewer a:hover{
+    border: 1px solid green;
+    border-radius: 3px;
+}
+
+.Topbar{
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 20px;
+}
+
+.suggestBut{
+    float: right;
+}
