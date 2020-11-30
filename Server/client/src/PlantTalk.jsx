@@ -68,7 +68,6 @@ function PlantTalk(props)
         else
           {
             var x= 100* (7-result.waterdiff) /7
-            console.log({value:x})
             setWater({value:x})
             waterGen(result.waterdiff)
           }
@@ -141,9 +140,7 @@ function PlantTalk(props)
           fill: color("#91FCFB").toString(),
           fontFamily: "Arial"
         }}
-        onClick={() => {
-          this.setState({ value: Math.random() * 100 });
-        }}
+
       />
       </div>
       <p>{manure}</p>

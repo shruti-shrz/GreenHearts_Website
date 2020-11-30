@@ -69,30 +69,47 @@ router.post('/searchcontestant',requireLogin,(req,res)=>{
     });
 })
 
-router.put('/addcontestant',requireLogin,async (req,res)=>{
-	let flag=1;
-  let no_trees =0;
-  let users;
-  try {
-    users = await User.findOne({_id:req.body.followId},{contest:req.body.contestId})
-    if(users){
-      flag=0
-      return res.status(422).json({error: "Contestant Already Exist"});
+router.put('/addcontestant',requireLogin,(req,res)=>{
+	// let flag=1;
+ //  let no_trees =0;
+ //  let users;
+ //  try {
+ //    users = await User.findOne({contest:req.body.contestId},{_id:req.body.followId})
+ //    if(users){
+ //      flag=0
+ //      return res.status(422).json({error: "Contestant Already Exist"});
+ //    }
+ //    let result;
+ //    let result1;
+   
+ //      result = await User.findByIdAndUpdate(req.body.followId,
+ //      	{$push: {contest: req.body.contestId}
+ //      },{new:true});
+ //      result1 = await Contest.findByIdAndUpdate(req.body.contestId,
+ //      	{$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
+ //      },{new:true});
+    
+ //    res.json(result1);
+ //  } catch (error) {
+ //    res.json(error)
+ //  }
+ User.findByIdAndUpdate(req.body.followId,{
+		$push: {contest: req.body.contestId}
+	},{new:true},function(err,result){
+		if(err) {
+        return res.status(422).json({error: err});
     }
-    let result;
-    let result1;
-    if(!flag){
-      result = await User.findByIdAndUpdate(req.body.followId,
-      	{$push: {contest: req.body.contestId}
-      },{new:true});
-      result1 = await Contest.findByIdAndUpdate(req.body.contestId,
-      	{$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
-      },{new:true});
-    }
-    res.json(result1);
-  } catch (error) {
-    res.json(error)
-  }
+    Contest.findByIdAndUpdate(req.body.contestId,{
+    	$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
+    },{new:true})
+    .then(function(result1) {
+          res.json({result: result});
+      })
+      .catch(function(err1) {
+        res.status(422).json({error: err1});
+      });
+	})
+
 })
 // router.put('/addcontestant',requireLogin,(req,res)=>{
 // 	let flag=1;
@@ -111,28 +128,9 @@ router.put('/addcontestant',requireLogin,async (req,res)=>{
 // 	})
 
 
-// 	if(flag===1)
-// 	{
-// 		User.findByIdAndUpdate(req.body.followId,{
-// 		$push: {contest: req.body.contestId}
-// 	},{new:true},function(err,result){
-// 		if(err) {
-//         return res.status(422).json({error: err});
-//     }
-//     Contest.findByIdAndUpdate(req.body.contestId,{
-//     	$push: {contestants: {user:result.name,score:result.score,no_trees:result.numplants}}
-//     },{new:true})
-//     .then(function(result1) {
-//           res.json({result: result});
-//       })
-//       .catch(function(err1) {
-//         res.status(422).json({error: err1});
-//       });
-// 	})
+	
 
-// 	}
 
-// })
 
 router.put('/leavecontest',requireLogin,(req,res)=>{
 	Contest.findByIdAndUpdate(req.body.contestId,{
