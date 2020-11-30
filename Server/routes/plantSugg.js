@@ -100,7 +100,7 @@ const req = http.request(options, function (res) {
 });
 
 req.end();
-
+})
 //console.log(temper)
 
 
