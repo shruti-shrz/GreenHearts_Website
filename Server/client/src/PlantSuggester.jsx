@@ -165,7 +165,7 @@ function PlantSuggester() {
     }
 
     return (
-        <div>
+        <div className="suggPage">
         <PlantInfoDialog plant={infoPlant} posts={infoPosts} clickSetter={setClick} click={click} />
         <div>
             <div className="Topbar">
@@ -343,7 +343,7 @@ function PlantSuggester() {
             </div>
         }
 
-        
+
     </div>
     );
 }
