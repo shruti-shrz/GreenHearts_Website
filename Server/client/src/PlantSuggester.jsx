@@ -80,7 +80,7 @@ function PlantSuggester() {
             })
         }).then(res=>res.json())
           .then(result=>{
-
+            console.log("Hello")
             console.log(result);
             setplants(result.result);
           });

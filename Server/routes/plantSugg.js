@@ -69,23 +69,17 @@ const options = {
 					}
 				}
 			}
+			 if(flag==1)
+		      {
+		      	resu.json({result:"Not able to find plants to suit you."})
+		      }
       })
       .catch(function(err) {
         resu.status(422).json({error: err});
       });
 
-      if(flag==1)
-      {
-      	 Plant.find({type:{$in :requ.body.type}})
-		.then(function(result1) {
-						flag = 0;
-						resu.json({result: result1});
-      })
-		.catch(function(err) {
-        resu.status(422).json({error: err});
-      });
-      }
-		}else
+     
+ 	 }else
 		{
 			Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
