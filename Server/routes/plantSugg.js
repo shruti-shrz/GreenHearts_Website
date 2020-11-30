@@ -13,7 +13,7 @@ router.post('/api',requireLogin,(req,res)=>{
 
 })
 
-router.post('/plantSuggest/:latlon',async (requ,resu)=>{
+router.post('/plantSuggest/:latlon', (requ,resu)=>{
 	 const latlon = requ.params.latlon.split(',');
 	 const lat = latlon[0];
 	 const lon = latlon[1];
@@ -37,7 +37,7 @@ const options = {
 	}
 };
 
-const req = http.request(options, function (res) {
+ const req = http.request(options, function (res) {
 	const chunks = [];
 
 	res.on("data", function (chunk) {
@@ -52,7 +52,7 @@ const req = http.request(options, function (res) {
 		{
 			const temper = json['data'][0]['soil_temperature'];
 		const moist = json['data'][0]['soil_moisture'];
-		Plant.find({type:{$in :requ.body.type}})
+		 Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
 			if((result.temp <= temper + 5 && result.temp >= temper-5))
 			{
