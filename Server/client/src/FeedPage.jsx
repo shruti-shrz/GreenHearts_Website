@@ -320,6 +320,7 @@ const unpinPost=(id)=>{
                     <input
                         onChange={(event)=>{
                             setcomment(event.target.value)
+                            setpostID(props._id);
                         }}
                         value={postID===props._id? comment :""}
                     style={{marginLeft:"50px"},{height:"20px"},{width:"530px"}} placeholder="Comment..." type="text" id="message"/>

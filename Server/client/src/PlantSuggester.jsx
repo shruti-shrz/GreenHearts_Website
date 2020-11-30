@@ -43,6 +43,7 @@ function PlantSuggester() {
     const [infoPlant, setInfoPlant]= useState([])
     const [infoPosts, setInfoPosts]= useState([])
     const [searchP, setsearchP] = useState("")
+    const [error1, seterror1] = useState("")
 
     var answer1=[];
     var types=["Vegetable","Flower","Fruit","Creeper","Shrub","Ornamental","Herb"]
@@ -82,7 +83,8 @@ function PlantSuggester() {
           .then(result=>{
             console.log("Hello")
             console.log(result);
-            setplants(result.result);
+            if(result.error){seterror1(result.error);}
+            else{setplants(result.result);}
           });
           setlat();
         }
@@ -317,7 +319,8 @@ function PlantSuggester() {
                 </Dialog>
             </div>
         </div>
-            {plants.length===0
+        {error1===""?
+            plants.length===0
             ?
             <div>
                 <img className="suggimg" style={{marginLeft:"20%"},{width:"400px"},{height:"400px"}} src="suggester.png"/>
@@ -341,6 +344,9 @@ function PlantSuggester() {
                 );
             })}
             </div>
+        
+        :
+            <div style={{padding:"100px"}}>We don't have plants matching you preferences :(</div>
         }
 
 

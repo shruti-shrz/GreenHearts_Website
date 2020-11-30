@@ -421,7 +421,7 @@ function ContestPage(props){
                         <div  className="lbRow">
 
                             <div style={{width:"25%"},{marginLeft:"10px"},{float:"left"},{alignItems:"center"}}>
-                                <Avatar style={{marginLeft:"10px"}} alt="profile" src="https://www.cbronline.com/wp-content/uploads/2016/06/what-is-URL-1024x669.jpg" />
+                                <Avatar style={{marginLeft:"10px"}} alt="profile" src={contestant.url} />
                             </div>
                             <div style={{width:"60%"}}>
                             <a style={{textDecoration:"none"}} href="#" onClick={()=>getProfile(contestant._id)}>
