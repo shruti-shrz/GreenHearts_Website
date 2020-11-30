@@ -62,12 +62,12 @@ function PlantTalk(props)
         console.log(result)
         if(!result.error)
         {
-        if(result.waterdiff>7)
+        if(result.waterdiff>3)
           {setWater({value:0})
           waterGen(result.waterdiff)}
         else
           {
-            var x= 100* (7-result.waterdiff) /7
+            var x= 100* (3-result.waterdiff) /3
             setWater({value:x})
             waterGen(result.waterdiff)
           }
@@ -97,7 +97,7 @@ function PlantTalk(props)
         height={radius * 2}
         value={water.value}
         percent=""
-        textSize={1}
+        textSize={0.8}
         textOffsetX={0}
         textOffsetY={0}
         textRenderer={(props) => {
@@ -116,7 +116,7 @@ function PlantTalk(props)
               <tspan className="value" style={valueStyle}>
 
               </tspan>
-              <tspan style={percentStyle}>{watertext}</tspan>
+              <tspan style={percentStyle}>WaterMeter</tspan>
             </tspan>
           );
         }}

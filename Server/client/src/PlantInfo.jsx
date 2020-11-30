@@ -126,7 +126,7 @@ export default function PlantInfoDialog(props) {
                 <img src={props.plant.url} alt="a leaf pic" />
                 <p>Name: <strong>{props.plant.name}</strong></p>
                 <p>Yield Time: <strong>{props.plant.yieldTime}</strong></p>
-                <p>Suitable Temperature: <strong>{props.plant.temp}</strong></p>
+                <p>Soil Temperature: <strong>{props.plant.temp}</strong></p>
                 <p>Water: <strong>{props.plant.water}</strong></p>
                 <p>Maintenance: <strong>{maintainAns[props.plant.maintanance]}</strong></p>
                 <p>Manure: <strong>{manureAns[props.plant.manure]}</strong></p>
@@ -134,7 +134,7 @@ export default function PlantInfoDialog(props) {
                 <div className='totalInfo'>
                 <p><strong>Details</strong></p>
                 <p>{props.plant.tip}</p>
-                <p> Companion plants: <em>{props.plant.companions}</em></p>
+                {props.plant.companions && <p> Companion plants: <em>{props.plant.companions}</em></p>}
                 </div>
                 </div>
                 <div className="leftInfo">
