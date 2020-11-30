@@ -13,7 +13,7 @@ router.post('/api',requireLogin,(req,res)=>{
 
 })
 
-router.post('/plantSuggest/:latlon',async (requ,resu)=>{
+router.post('/plantSuggest/:latlon', (requ,resu)=>{
 	 const latlon = requ.params.latlon.split(',');
 	 const lat = latlon[0];
 	 const lon = latlon[1];
@@ -37,7 +37,8 @@ const options = {
 	}
 };
 
-const req = http.request(options, function (res) {
+ const req = http.request(options, function (res) {
+ 	let flag =1;
 	const chunks = [];
 
 	res.on("data", function (chunk) {
@@ -50,9 +51,10 @@ const req = http.request(options, function (res) {
 		console.log(json)
 		if(json.message === 'Nearest places')
 		{
+			console.log("Inside");
 			const temper = json['data'][0]['soil_temperature'];
 		const moist = json['data'][0]['soil_moisture'];
-		Plant.find({type:{$in :requ.body.type}})
+		 Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
 			if((result.temp <= temper + 5 && result.temp >= temper-5))
 			{
@@ -62,18 +64,27 @@ const req = http.request(options, function (res) {
 					var gl = (requ.body.manure + requ.body.maintenance)/2;
 					if(gl>= pl-1)
 					{
+						flag = 0;
 						resu.json({result: result});
-					}else
-					resu.json({result: result});
-				}else
-				resu.json({result: result});
+					}
+				}
 			}
-		else
-          resu.json({result: result});
       })
       .catch(function(err) {
         resu.status(422).json({error: err});
       });
+
+      if(flag==1)
+      {
+      	 Plant.find({type:{$in :requ.body.type}})
+		.then(function(result1) {
+						flag = 0;
+						resu.json({result: result1});
+      })
+		.catch(function(err) {
+        resu.status(422).json({error: err});
+      });
+      }
 		}else
 		{
 			Plant.find({type:{$in :requ.body.type}})
