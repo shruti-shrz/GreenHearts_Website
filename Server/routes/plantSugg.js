@@ -38,6 +38,7 @@ const options = {
 };
 
  const req = http.request(options, function (res) {
+ 	let flag =1;
 	const chunks = [];
 
 	res.on("data", function (chunk) {
@@ -50,6 +51,7 @@ const options = {
 		console.log(json)
 		if(json.message === 'Nearest places')
 		{
+			console.log("Inside");
 			const temper = json['data'][0]['soil_temperature'];
 		const moist = json['data'][0]['soil_moisture'];
 		 Plant.find({type:{$in :requ.body.type}})
@@ -62,18 +64,27 @@ const options = {
 					var gl = (requ.body.manure + requ.body.maintenance)/2;
 					if(gl>= pl-1)
 					{
+						flag = 0;
 						resu.json({result: result});
-					}else
-					resu.json({result: result});
-				}else
-				resu.json({result: result});
+					}
+				}
 			}
-		else
-          resu.json({result: result});
       })
       .catch(function(err) {
         resu.status(422).json({error: err});
       });
+
+      if(flag==1)
+      {
+      	 Plant.find({type:{$in :requ.body.type}})
+		.then(function(result1) {
+						flag = 0;
+						resu.json({result: result1});
+      })
+		.catch(function(err) {
+        resu.status(422).json({error: err});
+      });
+      }
 		}else
 		{
 			Plant.find({type:{$in :requ.body.type}})
@@ -100,7 +111,7 @@ const options = {
 });
 
 req.end();
-
+})
 //console.log(temper)
 
 
