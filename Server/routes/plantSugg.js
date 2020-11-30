@@ -56,23 +56,32 @@ const options = {
 		const moist = json['data'][0]['soil_moisture'];
 		 Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
-			if((result.temp <= temper + 5 && result.temp >= temper-5))
+			var arr=[];
+			var i;
+			for(i of result)
 			{
-				if((result.water - (requ.body.water+(moist/100*5)))<=3)
+			if((i.temp <= temper + 5 && i.temp >= temper-5))
+			{
+				if((i.water - (requ.body.water+(moist/100*5)))<=3)
 				{
-					var pl = (result.manure + result.maintenance)/2;
+					var pl = (i.manure + i.maintenance)/2;
 					var gl = (requ.body.manure + requ.body.maintenance)/2;
-					if(gl>= pl-1)
+					if(gl>= pl-2)
 					{
 						flag = 0;
-						resu.json({result: result});
+						arr.push(i);
 					}
 				}
 			}
-			 if(flag==1)
-		      {
-		      	resu.json({result:"Not able to find plants to suit you."})
-		      }
+		}
+		if(flag==0)
+		{
+			resu.json({result:arr});
+		}else
+		{
+			resu.json({error:"We are not able to satisfy your requirements"});
+		}
+			 
       })
       .catch(function(err) {
         resu.status(422).json({error: err});
@@ -83,18 +92,31 @@ const options = {
 		{
 			Plant.find({type:{$in :requ.body.type}})
 		.then(function(result) {
-
-				if((result.water - (requ.body.water))<=3)
+			var arr=[];
+			var i;
+			for(i of result)
+			{
+			
+				if((i.water - (requ.body.water))<=3)
 				{
-					var pl = (result.manure + result.maintenance)/2;
+					var pl = (i.manure + i.maintenance)/2;
 					var gl = (requ.body.manure + requ.body.maintenance)/2;
-					if(gl>= pl-1)
+					if(gl>= pl-2)
 					{
-						resu.json({result: result});
-					}else
-					resu.json({result: result});
-				}else
-				resu.json({result: result});
+						flag = 0;
+						arr.push(i);
+					}
+				}
+			
+		}
+		if(flag==0)
+		{
+			resu.json({result:arr});
+		}else
+		{
+			resu.json({error:"We are not able to satisfy your requirements"});
+		}
+			 
       })
       .catch(function(err) {
         resu.status(422).json({error: err});
