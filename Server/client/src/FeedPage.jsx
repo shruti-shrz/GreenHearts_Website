@@ -227,9 +227,9 @@ const unpinPost=(id)=>{
         setimageURL("")
         newPost("")
       }
-      
+
     }
-    
+
     return(
         <div style={{alignContent: "center"}}>
             <div className="filterSection">
@@ -251,7 +251,7 @@ const unpinPost=(id)=>{
                     <input onChange={(event)=>{
                         setpostTag(event.target.value)
                     }} autoComplete="off" value={postTag} style={{paddingBottom:"5px"},{height:"25px"},{width:"40px"},{display:"flex"}} placeholder="Tag" type="text" id="message"/>
-                  
+
                     <TextField
                       id="outlined-multiline-flexible"
                       label="*Type your message here!!"
@@ -273,14 +273,14 @@ const unpinPost=(id)=>{
                     </label>
                     <button onClick={postDetails} style={{border:"none"},{background: "transparent"},{margin: "5px"}} ><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
-                
+
                 <div>
             {posts.map(props=>{
                 return(
                 <div className="postCard">
                 <div>
                     <div>
-                      {props.postedBy.url? 
+                      {props.postedBy.url?
                       <img className="profilePhoto" src={props.postedBy.url} alt="👤"/>:
                       <img className="profilePhoto" src="./profile-default-icon.png" alt="👤"/>
                       }
@@ -320,11 +320,12 @@ const unpinPost=(id)=>{
                     <input
                         onChange={(event)=>{
                             setcomment(event.target.value)
+                            setpostID(props._id);
                         }}
                         value={postID===props._id? comment :""}
                     style={{marginLeft:"50px"},{height:"20px"},{width:"530px"}} placeholder="Comment..." type="text" id="message"/>
                     <button
-                    onClick={()=>{setpostID(props._id); makeComment(comment,postID)} }
+                    onClick={()=>{ makeComment(comment,postID)} }
                     className="icon"><img style={{height:"20px"},{width:"20px"}} src="./send-icon.png"/></button>
                 </div>
                 <div style={{marginBottom:"5px"}}>
